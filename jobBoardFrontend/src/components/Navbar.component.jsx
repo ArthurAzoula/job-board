@@ -3,8 +3,8 @@ const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <ul>
-                <li></li>
-                <li></li>
+                <li>Menu 1</li>
+                <li>Menu 2</li>
                 <li></li>
                 <li></li>
                 <li></li>
