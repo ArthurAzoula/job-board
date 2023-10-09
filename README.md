@@ -37,3 +37,29 @@ yarn install
 ```bash
 npm run dev
 ```
+
+
+# Commande a suivre pour les branches
+
+```bash
+// Depuis la branche locale
+
+git add [ListeFichiers] ou . # ou sur gitKraken
+
+git commit -m "ton message" # ou sur gitKraken
+
+git checkout dev # Basculement sur la branche distante
+
+git pull # récupération 
+
+git merge `branche_locale` # récupération des modifications
+
+
+git push # Ajouts des modifications sur dev
+git checkou `branche_locale` # retour sur la branche locale
+
+
+## Créer une nouvelle branche
+
+git branch "feature/mabranche, mabranche, fix/mabranche"
+```
