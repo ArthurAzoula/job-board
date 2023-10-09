@@ -18,8 +18,6 @@ function App() {
           <Route path="/announce/{ID}" element={<AnnoncePage />}></Route>
           <Route path="/announce" element={<Annonces />}></Route>
           <Route path="/admin" element={<Admin />}></Route>
-
-
         </Routes>
         <Footer />
       </div>
