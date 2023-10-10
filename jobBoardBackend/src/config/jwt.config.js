@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+const crypto = require('crypto');
 
 const generateSecretToken = () => {
     return crypto.randomBytes(64).toString('hex');
@@ -8,14 +8,21 @@ const generateRefreshToken = () => {
     return crypto.randomBytes(128).toString('hex');
 };
 
-export const secret = generateSecretToken();
+const secret = generateSecretToken();
 
-export const options = {
+const options = {
     expiresIn: '1h'
 };
 
-export const refreshOptions = {
+const refreshOptions = {
     expiresIn: '7d'
 };
 
-export const refreshSecret = generateRefreshToken();
+const refreshSecret = generateRefreshToken();
+
+module.exports = {
+    secret,
+    options,
+    refreshOptions,
+    refreshSecret
+};
