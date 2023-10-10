@@ -1,13 +1,14 @@
-import React from 'react';
-import Navbar from './Navbar.component';
+import React from "react";
+import Navbar from "./Navbar.component";
 
 const Header = () => {
-
     return (
-        <div>
-            <Navbar />
+      <header className="p-6 bg-cerulean">
+        <div className="container mx-auto flex justify-between items-center">
+          <Navbar />
         </div>
-    )
-}
+      </header>
+    );
+};
 
 export default Header;

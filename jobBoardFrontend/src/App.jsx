@@ -9,15 +9,14 @@ import InscriptionPage from "./pages/Inscription.page";
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen">
+      <div className="min-h-screen font-mono bg-dogwood w-full">
         <Header />
         <Routes>
           <Route path="/" element={<Annonces />}></Route>
           <Route path="/signin" element={<ConnexionPage />}></Route>
           <Route path="/signup" element={<InscriptionPage />}></Route>
-          <Route path="/announce/{ID}" element={<AnnoncePage />}></Route>
           <Route path="/announces" element={<Annonces />}></Route>
-          <Route path="/admin" element={<Admin />}></Route>
+          <Route path="/admin" element={<AdminIcon />}></Route>
         </Routes>
         <Footer />
       </div>
