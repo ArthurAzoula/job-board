@@ -26,6 +26,17 @@ module.exports = {
 
         },
       },
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING(50),
+        // add security to password set and get
+        set(value) {
+          this.setDataValue('password', bcrypt.hashSync(value, 10));
+        },
+        get() {
+          return this.getDataValue('password');
+        },
+      },
       telephone: {
         allowNull: false,
         type: Sequelize.STRING(50),
@@ -45,6 +56,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }

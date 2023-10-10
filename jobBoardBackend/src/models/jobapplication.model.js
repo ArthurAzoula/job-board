@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      jobApplicationModel.hasOne(models.advertissement)
-      jobApplicationModel.hasMany(models.people);
+      jobApplicationModel.hasOne(models.advertissement, {foreignKey: 'advertissement_id'})
+      jobApplicationModel.hasMany(models.people, {foreignKey: 'people_id'});
     }
   }
   jobApplicationModel.init({
@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'jobapplication',
+    paranoid: true
   });
   return jobApplicationModel;
 };  
