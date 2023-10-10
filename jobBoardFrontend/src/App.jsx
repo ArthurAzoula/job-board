@@ -1,6 +1,6 @@
-import AdminIcon from "./icons/Admin.icon"
-import Header from "./components/Header.component"
-import Footer from "./components/Footer.component"
+import AdminIcon from "./icons/Admin.icon";
+import Header from "./components/Header.component";
+import Footer from "./components/Footer.component";
 import Annonces from "./components/Annonces.component";
 import ConnexionPage from "./pages/Connexion.page";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -16,13 +16,13 @@ function App() {
           <Route path="/signin" element={<ConnexionPage />}></Route>
           <Route path="/signup" element={<InscriptionPage />}></Route>
           <Route path="/announce/{ID}" element={<AnnoncePage />}></Route>
-          <Route path="/announce" element={<Annonces />}></Route>
+          <Route path="/announces" element={<Annonces />}></Route>
           <Route path="/admin" element={<Admin />}></Route>
         </Routes>
         <Footer />
       </div>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App;
