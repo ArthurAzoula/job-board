@@ -1,36 +1,38 @@
 const express = require('express');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const winston = require('winston');
 const sequelize = require('./src/database/connection.database');
-require('dotenv').config();
+const database = require('./src/models/index');
+//const advertissementsRoutes = require('./src/routes/advertissement.route')
+//const candidaturesRoutes = require('./src/routes/candidatures.route');
+//const companiesRoutes = require('./src/routes/companies.route');
+//const usersRoutes = require('./src/routes/users.route');
+//const authRoutes = require('./src/routes/auth.route');
 
-// import models
-require('./src/models/index');
-
-// Create the connection with the database
-sequelize.authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch((error) => {
-        console.error('Unable to connect to the database:', error);
-    });
-
-// Syncronize the models with the database
-sequelize.sync({ force : true }) // force : true will drop the table if it already exists
-    .then(() => {
-        console.log('Models synchronized successfully.');
-    })
-    .catch((error) => {
-        console.error('Unable to synchronize the models with the database:', error);
-    });
-
+// Create the Express app
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello, world!');
+// Set up middleware
+app.use(express.json());
+app.use(helmet());
+app.use(morgan('combined', { stream: winston.stream }));
+
+
+
+// Base API
+const BASE_API_URL = process.env.BASE_API_URL;
+
+// Define the routes
+// app.use(`${BASE_API_URL}advertissements`, advertissementsRoutes);
+// app.use(`${BASE_API_URL}candidatures`, candidaturesRoutes);
+// app.use(`${BASE_API_URL}companies`, companiesRoutes);
+// app.use(`${BASE_API_URL}users`, usersRoutes);
+// app.use(`${BASE_API_URL}/auth`, authRoutes);
+
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
-
-app.listen(3000, () => {
-    console.log('Server listening on port 3000');
-});
-
-
