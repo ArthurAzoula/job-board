@@ -32,7 +32,7 @@ const login = async (req, res) => {
 const register = async (req, res) => {
     // mdp encrypt
     const salt = bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(req.body.password, salt);
+    const hashPassword = bcrypt.hash(req.body.password, salt);
 
     try {
         const userData = {
