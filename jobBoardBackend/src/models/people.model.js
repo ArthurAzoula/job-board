@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      peopleModel.hasMany(models.jobapplication);
+      peopleModel.hasMany(models.jobapplication, {foreignKey: 'people_id'});
     }
   }
   peopleModel.init({
@@ -38,6 +38,17 @@ module.exports = (sequelize, DataTypes) => {
 
       },
     },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING(50),
+      // add security to password set and get
+      set(value) {
+        this.setDataValue('password', bcrypt.hashSync(value, 10));
+      },
+      get() {
+        return this.getDataValue('password');
+      },
+    },
     telephone: {
       allowNull: false,
       type: DataTypes.STRING(50),
@@ -55,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'people',
+    paranoid: true
   });
   return peopleModel;
 };
