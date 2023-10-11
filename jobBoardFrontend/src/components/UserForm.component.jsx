@@ -1,44 +1,70 @@
 import { useState } from 'react';
 
-const UserForm = () => {
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [email, setEmail] = useState('');
-    const [telephone, setTelephone] = useState('');
-    const [password, setPassword] = useState('');
+import react from 'react'
+import axios from 'axios';
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+const UserForm = () => {
+    const [credentials, setCredentials] = useState({
+        nom: '',
+        prenom: '',
+        email: '',
+        telephone: '',
+        password: '',
+    });
+
+    const onChange = (e) => {
+        setCredentials({
+            ...credentials,
+            [e.target.name] : e.target.value,
+        })
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
         // Handle form submission
+        axios.post('http://localhost:3000/api/users', credentials, {
+            headers: {
+                'Access-Control-Allow-Origin': '*', // Allow CORS
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((res) => console.log(res))
+            .catch((err) => console.error(err.response))
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
-                    Nom
-                </label>
-                <input
-                    type="text"
-                    id="name"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    required
-                />
-            </div>
-            <div className="mb-4">
-                <label htmlFor="surname" className="block text-gray-700 font-bold mb-2">
-                    Prénom
-                </label>
-                <input
-                    type="text"
-                    id="surname"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={surname}
-                    onChange={(event) => setSurname(event.target.value)}
-                    required
-                />
+        <form className='mt-6' onSubmit={onSubmit}>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label htmlFor="nom" className="block text-gray-700 font-bold mb-2">
+                        Nom
+                    </label>
+                    <input
+                        type="text"
+                        id="nom"
+                        name="nom"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={credentials.nom}
+                        placeholder='Doe'
+                        onChange={onChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="prebom" className="block text-gray-700 font-bold mb-2">
+                        Prénom
+                    </label>
+                    <input
+                        type="text"
+                        id="prenom"
+                        name="prenom"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        value={credentials.surname}
+                        placeholder='John'
+                        onChange={onChange}
+                        required
+                    />
+                </div>
             </div>
             <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
@@ -47,9 +73,11 @@ const UserForm = () => {
                 <input
                     type="email"
                     id="email"
+                    name="email"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    value={credentials.email}
+                    placeholder='jonhdoe@mail.com'
+                    onChange={onChange}
                     required
                 />
             </div>
@@ -60,9 +88,11 @@ const UserForm = () => {
                 <input
                     type="tel"
                     id="telephone"
+                    name="telephone"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={telephone}
-                    onChange={(event) => setTelephone(event.target.value)}
+                    value={credentials.telephone}
+                    placeholder='0606060606'
+                    onChange={onChange}
                     required
                 />
             </div>
@@ -73,16 +103,18 @@ const UserForm = () => {
                 <input
                     type="password"
                     id="password"
+                    name="password"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    value={credentials.password}
+                    placeholder='********'
+                    onChange={onChange}
                     required
                 />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex justify-center">
                 <button
                     type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-gunmetal hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                     S'inscrire
                 </button>

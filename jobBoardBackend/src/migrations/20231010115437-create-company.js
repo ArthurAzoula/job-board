@@ -39,6 +39,18 @@ module.exports = {
 
         },
       },
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING(300),
+        set(value) {
+          const salt = bcrypt.genSaltSync(10);
+          const hash = bcrypt.hashSync(value, salt);
+          this.setDataValue('password', hash);
+        },
+        get() {
+          return this.getDataValue('password');
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -48,7 +60,6 @@ module.exports = {
         type: Sequelize.DATE
       },
       deletedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });

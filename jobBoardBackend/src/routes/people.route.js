@@ -12,6 +12,10 @@ router.get('/:id', peopleController.getUserById);
 
 router.get('/me', peopleController.getUserConnected);
 
+/* POST */
+
+router.post('/', peopleController.createUser);
+
 /* PUT */
 
 router.put('/:id', peopleController.updateUser);

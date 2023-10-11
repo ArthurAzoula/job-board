@@ -39,6 +39,19 @@ const getUserConnected = async (req, res) => {
 
 }
 
+const createUser = async (req, res) => {
+    try {
+        const user = await database.sequelize.models.people.create(req.body);
+        if (user) {
+            console.log(`Un utilisateur de type client a été créé :${user}}`)
+            return res.status(201).json(user);
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+
+
 const updateUser = async (req, res) => {
 
 
@@ -64,5 +77,6 @@ module.exports = {
     getUserById,
     getUserConnected,
     updateUser,
-    deleteUser
+    deleteUser,
+    createUser
 }
