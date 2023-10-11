@@ -1,7 +1,9 @@
+import Filtres from "./Filtres.component";
+
 const Annonces = () => {
     return (
         <div>
-            <h1>Annonces</h1>
+            <Filtres />
         </div>
     )
 }

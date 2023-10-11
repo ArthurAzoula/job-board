@@ -8,9 +8,9 @@ export default {
         dogwood: "#F4D8CD",
         gunmetal: "#292F36",
         bleugris: "#647C97",
+        grisclair: "#e2e8f0",
       },
     },
   },
   plugins: [],
 };
-

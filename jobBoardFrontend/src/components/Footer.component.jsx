@@ -8,7 +8,7 @@ const Footer = () => {
             <span class="text-sm text-white sm:text-center dark:text-gray-400">
               © 2023{" "}
               <a href="https://flowbite.com/" class="hover:underline">
-                Flowbite™
+                Epitech™
               </a>
               . All Rights Reserved.
             </span>

@@ -1,5 +1,5 @@
 import React from "react";
-import logo from '../assets/logo/logo_EpiJob/png/white_transparent.png'
+import logo from "../assets/logo/logo_EpiJob/png/white_transparent.png";
 
 function Navbar() {
   return (
@@ -9,31 +9,43 @@ function Navbar() {
         <a href="/" className="text-white text-4xl font-bold text-center">
           EpiJob
         </a>
-        <ul className="flex space-x-4 items-center bg-bleugris p-4 rounded-md">
+        <ul className="flex space-x-14 items-center bg-bleugris p-4 rounded-xl text-xl">
           <li>
-            <a href="/" className="text-white hover:text-gunmetal">
+            <a
+              href="/"
+              className="text-white hover:text-gunmetal hover:underline hover: underline-offset-2 decoration-white"
+            >
               Home
             </a>
           </li>
           <li>
-            <a href="/annonces" className="text-white hover:text-gunmetal">
+            <a
+              href="/annonces"
+              className="text-white hover:text-gunmetal hover:underline decoration-white "
+            >
               Adverts
             </a>
           </li>
           <li>
-            <a href="/services" className="text-white hover:text-gunmetal">
+            <a
+              href="/services"
+              className="text-white hover:text-gunmetal hover:underline decoration-white"
+            >
               About
             </a>
           </li>
           <li>
             <div className="bg-dogwood rounded-full px-4 py-2">
-              <a href="/signin" className="text-cerulean hover:text-gunmetal">
-                Signin 
+              <a
+                href="/signin"
+                className="text-cerulean hover:text-gunmetal hover:underline decoration-white"
+              >
+                Signin
               </a>
               <span className="ml-3 text-cerulean">/</span>
               <a
                 href="/signup"
-                className="text-cerulean hover:text-gunmetal ml-4"
+                className="text-cerulean hover:text-gunmetal hover:underline decoration-white ml-4"
               >
                 Signup
               </a>
