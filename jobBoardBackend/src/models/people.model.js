@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require('bcrypt');
 const {
   Model
 } = require('sequelize');
@@ -40,14 +41,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       allowNull: false,
-      type: DataTypes.STRING(50),
-      // add security to password set and get
+      type: DataTypes.STRING(300),
       set(value) {
-        this.setDataValue('password', bcrypt.hashSync(value, 10));
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(value, salt);
+        this.setDataValue('password', hash);
       },
       get() {
         return this.getDataValue('password');
-      },
+      }
     },
     telephone: {
       allowNull: false,

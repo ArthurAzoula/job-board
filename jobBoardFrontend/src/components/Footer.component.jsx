@@ -1,6 +1,4 @@
 const Footer = () => {
-
-
     return (
       <>
         <footer class="shadow bg-gunmetal">

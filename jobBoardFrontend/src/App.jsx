@@ -10,22 +10,24 @@ import Sidebar from "./components/Sidebar.component";
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen font-serif bg-white w-full flex">
-        <div className="w-1/6">
+      <div className="min-h-screen font-serif bg-bleugris w-full flex">
+        <div className="w-1/6 flex justify-center text-center">
           <Sidebar />
         </div>
-        <div className="w-5/6">
+        <div className="w-5/6 overflow-hidden">
           <Header />
-          <Routes>
-            <Route path="/" element={<Annonces />} />
-            <Route path="/announces" element={<Annonces />} />
-            <Route path="/admin" element={<AdminIcon />} />
-            <Route path="/signin" element={<ConnexionPage />} />
-            <Route path="/signup" element={<InscriptionPage />} />
-          </Routes>
+          <div className="overflow-y-auto bg-white min-h-screen">
+            <Routes>
+              <Route path="/" element={<Annonces />} />
+              <Route path="/announces" element={<Annonces />} />
+              <Route path="/admin" element={<AdminIcon />} />
+              <Route path="/signin" element={<ConnexionPage />} />
+              <Route path="/signup" element={<InscriptionPage />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
       </div>
-      <Footer />
     </BrowserRouter>
   );
 }

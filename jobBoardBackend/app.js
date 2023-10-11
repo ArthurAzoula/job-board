@@ -7,20 +7,25 @@ const peopleRoutes = require('./src/routes/people.route');
 const authRoutes = require('./src/routes/auth.route');
 const anonymousRoutes = require('./src/routes/anonymous.route');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 // Create the Express app
 const app = express();
 
+// Authorize request
+const corsOption = {origin: 'http://127.0.0.1:5173'};
+
 // Set up middleware
 app.use(express.json());
+app.use(cors(corsOption));
 
 // Define the routes
-app.use(`/advertissements`, advertissementsRoutes);
-app.use(`/jobapplications`, jobapplicationRoutes);
-app.use(`/companies`, companiesRoutes);
-app.use(`/users`, peopleRoutes);
-app.use(`/auth`, authRoutes);
-app.use(`/anonymous`, anonymousRoutes);
+app.use(`/api/advertissements`, advertissementsRoutes);
+app.use(`/api/jobapplications`, jobapplicationRoutes);
+app.use(`/api/companies`, companiesRoutes);
+app.use(`/api/users`, peopleRoutes);
+app.use(`/api/auth`, authRoutes);
+app.use(`/api/anonymous`, anonymousRoutes);
 app.use('/test', (req, res) => {
     res.send('Hello World')
 });

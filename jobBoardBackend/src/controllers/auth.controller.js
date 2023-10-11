@@ -29,25 +29,6 @@ const login = async (req, res) => {
     }   
 }
 
-const register = async (req, res) => {
-    // mdp encrypt
-    const salt = bcrypt.genSalt();
-    const hashPassword = bcrypt.hash(req.body.password, salt);
-
-    try {
-        const userData = {
-            ...req.body,
-            password: hashPassword
-        };
-        newUser = await database.sequelize.models.people.create(userData);
-        delete userData.password;
-        console.log(`Nouvelle utilisateur dans la base de données : ${newUser.nom}`)
-    } catch (error) {
-        console.log(`Erreur lors de la création de l'utilisateur : ${error}`)
-        res.status(409).json({ error: error.message });
-    }
-}
-
 const logout = async (req, res) => {
     try {
         res.cookie('token', '', { maxAge: 0, httpOnly: true, secure: true, sameSite: 'strict' });

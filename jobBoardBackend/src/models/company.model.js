@@ -1,4 +1,5 @@
 'use strict';
+const bcrypt = require('bcrypt');
 const {
   Model
 } = require('sequelize');
@@ -50,6 +51,18 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true,
 
       },
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING(300),
+      set(value) {
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(value, salt);
+        this.setDataValue('password', hash);
+      },
+      get() {
+        return this.getDataValue('password');
+      }
     },
   }, {
     sequelize,

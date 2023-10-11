@@ -1,19 +1,39 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 const CompanyForm = () => {
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [telephone, setTelephone] = useState('');
-    const [address, setAddress] = useState('');
-    const [email, setEmail] = useState('');
+    const [credentials, setCredentials] = useState({
+        nom: '',
+        description: '',
+        telephone: '',
+        adresse: '',
+        email: '',
+        password: ''
+    });
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Handle form submission
+    const onChange = (e) => {
+        setCredentials({
+            ...credentials,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        console.log(credentials);
+        axios
+            .post('http://localhost:3000/api/companies', credentials, {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err.response));
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="mt-6" onSubmit={onSubmit}>
             <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
                     Nom de l'entreprise
@@ -21,69 +41,88 @@ const CompanyForm = () => {
                 <input
                     type="text"
                     id="name"
+                    name="nom"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
+                    value={credentials.nom}
+                    onChange={onChange}
                     required
                 />
             </div>
             <div className="mb-4">
                 <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
-                    Description de l'entreprise
+                    Description
                 </label>
                 <textarea
                     id="description"
+                    name="description"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={description}
-                    onChange={(event) => setDescription(event.target.value)}
+                    value={credentials.description}
+                    onChange={onChange}
                     required
                 />
             </div>
             <div className="mb-4">
                 <label htmlFor="telephone" className="block text-gray-700 font-bold mb-2">
-                    Téléphone de l'entreprise
+                    Téléphone
                 </label>
                 <input
                     type="tel"
                     id="telephone"
+                    name="telephone"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={telephone}
-                    onChange={(event) => setTelephone(event.target.value)}
+                    value={credentials.telephone}
+                    onChange={onChange}
                     required
                 />
             </div>
             <div className="mb-4">
-                <label htmlFor="address" className="block text-gray-700 font-bold mb-2">
-                    Adresse de l'entreprise
+                <label htmlFor="adress" className="block text-gray-700 font-bold mb-2">
+                    Adresse
                 </label>
                 <input
                     type="text"
-                    id="address"
+                    id="adresse"
+                    name="adresse"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={address}
-                    onChange={(event) => setAddress(event.target.value)}
+                    value={credentials.adresse}
+                    onChange={onChange}
                     required
                 />
             </div>
             <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                    Email de l'entreprise
+                    Email
                 </label>
                 <input
                     type="email"
                     id="email"
+                    name="email"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    value={credentials.email}
+                    onChange={onChange}
                     required
                 />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="mb-4">
+                <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+                    Mot de passe
+                </label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    value={credentials.password}
+                    onChange={onChange}
+                    required
+                />
+            </div>
+            <div className="flex justify-center">
                 <button
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
-                    S'inscrire
+                    Enregistrer
                 </button>
             </div>
         </form>
