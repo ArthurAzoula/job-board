@@ -2,9 +2,14 @@ import Filtres from "./Filtres.component";
 
 const Annonces = () => {
     return (
-        <div>
-            <Filtres />
-        </div>
+        <>
+            <div className="flex justify-center mt-12">
+                <Filtres />
+            </div>
+            <div>
+                Les annonces
+            </div>
+        </>
     )
 }
 
