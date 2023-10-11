@@ -5,12 +5,14 @@ import Annonces from "./components/Annonces.component";
 import ConnexionPage from "./pages/Connexion.page";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import InscriptionPage from "./pages/Inscription.page";
+import Sidebar from "./components/Sidebar.component";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen font-mono bg-dogwood w-full">
+      <div className="min-h-screen font-mono bg-white w-full">
         <Header />
+        <Sidebar />
         <Routes>
           <Route path="/" element={<Annonces />}></Route>
           <Route path="/signin" element={<ConnexionPage />}></Route>
