@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       jobApplicationModel.hasOne(models.advertissement, {foreignKey: 'advertissement_id'})
-      jobApplicationModel.hasMany(models.people, {foreignKey: 'people_id'});
+      jobApplicationModel.hasMany(models.people, { foreignKey: 'people_id' });
     }
   }
   jobApplicationModel.init({
@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     advertissement_id: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    anonymous_id: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },

@@ -64,7 +64,7 @@ const refresh = async (req, res) => {
             return res.status(401).send('Refresh token not provided');
         }
         const decoded = jwt.verify(refreshToken, jwtConfig.refreshSecret);
-        const user = await database.sequelize.models.people.findByPk(decoded.id);
+        const user = await database.sequelize.models.people.findOne(decoded.id);
         if (!user) {
             return res.status(404).send('User not found');
         }
