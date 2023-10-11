@@ -3,9 +3,9 @@ import logo from '../assets/logo/logo_EpiJob/png/white_transparent.png'
 
 function Navbar() {
   return (
-    <nav className="bg-gunmetal p-4">
+    <nav className="bg-gunmetal">
       <div className="mx-auto container flex items-center justify-between">
-        <img className="h-36 max-w-lg mr-3" src={logo} alt="Logo" />
+        <img className="h-12 max-w-lg mr-3" src={logo} alt="Logo" />
         <a href="/" className="text-white text-4xl font-bold text-center">
           EpiJob
         </a>
