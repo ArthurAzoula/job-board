@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(255),
     },
+    type_contrat: {
+      allowNull: false,
+      type: DataTypes.ENUM('CDI', 'CDD', 'Stage', 'Alternance'),
+    },
     publication_date: {
       allowNull: false,
       type: DataTypes.DATE,

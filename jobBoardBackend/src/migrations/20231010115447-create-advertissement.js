@@ -17,6 +17,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(255),
       },
+      type_contrat: {
+        allowNull: false,
+        type: Sequelize.ENUM('CDI', 'CDD', 'Stage', 'Alternance'),
+      },
       company_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
