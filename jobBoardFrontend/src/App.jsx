@@ -17,14 +17,8 @@ function App() {
           <Route path="/" element={<Annonces />}></Route>
           <Route path="/signin" element={<ConnexionPage />}></Route>
           <Route path="/signup" element={<InscriptionPage />}></Route>
-<<<<<<< HEAD
-          <Route path="/announce/{ID}" element={<AnnoncePage />}></Route>
-          <Route path="/announces" element={<Annonces />}></Route>
-          <Route path="/admin" element={<Admin />}></Route>
-=======
           <Route path="/announces" element={<Annonces />}></Route>
           <Route path="/admin" element={<AdminIcon />}></Route>
->>>>>>> feature/navbar
         </Routes>
         <Footer />
       </div>
