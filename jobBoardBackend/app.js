@@ -5,6 +5,7 @@ const jobapplicationRoutes = require('./src/routes/jobapplication.route');
 const companiesRoutes = require('./src/routes/company.route');
 const peopleRoutes = require('./src/routes/people.route');
 const authRoutes = require('./src/routes/auth.route');
+const anonymousRoutes = require('./src/routes/anonymous.route');
 const dotenv = require('dotenv');
 
 // Create the Express app
@@ -19,6 +20,7 @@ app.use(`/jobapplications`, jobapplicationRoutes);
 app.use(`/companies`, companiesRoutes);
 app.use(`/users`, peopleRoutes);
 app.use(`/auth`, authRoutes);
+app.use(`/anonymous`, anonymousRoutes);
 app.use('/test', (req, res) => {
     res.send('Hello World')
 });
