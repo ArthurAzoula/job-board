@@ -3,7 +3,7 @@ import Navbar from "./Navbar.component";
 
 const Header = () => {
     return (
-      <header className="p-6 bg-cerulean">
+      <header className="p-6 bg-gunmetal">
         <div className="container mx-auto">
           <Navbar />
         </div>
