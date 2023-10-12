@@ -1,16 +1,40 @@
 import Filtres from "./Filtres.component";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Annonces = () => {
-    return (
-        <>
-            <div className="flex justify-center mt-12">
-                <Filtres />
-            </div>
-            <div>
-                Les annonces
-            </div>
-        </>
-    )
-}
+  const [annonces, setAnnonces] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "localhost:3000/api/advertissements",
+      responseType: "json",
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          setAnnonces(response.data);
+        } else {
+          console.error("Erreur lors de la récupération des données de l'API");
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la requête API : " + error);
+      });
+  }, []);
+
+  // Appel api localhost:3000/api/advertissements fetch / axios
+  // gérer erreur et retour api
+  // mettre la var annonces a jour avec setAnnonces et les data récupérer de l'api
+
+  return (
+    <>
+      <div className="flex justify-center mt-12">
+        <Filtres />
+      </div>
+      <div></div>
+    </>
+  );
+};
 
 export default Annonces;
