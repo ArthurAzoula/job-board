@@ -36,7 +36,7 @@ const Sidebar = () => {
               className="text-left w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-white transition duration-200"
               onClick={handleAccountClick}
             >
-              <AdminIcon />
+              <SettingsIcon />
             </button>
           </div>
 
