@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SettingsIcon from "../icons/Settings.icon";
 import AdminIcon from "../icons/Admin.icon";
 import CandidatureIcon from "../icons/Candidature.icon";
+import Settings from "./Settings.component";
 
 const Sidebar = () => {
   const [showAccount, setShowAccount] = useState(false);
@@ -50,9 +51,7 @@ const Sidebar = () => {
 
           {showAccount && (
             <div className="flex flex-col">
-              <p>Informations personnelles</p>
-              <p>Paramètres de compte</p>
-              <p>Se déconnecter</p>
+              <Settings />
             </div>
           )}
         </div>
