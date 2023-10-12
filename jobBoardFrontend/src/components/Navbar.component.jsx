@@ -9,6 +9,7 @@ import AdminIcon from '../icons/Admin.icon';
 import { accountService } from '../services/account.service';
 import { useNavigate } from 'react-router-dom';
 
+
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(accountService.isLogged());
 

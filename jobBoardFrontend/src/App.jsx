@@ -6,6 +6,7 @@ import ConnexionPage from "./pages/Connexion.page";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import InscriptionPage from "./pages/Inscription.page";
 import Sidebar from "./components/Sidebar.component";
+import Home from "./pages/Home.page";
 
 function App() {
   return (
@@ -18,8 +19,8 @@ function App() {
           <Header />
           <div className="overflow-y-auto bg-white min-h-screen">
             <Routes>
-              <Route path="/" element={<Annonces />} />
-              <Route path="/announces" element={<Annonces />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/annonces" element={<Annonces />} />
               <Route path="/admin" element={<AdminIcon />} />
               <Route path="/signin" element={<ConnexionPage />} />
               <Route path="/signup" element={<InscriptionPage />} />
