@@ -8,6 +8,7 @@ import SignInIcon from '../icons/SignIn.icon';
 import AdminIcon from '../icons/Admin.icon';
 import { accountService } from '../services/account.service';
 import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '../icons/Logout.icon';
 
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(accountService.isLogged());
@@ -75,9 +76,10 @@ const Navbar = () => {
               <div className="bg-bleugris font-bold rounded-full px-4 py-2 flex items-center">
                   <button
                     onClick={logout}
-                    className="bg-bleugris rounded-full hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
+                    className="flex items-center bg-bleugris rounded-full hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
                   >
-                    Logout
+                    <LogoutIcon />
+                    <span className='ml-2'>Logout</span>
                   </button>
               </div>
             )}

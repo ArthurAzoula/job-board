@@ -28,16 +28,18 @@ const Sidebar = () => {
 
           <div className="flex flex-row gap-2 mb-4">
             <button
-              className="text-left w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-white transition duration-200"
+              className="flex justify-between text-left w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-white transition duration-200"
               onClick={handleCandidatureClick}
             >
               <CandidatureIcon />
+              <span className="ml-2">Applications</span>
             </button>
             <button
-              className="text-left w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-white transition duration-200"
+              className="flex text-left w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-white transition duration-200"
               onClick={handleAccountClick}
             >
               <SettingsIcon />
+              <span className="ml-2">Settings</span>
             </button>
           </div>
 
