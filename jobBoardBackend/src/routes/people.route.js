@@ -10,8 +10,6 @@ router.get('/', peopleController.getAllUsers);
 
 router.get('/:id', peopleController.getUserById);
 
-router.get('/me/:token', peopleController.getUserConnected);
-
 /* POST */
 
 router.post('/', peopleController.createUser);

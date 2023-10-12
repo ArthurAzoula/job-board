@@ -25,7 +25,7 @@ const AuthentificationForm = () => {
         axios.post('http://localhost:3000/api/auth/login', credentials)
             .then(res => {
                 console.log(res.data.accessToken);
-                accountService.saveToken(res.data.accessToken)
+                accountService.saveToken(res.data.accessToken, res.data.type)
                 navigate('/annonces')
             })
             .catch(err => console.log(err.response))

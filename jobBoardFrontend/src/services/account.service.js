@@ -1,9 +1,11 @@
-let saveToken = (token) => {
+let saveToken = (token, type) => {
     localStorage.setItem('token', token);
+    localStorage.setItem('type', type);
 }
 
 let logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('type');
 }
 
 let isLogged = () => {

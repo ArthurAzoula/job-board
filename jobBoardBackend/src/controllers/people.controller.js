@@ -24,34 +24,6 @@ const getUserById = async (req, res) => {
     }
 }
 
-const getUserConnected = async (req, res) => {
-    try {
-        const { token } = req.params;
-
-        // On décode le token
-        const decodedToken = jwt.verify(token, jwtConfig.secret);
-        // On récupère l'id de l'utilisateur
-        const userId = decodedToken.id;
-
-        // On cherche l'utilisateur correspondant dans la base de donnée
-        const user = await database.sequelize.models.people.findByPk(userId)
-
-        const company = await database.sequelize.models.company.findByPk(userId);
-
-        if (user && !company) {
-            return res.status(200).json(user);
-        }
-
-        if (company && !user) {
-            return res.status(200).json(company);
-        }
-
-        return res.status(404).send('User with the specified ID does not exists');
-    } catch (error) {
-        return res.status(500).json({ error: error.message })
-    }
-
-}
 
 const createUser = async (req, res) => {
     try {
@@ -89,7 +61,6 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     getUserById,
-    getUserConnected,
     updateUser,
     deleteUser,
     createUser
