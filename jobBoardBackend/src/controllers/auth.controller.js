@@ -35,10 +35,10 @@ const login = async (req, res) => {
             }
 
             // Generate access and refresh tokens for the company
-            const accessToken = jwt.sign({ id: user.company_id }, jwtConfig.secret, {
+            const accessToken = jwt.sign({ id: company.company_id }, jwtConfig.secret, {
                 expiresIn: jwtConfig.options.expiresIn
             });
-            const refreshToken = jwt.sign({ id: user.company_id }, jwtConfig.refreshSecret, {
+            const refreshToken = jwt.sign({ id: company.company_id }, jwtConfig.refreshSecret, {
                 expiresIn: jwtConfig.refreshOptions.expiresIn
             });
 

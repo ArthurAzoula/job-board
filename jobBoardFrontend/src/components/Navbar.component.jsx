@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Logo from '../assets/logo/logo_EpiJob/png/white_transparent.png';
 import HomeIcon from '../icons/Home.icon';
 import AdvertissementIcon from '../icons/Advertissement.icon';
@@ -9,24 +10,46 @@ import AdminIcon from '../icons/Admin.icon';
 import { accountService } from '../services/account.service';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '../icons/Logout.icon';
-
+import ButtonAddAdvert from './ButtonAddAdvert.component';
 
 const Navbar = () => {
-  const [isLogged, setIsLogged] = useState(accountService.isLogged());
+  const [logged, setLogged] = useState(accountService.isLogged());
+  const [user, setUser] = useState([]);
+  const token = accountService.getToken() || null;
 
+  useEffect(() => {
+    if (logged) {
+      axios({
+        method: "GET",
+        url: `http://localhost:3000/api/auth/me/${token}`,
+        responseType: "json",
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data);
+            setUser(response.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [logged, token]);
 
   let navigate = useNavigate();
 
   const logout = () => {
     accountService.logout();
+    setLogged(false);
     navigate('/');
-  }
+  } 
+
+  const userType =  localStorage.getItem('type') || null;
 
   return (
     <nav className="bg-gunmetal">
       <div className="mx-auto container flex items-center justify-between">
         <Link to="/" className="text-white text-4xl font-bold text-center">
-          EpiJob
+          <span className="text-gradient font-extrabold text-5xl">&#123;EpiJob&#125;</span>
+          <span className="text-bleugris font-bold text-3xl ml-2">{userType === 'company' ? 'for company' : userType === 'user' ? 'for user' : ''}</span>
         </Link>
         <ul className="hidden md:flex space-x-14 items-center bg-gunemetal p-4 rounded-xl text-xl">
           <li>
@@ -56,32 +79,37 @@ const Navbar = () => {
               <span className='ml-2 hover:scale-110 duration-100'>About</span>
             </Link>
           </li>
+          {userType === 'company' && (
+            <li>
+              <ButtonAddAdvert />
+            </li>
+          )}
           <li>
-            {!isLogged ? (
-            <div className="bg-bleugris rounded-full px-4 py-2 flex items-center">
-              <Link
-                to="/signin"
-                className="text-white hover:underline decoration-white hover:scale-110 duration-100"
-              >
-                <AdminIcon className="mr-2" />
-              </Link>
-              <span className="ml-3 text-white">/</span>
-              <Link
-                to="/signup"
-                className="text-white hover:underline decoration-white ml-4 hover:scale-110 duration-100"
-              >
-                <SignInIcon className="mr-2" />
-              </Link>
+            {!logged ? (
+              <div className="bg-bleugris rounded-full px-4 py-2 flex items-center">
+                <Link
+                  to="/signin"
+                  className="text-white hover:underline decoration-white hover:scale-110 duration-100"
+                >
+                  <AdminIcon className="mr-2" />
+                </Link>
+                <span className="ml-3 text-white">/</span>
+                <Link
+                  to="/signup"
+                  className="text-white hover:underline decoration-white ml-4 hover:scale-110 duration-100"
+                >
+                  <SignInIcon className="mr-2" />
+                </Link>
               </div>
             ) : (
               <div className="bg-bleugris font-bold rounded-full px-4 py-2 flex items-center">
-                  <button
-                    onClick={logout}
-                    className="flex items-center bg-bleugris rounded-full hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
-                  >
-                    <LogoutIcon />
-                    <span className='ml-2'>Logout</span>
-                  </button>
+                <button
+                  onClick={logout}
+                  className="flex items-center bg-bleugris rounded-full hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
+                >
+                  <LogoutIcon />
+                  <span className='ml-2'>Logout</span>
+                </button>
               </div>
             )}
           </li>
