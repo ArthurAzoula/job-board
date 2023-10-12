@@ -1,4 +1,6 @@
 const database = require('../models/index');
+const jwt = require('jsonwebtoken');
+const jwtConfig = require('../config/jwt.config');
 
 const getAllUsers = async (req, res) => {
     try {
@@ -12,9 +14,7 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = await database.sequelize.models.people.findOne({
-            where: { id: Number(id) }
-        });
+        const user = await database.sequelize.models.people.findByPk(Number(id));
         if (user) {
             return res.status(200).json(user);
         }
@@ -26,12 +26,26 @@ const getUserById = async (req, res) => {
 
 const getUserConnected = async (req, res) => {
     try {
-        const user = await database.sequelize.models.people.findOne({
-            where: { id: Number(req.user.id) }
-        });
-        if (user) {
+        const { token } = req.params;
+
+        // On décode le token
+        const decodedToken = jwt.verify(token, jwtConfig.secret);
+        // On récupère l'id de l'utilisateur
+        const userId = decodedToken.id;
+
+        // On cherche l'utilisateur correspondant dans la base de donnée
+        const user = await database.sequelize.models.people.findByPk(userId)
+
+        const company = await database.sequelize.models.company.findByPk(userId);
+
+        if (user && !company) {
             return res.status(200).json(user);
         }
+
+        if (company && !user) {
+            return res.status(200).json(company);
+        }
+
         return res.status(404).send('User with the specified ID does not exists');
     } catch (error) {
         return res.status(500).json({ error: error.message })

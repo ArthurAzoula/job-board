@@ -11,7 +11,7 @@ const generateRefreshToken = () => {
 const secret = generateSecretToken();
 
 const options = {
-    expiresIn: '1h'
+    expiresIn: '1d'
 };
 
 const refreshOptions = {

@@ -7,17 +7,24 @@ const jwtConfig = require('../config/jwt.config');
 
 const login = async (req, res) => {
     try {
+
         const user = await database.sequelize.models.people.findOne({
             where: { email: req.body.email }
         });
-        if (!user) {
+
+        const company = await database.sequelize.models.company.findOne({
+            where: { email: req.body.email }
+        });
+
+        if (!user && !company) {
             return res.status(404).send('User not found');
         }
+
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) {
             return res.status(401).send('Password not valid');
         }
-        const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
+        const accessToken = jwt.sign({ id: user.people_id }, jwtConfig.secret, {
             expiresIn: jwtConfig.options.expiresIn
         });
         const refreshToken = jwt.sign({ id: user.id }, jwtConfig.refreshSecret, {
