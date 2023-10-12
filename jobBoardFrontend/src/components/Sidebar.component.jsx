@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   return (
     <div className="Sidebar fixed">
-      <div className="bg-bleugris h-screen p-4 w-full text-white">
+      <div className="bg-gray-100 h-screen p-4 w-full text-gunmetal">
         <div className="flex flex-col">
           <div className="flex justify-center items-center mb-4">
             <h1 className="text-2xl">Mon espace</h1>

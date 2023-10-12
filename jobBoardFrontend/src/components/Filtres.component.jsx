@@ -89,8 +89,8 @@ const Filtres = () => {
           )}
         </div>
 
-        <button className="bg-bleugris p-2 m-2 rounded-full hover:scale-110 duration-200 text-white font-bold">
-          <LoopIcon className="inline-block ml-2" />
+        <button className="bg-bleugris p-2 mr-2 rounded-full hover:scale-110 duration-200 text-white font-bold">
+          <LoopIcon className="inline-block" />
         </button>
       </form>
     </div>

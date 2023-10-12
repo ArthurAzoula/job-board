@@ -23,7 +23,7 @@ const login = async (req, res) => {
         const refreshToken = jwt.sign({ id: user.id }, jwtConfig.refreshSecret, {
             expiresIn: jwtConfig.refreshOptions.expiresIn
         });
-        return res.status(200).json({ user, accessToken, refreshToken });
+        return res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }   
@@ -60,7 +60,6 @@ const refresh = async (req, res) => {
 
 module.exports = {
     login,
-    register,
     logout,
     refresh
 }

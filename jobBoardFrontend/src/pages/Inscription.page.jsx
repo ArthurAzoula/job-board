@@ -18,17 +18,8 @@ const InscriptionPage = () => {
 
     return (
         <>
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Inscription
-                </h2>
-                <p className="mt-2 text-center text-sm text-gray-600">
-                    Choisissez le type de compte que vous voulez créer
-                </p>
-            </div>
-
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-gray-100 py-8 px-4 shadow shadow-lg sm:rounded-lg">
+                <div className="bg-gray-100 py-8 px-4 shadow-lg sm:rounded-lg">
                     <div className="flex justify-center">
                         <button
                             className={`${
