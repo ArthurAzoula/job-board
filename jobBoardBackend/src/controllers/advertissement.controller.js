@@ -3,10 +3,24 @@ const database = require('../models/index');
 const getAllAdvertissements = async (req, res) => {
     try {
         const advertissement = await database.sequelize.models.advertissement.findAll();
+        console.log( "advertissement", advertissement);
         if (advertissement) {
             return res.status(200).json(advertissement);
         }
         return res.status(404).send('Advertissements does not exists');
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+const getAdvertissementById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const advertissement = await database.sequelize.models.advertissement.findByPk(Number(id));
+        if (advertissement) {
+            return res.status(200).json(advertissement);
+        }
+        return res.status(404).send('Advertissement with the specified ID does not exists');
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
@@ -46,5 +60,6 @@ module.exports = {
     getAllAdvertissements,
     createAdvertissement,
     updateAdvertissement,
-    deleteAdvertissement
+    deleteAdvertissement,
+    getAdvertissementById
 }

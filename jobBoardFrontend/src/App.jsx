@@ -1,6 +1,7 @@
 import AdminIcon from "./icons/Admin.icon";
 import Header from "./components/Header.component";
 import Footer from "./components/Footer.component";
+import Annonce from "./components/Annonce.component";
 import Annonces from "./components/Annonces.component";
 import ConnexionPage from "./pages/Connexion.page";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -20,6 +21,7 @@ function App() {
           <div className="overflow-y-auto bg-white min-h-screen">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/annonces/:id" element={<Annonce />} />
               <Route path="/annonces" element={<Annonces />} />
               <Route path="/admin" element={<AdminIcon />} />
               <Route path="/signin" element={<ConnexionPage />} />

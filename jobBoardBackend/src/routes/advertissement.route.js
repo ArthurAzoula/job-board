@@ -8,6 +8,8 @@ const AdvertissementController = require('../controllers/advertissement.controll
 
 router.get('/', AdvertissementController.getAllAdvertissements);
 
+router.get('/:id', AdvertissementController.getAdvertissementById)
+
 /* POST */
 
 router.post('/', AdvertissementController.createAdvertissement);
