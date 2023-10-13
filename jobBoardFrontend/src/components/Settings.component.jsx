@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { accountService } from "../services/account.service";
 import formatDate from "../utils/function";
 import axios from "axios";
@@ -10,7 +10,6 @@ const Settings = () => {
 
   useEffect(() => {
     if (logged) {
-
       axios({
         method: "GET",
         url: `http://localhost:3000/api/auth/me/${token}`,
@@ -28,8 +27,10 @@ const Settings = () => {
   return (
     <div className="h-screen flex items-start justify-center">
       {logged ? (
-        <div className="p-4 border border-gray-300 rounded shadow-md h-1/2 w-full">
-          {localStorage.getItem('type') === 'user' ? (
+        <div
+          className="p-4 border border-gray-300 rounded shadow-md w-full max-w-xs overflow-auto ml-4"
+        >
+          {localStorage.getItem("type") === "user" ? (
             <ul className="list-none p-0">
               <li className="text-left text-lg">
                 <strong>Email:</strong> {user.email}

@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import LocalisationIcon from '../icons/Localisation.icon';
-import KeyWordsIcon from '../icons/KeyWords.icon';
-import LoopIcon from '../icons/Loop.icon';
-import ContractIcon from '../icons/Contract.icon';
+import { useState } from "react";
+import LocalisationIcon from "../icons/Localisation.icon";
+import KeyWordsIcon from "../icons/KeyWords.icon";
+import LoopIcon from "../icons/Loop.icon";
+import ContractIcon from "../icons/Contract.icon";
 
 const Filtres = () => {
-  const [keywords, setKeywords] = useState('');
-  const [contractType, setContractType] = useState('');
-  const [city, setCity] = useState('');
+  const [keywords, setKeywords] = useState("");
+  const [contractType, setContractType] = useState("");
+  const [city, setCity] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const handleKeywordsChange = (e) => {
@@ -20,7 +20,9 @@ const Filtres = () => {
 
   const handleCityChange = (e) => {
     setCity(e.target.value);
-    fetch(`https://api-adresse.data.gouv.fr/search/?q=${e.target.value}&type=municipality`)
+    fetch(
+      `https://api-adresse.data.gouv.fr/search/?q=${e.target.value}&type=municipality`
+    )
       .then((response) => response.json())
       .then((data) => {
         setSuggestions(data.features.map((feature) => feature.properties.city));
@@ -42,7 +44,7 @@ const Filtres = () => {
       <form className="flex space-x-4" onSubmit={handleSubmit}>
         <div className="relative flex items-center pr-8">
           <KeyWordsIcon className="absolute left-2 text-gray-400" />
-          <span className='ml-2'></span>
+          <span className="ml-2"></span>
           <input
             type="text"
             placeholder="Rechercher des mots clés (Développeur, Full-Stack, Back-end)"
@@ -54,7 +56,7 @@ const Filtres = () => {
 
         <div className="relative flex items-center pr-8">
           <ContractIcon className="absolute left-2 text-gray-400" />
-          <span className='ml-2'></span>
+          <span className="ml-2"></span>
           <input
             type="text"
             placeholder="Type de contrat"
@@ -66,7 +68,8 @@ const Filtres = () => {
 
         <div className="relative flex items-center pr-8">
           <LocalisationIcon className="absolute left-2 text-gray-400" />
-          <span className='ml-1'></span>
+
+          <span className="ml-1"></span>
           <input
             type="text"
             placeholder="Ville"
@@ -74,8 +77,13 @@ const Filtres = () => {
             value={city}
             onChange={handleCityChange}
           />
-          {suggestions.length > 0 && city.length > 0  && (
-            <ul className="absolute z-10 w-72 py-1 bg-white rounded-md shadow-lg border border-gray-300">
+        </div>
+        <div className="relative items-center pr-8">
+          {suggestions.length > 0 && city.length > 0 && (
+            <ul
+              className="absolute z-10 w-72 py-1 bg-white rounded-md shadow-lg border border-gray-300"
+              style={{ top: "40px", left: "-250px" }}
+            >
               {suggestions.map((suggestion) => (
                 <li
                   key={suggestion}
@@ -88,10 +96,11 @@ const Filtres = () => {
             </ul>
           )}
         </div>
-
-        <button className="bg-bleugris p-2 mr-2 rounded-full hover:scale-110 duration-200 text-white font-bold">
-          <LoopIcon className="inline-block" />
-        </button>
+        <div className="relative flex items-center pr-8">
+          <button className="bg-bleugris p-2 mr-2 rounded-full hover:scale-110 duration-200 text-white font-bold">
+            <LoopIcon className="inline-block" />
+          </button>
+        </div>
       </form>
     </div>
   );

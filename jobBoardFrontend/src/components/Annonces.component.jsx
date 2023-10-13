@@ -23,10 +23,6 @@ const Annonces = () => {
       });
   }, []);
 
-  // Appel api localhost:3000/api/advertissements fetch / axios
-  // gérer erreur et retour api
-  // mettre la var annonces a jour avec setAnnonces et les data récupérer de l'api
-
   return (
     <>
       <div className="flex justify-center mt-12">
