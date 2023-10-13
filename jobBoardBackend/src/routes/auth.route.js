@@ -12,6 +12,8 @@ router.post('/logout', AuthController.logout);
 
 router.post('/refresh', AuthController.refresh);
 
+/* GET */
+
 router.get('/me/:token', AuthController.getUserConnected);
 
 module.exports = router;

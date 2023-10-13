@@ -6,11 +6,14 @@ import { accountService } from '../services/account.service';
 import { getUserConnected } from '../api/calls.api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const ButtonAddAdvert = () => {
     const [showModal, setShowModal] = useState(false);
     const [logged, isLogged] = useState(accountService.isLogged());
     const [id, setId] = useState(0);
+
+    let navigate = useNavigate();
 
     if (logged) {
         const userConnectedPromise = getUserConnected(localStorage.getItem('token'));
@@ -44,6 +47,10 @@ const ButtonAddAdvert = () => {
             .then((res) => {
                 toast.success('Annonce ajoutée avec succès!');
                 closeModal();
+                window.setInterval(() => {
+                    navigate('/annonces');
+                    window.location.reload();
+                }, 3000);
             })
             .catch((err) => {
                 console.log(err.response)

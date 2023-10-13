@@ -32,8 +32,8 @@ const AuthentificationForm = () => {
                 accountService.saveToken(res.data.accessToken, res.data.type);
                 toast.success('Connection successful!');
                 window.setTimeout(() => {
-                    setLogged(true);
                     navigate('/');
+                    window.location.reload();
                 }, 3000);
             })
             .catch(err => {
