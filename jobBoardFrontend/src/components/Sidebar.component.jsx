@@ -4,7 +4,7 @@ import AdminIcon from "../icons/Admin.icon";
 import CandidatureIcon from "../icons/Candidature.icon";
 import Settings from "./Settings.component";
 
-const Sidebar = () => {
+const   Sidebar = () => {
   const [showAccount, setShowAccount] = useState(false);
   const [showCandidature, setShowCandidature] = useState(false);
 
@@ -20,7 +20,7 @@ const Sidebar = () => {
 
   return (
     <div className="Sidebar fixed">
-      <div className="bg-gray-100 h-screen p-4 w-full text-gunmetal">
+      <div className="bg-gray-100 h-screen p-4 w-full border-gunmetal text-gunmetal">
         <div className="flex flex-col">
           <div className="flex justify-center items-center mb-4">
             <h1 className="text-2xl">Mon espace</h1>
