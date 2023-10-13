@@ -4,12 +4,18 @@ import axios from 'axios';
 import Filtres from './Filtres.component';
 import hiringImage from '../assets/images/hiring.jpg';
 import formatDate from "../utils/function";
+import Breadcrumb from './FilArianne.component';
 
 
 const Annonces = () => {
   const [annonces, setAnnonces] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [logged, setLogged] = useState(false);
+
+  const items = [
+    { label: 'Home', path: '/' },
+    { label: "Annonces", path: '/annonces'}
+  ]
 
   useEffect(() => {
     const fetchAnnonces = async () => {
@@ -46,6 +52,7 @@ const Annonces = () => {
 
   return (
     <>
+      <Breadcrumb items={items} />
       <div className="flex justify-center mt-12">
         <Filtres />
       </div>

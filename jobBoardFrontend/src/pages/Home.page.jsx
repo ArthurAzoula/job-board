@@ -9,10 +9,17 @@ import Job4 from '../assets/images/job4.jpg';
 import Job5 from '../assets/images/job5.jpeg';
 import Job6 from '../assets/images/job6.jpg';
 import Job7 from '../assets/images/job7.jpg';
+import Breadcrumb from '../components/FilArianne.component';
 
 const Home = () => {
+    const items = [
+        { label: "Home", path: "/"}
+    ]
+
+
     return (
         <div className="bg-white">
+            <Breadcrumb items={items} />
             <div className="mx-auto container py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                     <div className="flex flex-col justify-center">

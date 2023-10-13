@@ -2,9 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { accountService } from "../services/account.service";
 import axios from "axios";
+import Breadcrumb from "../components/FilArianne.component";
 
 const Admin = () => {
   let navigate = useNavigate();
+
+  const items = [
+    { label: 'Home', path: '/' },
+    { label: 'Admin', path: '/admin'}
+  ]
 
   const [logged, setLogged] = useState(accountService.isLogged());
   const [user, setUser] = useState([]);
