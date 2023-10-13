@@ -10,6 +10,7 @@ const Settings = () => {
 
   useEffect(() => {
     if (logged) {
+
       axios({
         method: "GET",
         url: `http://localhost:3000/api/auth/me/${token}`,
@@ -17,7 +18,6 @@ const Settings = () => {
       })
         .then((response) => {
           if (response.status === 200) {
-            console.log(response.data);
             setUser(response.data);
           }
         })
@@ -29,23 +29,46 @@ const Settings = () => {
     <div className="h-screen flex items-start justify-center">
       {logged ? (
         <div className="p-4 border border-gray-300 rounded shadow-md h-1/2 w-full">
-          <ul className="list-none p-0">
-            <li className="text-left text-lg">
-              <strong>Email:</strong> {user.email}
-            </li>
-            <li className="text-left text-lg">
-              <strong>Prénom:</strong> {user.prenom}
-            </li>
-            <li className="text-left text-lg">
-              <strong>Nom:</strong> {user.nom}
-            </li>
-            <li className="text-left text-lg">
-              <strong>Téléphone:</strong> {user.telephone}
-            </li>
-            <li className="text-left text-lg">
-              <strong>Date de création:</strong> {formatDate(user.createdAt)}
-            </li>
-          </ul>
+          {localStorage.getItem('type') === 'user' ? (
+            <ul className="list-none p-0">
+              <li className="text-left text-lg">
+                <strong>Email:</strong> {user.email}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Prénom:</strong> {user.prenom}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Nom:</strong> {user.nom}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Téléphone:</strong> {user.telephone}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Date de création:</strong> {formatDate(user.createdAt)}
+              </li>
+            </ul>
+          ) : (
+            <ul className="list-none p-0">
+              <li className="text-left text-lg">
+                <strong>Entreprise:</strong> {user.nom}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Email:</strong> {user.email}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Téléphone:</strong> {user.telephone}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Adresse:</strong> {user.adresse}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Description:</strong> {user.description}
+              </li>
+              <li className="text-left text-lg">
+                <strong>Date de création:</strong> {formatDate(user.createdAt)}
+              </li>
+            </ul>
+          )}
         </div>
       ) : (
         <p className="text-red-500">

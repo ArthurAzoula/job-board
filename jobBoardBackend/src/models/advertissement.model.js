@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(255),
     },
+    company_id: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
     type_contrat: {
       allowNull: false,
       type: DataTypes.ENUM('CDI', 'CDD', 'Stage', 'Alternance'),

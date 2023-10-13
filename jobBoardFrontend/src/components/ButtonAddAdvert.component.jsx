@@ -1,9 +1,63 @@
 import { useState } from 'react';
 import PlusIcon from "../icons/Plus.icon";
 import Modal from './Modal.component';
+import axios from 'axios';
+import { accountService } from '../services/account.service';
+import { getUserConnected } from '../api/calls.api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ButtonAddAdvert = () => {
     const [showModal, setShowModal] = useState(false);
+    const [logged, isLogged] = useState(accountService.isLogged());
+    const [id, setId] = useState(0);
+
+    if (logged) {
+        const userConnectedPromise = getUserConnected(localStorage.getItem('token'));
+
+        userConnectedPromise.then((user) => {
+            setId(user.company_id);
+        });
+    } 
+
+    const [credentials, setCredentials] = useState({
+        titre: '',
+        description: '',
+        type_contrat: '',
+        company_id: 0,
+        publication_date: '',
+        expiration_date: '',
+    });
+    
+    const token = accountService.getToken() || null;
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        axios
+            .post('http://localhost:3000/api/advertissements', credentials, {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-type_contrat': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+            .then((res) => {
+                toast.success('Annonce ajoutée avec succès!');
+                closeModal();
+            })
+            .catch((err) => {
+                console.log(err.response)
+                toast.error('Erreur lors de l\'ajout de l\'annonce!');
+            });
+    };
+
+    const onChange = (e) => {
+        setCredentials({
+            ...credentials,
+            company_id: id,
+            [e.target.name]: e.target.value,
+        })
+    };
 
     const openModal = () => {
         setShowModal(true);
@@ -16,7 +70,7 @@ const ButtonAddAdvert = () => {
     return (
         <>
             <button
-                className="bg-white border border-black text-gunmetal px-4 py-2 rounded-md flex items-center"
+                className="bg-white border hover:scale-110 duration-300 border-black text-gunmetal px-4 py-2 rounded-md flex items-center"
                 onClick={openModal}
             >
                 <PlusIcon className="w-4 h-4 mr-2" />
@@ -24,16 +78,17 @@ const ButtonAddAdvert = () => {
             </button>
             {showModal && (
                 <Modal closeModal={closeModal}>
-                    <form>
+                    <form onSubmit={onSubmit}>
                         <h1 className='text-gray-700 font-bold mb-4 text-center uppercase'>Ajouter une annonce</h1>
                         <div className="mb-4">
-                            <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
+                            <label htmlFor="titre" className="block text-gray-700 font-bold mb-2">
                                 Titre
                             </label>
                             <input
                                 type="text"
-                                id="title"
-                                name="title"
+                                id="titre"
+                                name="titre"
+                                onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
@@ -45,17 +100,19 @@ const ButtonAddAdvert = () => {
                             <textarea
                                 id="description"
                                 name="description"
+                                onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="type" className="block text-gray-700 font-bold mb-2">
+                            <label htmlFor="type_contrat" className="block text-gray-700 font-bold mb-2">
                                 Type de contrat
                             </label>
                             <select
-                                id="type"
-                                name="type"
+                                id="type_contrat"
+                                name="type_contrat"
+                                onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             >
@@ -66,25 +123,27 @@ const ButtonAddAdvert = () => {
                             </select>
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="start_date" className="block text-gray-700 font-bold mb-2">
+                            <label htmlFor="publication_date" className="block text-gray-700 font-bold mb-2">
                                 Date de début
                             </label>
                             <input
                                 type="date"
-                                id="start_date"
-                                name="start_date"
+                                id="publication_date"
+                                name="publication_date"
+                                onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="end_date" className="block text-gray-700 font-bold mb-2">
+                            <label htmlFor="expiration_date" className="block text-gray-700 font-bold mb-2">
                                 Date de fin
                             </label>
                             <input
                                 type="date"
-                                id="end_date"
-                                name="end_date"
+                                id="expiration_date"
+                                name="expiration_date"
+                                onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
@@ -107,6 +166,7 @@ const ButtonAddAdvert = () => {
                     </form>
                 </Modal>
             )}
+            <ToastContainer />
         </>
     );
 };

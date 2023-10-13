@@ -18,7 +18,7 @@ const Navbar = () => {
   const token = accountService.getToken() || null;
 
   useEffect(() => {
-    if (logged) {
+    if (logged && token) {
       axios({
         method: "GET",
         url: `http://localhost:3000/api/auth/me/${token}`,
@@ -86,26 +86,34 @@ const Navbar = () => {
           )}
           <li>
             {!logged ? (
-              <div className="bg-bleugris rounded-full px-4 py-2 flex items-center">
+              <div className="bg-bleugris rounded-lg px-4 py-2 flex items-center">
                 <Link
                   to="/signin"
                   className="text-white hover:underline decoration-white hover:scale-110 duration-100"
                 >
-                  <AdminIcon className="mr-2" />
+                  <div className='flex justify-center'>
+                    <AdminIcon className="mr-2" />
+                    <span className='ml-2'>Connexion</span>
+                  </div>
+                  
                 </Link>
                 <span className="ml-3 text-white">/</span>
                 <Link
                   to="/signup"
                   className="text-white hover:underline decoration-white ml-4 hover:scale-110 duration-100"
                 >
-                  <SignInIcon className="mr-2" />
+                  <div className='flex justify-center'>
+                    <SignInIcon className="mr-2" />
+                    <span className='ml-2'>Inscription</span>
+                  </div>
+                  
                 </Link>
               </div>
             ) : (
-              <div className="bg-bleugris font-bold rounded-full px-4 py-2 flex items-center">
+              <div className="">
                 <button
                   onClick={logout}
-                  className="flex items-center bg-bleugris rounded-full hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
+                  className="flex items-center bg-bleugris rounded-lg font-bold hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
                 >
                   <LogoutIcon />
                   <span className='ml-2'>Logout</span>

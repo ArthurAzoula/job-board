@@ -14,6 +14,7 @@ const getAllAdvertissements = async (req, res) => {
 
 const createAdvertissement = async (req, res) => {
     try {
+        console.log(req.body);
         const advertissement = await database.sequelize.models.advertissement.create(req.body);
         if (advertissement) {
             return res.status(201).json(advertissement);
