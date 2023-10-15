@@ -19,27 +19,32 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="Sidebar fixed">
-      <div className="bg-gray-100 h-screen p-4 w-full text-gunmetal">
+    <div className="max-w-fit">
+      <div className="bg-gray-100 h-screen p-4 w-full text-gunmetal max-w-fit">
         <div className="flex flex-col">
           <div className="flex justify-center items-center mb-4">
             <h1 className="text-2xl">Mon espace</h1>
           </div>
 
-          <div className="flex flex-row gap-2 mb-4">
+          <div className="flex flex-col gap-2 mb-4 justify-center">
+            {" "}
             <button
-              className="flex justify-between text-left w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-white transition duration-200"
+              className=" w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-white transition duration-200"
               onClick={handleCandidatureClick}
             >
-              <CandidatureIcon />
+              <span className="flex justify-center">
+                <CandidatureIcon />
+              </span>
               <span className="ml-2">Applications</span>
             </button>
             <button
-              className="flex text-left w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-white transition duration-200"
+              className="text-left w-full py-2 px-4 rounded-lg bg-gray-800 hover-bg-gray-700 text-white transition duration-200"
               onClick={handleAccountClick}
             >
-              <SettingsIcon />
-              <span className="ml-2">Settings</span>
+              <span className="flex justify-center">
+                <SettingsIcon />
+              </span>
+              <span className="ml-2 flex justify-center">Settings</span>
             </button>
           </div>
 
@@ -62,4 +67,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

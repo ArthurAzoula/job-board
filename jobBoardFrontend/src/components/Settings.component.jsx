@@ -27,9 +27,7 @@ const Settings = () => {
   return (
     <div className="h-screen flex items-start justify-center">
       {logged ? (
-        <div
-          className="p-4 border border-gray-300 rounded shadow-md w-full max-w-xs overflow-auto ml-4"
-        >
+        <div className="p-4 border border-gray-300 rounded shadow-md w-full max-w-xs overflow-auto ml-4">
           {localStorage.getItem("type") === "user" ? (
             <ul className="list-none p-0">
               <li className="text-left text-lg">
@@ -72,9 +70,11 @@ const Settings = () => {
           )}
         </div>
       ) : (
-        <p className="text-red-500">
-          Veuillez vous connecter pour voir les informations.
-        </p>
+        <div className="flex">
+          <p className="text-red-500 flex">
+            Veuillez vous connecter pour voir les informations.
+          </p>
+        </div>
       )}
     </div>
   );

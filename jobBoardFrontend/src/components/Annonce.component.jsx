@@ -39,7 +39,7 @@ const Annonce = () => {
     const handleApply = () => {
         // Lancer une requete post pour ajouter la candidature (si utiisateur type user connecté, ajouté les 
         // infos dynamiquement sinon créer un formulaire pour les utilisateurs non connectés)
-
+        
         // Etapes
         // Faire un appel post avec Axios pour ajouter la candidature 'http://localhost:3000/api/jobapplications'
         // Passer les données du user dans le body de la requete
