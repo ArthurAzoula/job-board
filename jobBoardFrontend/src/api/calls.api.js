@@ -37,3 +37,12 @@ export const getUserConnected = async (token) => {
         console.error(error);
     }
 }
+
+export const getAnonymousUserByEmail = async (email) => {
+    try {
+        const response = await axios.get(`http://localhost:3000/api/anonymous/email/${email}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}

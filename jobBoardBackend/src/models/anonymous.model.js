@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      anonymousModel.hasMany(models.jobapplication, { foreignKey: 'anonymous_id' , as: 'jobapplication'});
+      anonymousModel.hasMany(models.jobapplication, { foreignKey: 'jobapplication_id', as: 'jobapplication' });
     }
   }
   anonymousModel.init({

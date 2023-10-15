@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       jobApplicationModel.hasOne(models.advertissement, {foreignKey: 'advertissement_id', as: 'advertissement'})
-      jobApplicationModel.hasMany(models.people, { foreignKey: 'people_id', as: 'people'});
+      jobApplicationModel.hasMany(models.people, { foreignKey: 'people_id', as: 'people' });
+      jobApplicationModel.hasMany(models.anonymous, { foreignKey: 'anonymous_id', as: 'anonymous' });
     }
   }
   jobApplicationModel.init({
@@ -23,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER
     },
     people_id: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.INTEGER,
     },
     advertissement_id: {
@@ -31,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     anonymous_id: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.INTEGER,
     },
     email_send: {

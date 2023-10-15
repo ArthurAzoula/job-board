@@ -25,14 +25,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      publication_date: {
+      remuneration : {
         allowNull: false,
-        type: Sequelize.DATE,
-
+        type: Sequelize.STRING(50),
       },
-      expiration_date: {
+      working_time: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.STRING(50),
+      },
+      lieu: {
+        allowNull: false,
+        type: Sequelize.STRING(50),
       },
       createdAt: {
         allowNull: false,

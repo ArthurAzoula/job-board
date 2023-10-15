@@ -69,7 +69,7 @@ const Annonces = () => {
               <p className="text-gray-700 text-base mt-2">Posté par {getCompanyName(annonce.company_id)}</p>
               <div className="flex justify-between items-center mt-4">
                 <div className="bg-gray-200 text-gray-700 px-2 py-1 rounded-lg text-base">
-                  <span className="font-bold">Contrat du</span> {formatDate(annonce.publication_date)} <span className="font-bold">au</span> {formatDate(annonce.expiration_date)}
+                  <span className="font-bold">Publié le : </span> {formatDate(annonce.createdAt)}
                 </div>
                 <div>
                   <Link to={`/annonces/${annonce.advertissement_id}`} className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300">Voir l'annonce</Link>

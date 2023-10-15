@@ -10,11 +10,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       people_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER,
       },
       advertissement_id: {
         allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      anonymous_id: {
+        allowNull: true,
         type: Sequelize.INTEGER,
       },
       email_send: {
@@ -59,6 +63,18 @@ module.exports = {
       references: {
         table: 'advertissements',
         field: 'advertissement_id'
+      },
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
+
+    await queryInterface.addConstraint('jobapplications', {
+      fields: ['anonymous_id'],
+      type: 'foreign key',
+      name: 'fk_anonymous_id',
+      references: {
+        table: 'anonymous',
+        field: 'anonymous_id'
       },
       onDelete: 'cascade',
       onUpdate: 'cascade'
