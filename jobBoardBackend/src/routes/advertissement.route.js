@@ -10,6 +10,8 @@ router.get('/', AdvertissementController.getAllAdvertissements);
 
 router.get('/:id', AdvertissementController.getAdvertissementById)
 
+// router.get('/filters', AdvertissementController.getAdvertissementFilters);
+
 /* POST */
 
 router.post('/', AdvertissementController.createAdvertissement);

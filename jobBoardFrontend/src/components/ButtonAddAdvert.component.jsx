@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PlusIcon from "../icons/Plus.icon";
 import Modal from './Modal.component';
-import axios from 'axios';
-import { accountService } from '../services/account.service';
+import axios from 'axios'; import { accountService } from '../services/account.service';
 import { getUserConnected } from '../api/calls.api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,23 +14,26 @@ const ButtonAddAdvert = () => {
 
     let navigate = useNavigate();
 
-    if (logged) {
-        const userConnectedPromise = getUserConnected(localStorage.getItem('token'));
+    useEffect(() => {
+        if (logged) {
+            const userConnectedPromise = getUserConnected(localStorage.getItem('token'));
 
-        userConnectedPromise.then((user) => {
-            setId(user.company_id);
-        });
-    } 
+            userConnectedPromise.then((user) => {
+                setId(user.company_id);
+            });
+        }
+    }, [logged]);
 
     const [credentials, setCredentials] = useState({
         titre: '',
         description: '',
         type_contrat: '',
         company_id: 0,
-        publication_date: '',
-        expiration_date: '',
+        remuneration: '',
+        working_time: '',
+        lieu: '',
     });
-    
+
     const token = accountService.getToken() || null;
 
     const onSubmit = (e) => {
@@ -130,26 +132,39 @@ const ButtonAddAdvert = () => {
                             </select>
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="publication_date" className="block text-gray-700 font-bold mb-2">
-                                Date de début
+                            <label htmlFor="remuneration" className="block text-gray-700 font-bold mb-2">
+                                Rémunération
                             </label>
                             <input
-                                type="date"
-                                id="publication_date"
-                                name="publication_date"
+                                type="text"
+                                id="remuneration"
+                                name="remuneration"
                                 onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="expiration_date" className="block text-gray-700 font-bold mb-2">
-                                Date de fin
+                            <label htmlFor="working_time" className="block text-gray-700 font-bold mb-2">
+                                Temps de travail
                             </label>
                             <input
-                                type="date"
-                                id="expiration_date"
-                                name="expiration_date"
+                                type="text"
+                                id="working_time"
+                                name="working_time"
+                                onChange={onChange}
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label htmlFor="lieu" className="block text-gray-700 font-bold mb-2">
+                                Lieu
+                            </label>
+                            <input
+                                type="text"
+                                id="lieu"
+                                name="lieu"
                                 onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required

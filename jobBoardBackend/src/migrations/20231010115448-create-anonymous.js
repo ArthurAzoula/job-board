@@ -35,14 +35,6 @@ module.exports = {
           len: [10, 10],
         },
       },
-      jobapplication_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'jobapplications',
-          key: 'jobapplication_id'
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -54,18 +46,6 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE
       }
-    });
-    await queryInterface.addConstraint('anonymous', {
-      fields: ['jobapplication_id'],
-      type: 'foreign key',
-      name: 'fk_jobapplication_id',
-      references: {
-        table: 'jobapplications',
-        field: 'jobapplication_id'
-      },
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-
     });
 
   },

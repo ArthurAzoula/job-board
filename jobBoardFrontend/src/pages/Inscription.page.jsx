@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import UserForm from '../components/UserForm.component';
 import CompanyForm from '../components/CompanyForm';
+import Breadcrumb from '../components/FilArianne.component';
 
 const InscriptionPage = () => {
     const [isCompanyFormVisible, setIsCompanyFormVisible] = useState(false);
     const [isUserFormVisible, setIsUserFormVisible] = useState(false);
+
+    const items = [
+        { label: "Home", path: '/' },
+        { label: "Inscription", path: '/signup' }
+    ]
 
     const toggleCompanyForm = () => {
         setIsCompanyFormVisible(!isCompanyFormVisible);
@@ -18,6 +24,7 @@ const InscriptionPage = () => {
 
     return (
         <>
+            <Breadcrumb items={items} />
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-gray-100 py-8 px-4 shadow-lg sm:rounded-lg">
                     <div className="flex justify-center">

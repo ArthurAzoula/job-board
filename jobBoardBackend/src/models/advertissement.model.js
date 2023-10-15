@@ -37,14 +37,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.ENUM('CDI', 'CDD', 'Stage', 'Alternance'),
     },
-    publication_date: {
+    remuneration: {
       allowNull: false,
-      type: DataTypes.DATE,
-
+      type: DataTypes.STRING(50),
     },
-    expiration_date: {
+    working_time: {
       allowNull: false,
-      type: DataTypes.DATE,
+      type: DataTypes.STRING(50),
+    },
+    lieu: {
+      allowNull: false,
+      type: DataTypes.STRING(50),
     },
   }, {
     sequelize,

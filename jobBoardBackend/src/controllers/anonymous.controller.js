@@ -2,11 +2,7 @@ const database = require('../models/index');
 
 const create = async (req, res) => {
     try {
-        const { nom, prenom, email, telephone  } = req.body;
-        const anonymous = await database.sequelize.models.anonymous.create({
-            name,
-            email
-        });
+        const anonymous = await database.sequelize.models.anonymous.create(req.body);
         return res.status(200).json({ anonymous });
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -34,6 +30,19 @@ const findOne = async (req, res) => {
         return res.status(500).json({ error: error.message });
     }
 };
+
+const findAnonymousByEmail = async (req, res) => {
+    try {
+        const anonymousEmail = req.params.email;
+        const anonymous = await database.sequelize.models.anonymous.findOne({ where: { email: anonymousEmail } });
+        if (!anonymous) {
+            return res.status(404).send('Anonymous not found');
+        }
+        return res.status(200).json({ anonymous });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
 
 const update = async (req, res) => {
     try {
@@ -69,6 +78,7 @@ const remove = async (req, res) => {
 module.exports = {
     create,
     findAll,
+    findAnonymousByEmail,
     findOne,
     update,
     remove

@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="min-h-screen font-serif bg-bleugris w-full flex">
-        <div className="w-1/6 bg-gray-100 flex justify-center text-center border-r-2 border-gunmetal">
+        <div className="w-1/6 border-r-2 bg-gray-100 flex justify-center text-center">
           <Sidebar />
         </div>
         <div className="w-5/6 overflow-hidden">
