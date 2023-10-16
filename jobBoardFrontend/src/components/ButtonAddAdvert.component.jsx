@@ -6,6 +6,7 @@ import { getUserConnected } from '../api/calls.api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { FaPlusCircle } from "react-icons/fa";
 
 const ButtonAddAdvert = () => {
     const [showModal, setShowModal] = useState(false);
@@ -19,7 +20,9 @@ const ButtonAddAdvert = () => {
             const userConnectedPromise = getUserConnected(localStorage.getItem('token'));
 
             userConnectedPromise.then((user) => {
-                setId(user.company_id);
+                if (user && user.company_id) {
+                    setId(user.company_id);
+                }
             });
         }
     }, [logged]);
@@ -82,7 +85,7 @@ const ButtonAddAdvert = () => {
                 className="bg-white border hover:scale-110 duration-300 border-black text-gunmetal px-4 py-2 rounded-md flex items-center"
                 onClick={openModal}
             >
-                <PlusIcon className="w-4 h-4 mr-2" />
+                <FaPlusCircle className="w-4 h-4 mr-2" />
                 <span>Ajouter une annonce</span>
             </button>
             {showModal && (

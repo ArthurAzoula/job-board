@@ -70,7 +70,7 @@ const Admin = () => {
             <div className="flex flex-col gap-4">
               {records.map((record) => (
                 <div key={record.id} className="bg-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300 ease-in-out">
-                  <div className="p-4 flex justify-between gap-4 border-b-2 border-bleugris overflow-x-auto">
+                  <div className="p-4 flex justify-between gap-4 border-b-2 border-gray-300 overflow-x-auto">
                     {Object.keys(record).map((key) => (
                       <div key={key} className="mb-2 flex flex-col">
                         <span className="font-bold text-gray-700 uppercase bg-grisclair">{key}:</span>

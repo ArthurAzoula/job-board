@@ -30,15 +30,15 @@ const AuthentificationForm = () => {
             .then(res => {
                 console.log(res.data.accessToken);
                 accountService.saveToken(res.data.accessToken, res.data.type);
-                toast.success('Connection successful!');
+                toast.success('Connection réussie!');
                 window.setTimeout(() => {
                     navigate('/');
                     window.location.reload();
-                }, 3000);
+                }, 2000);
             })
             .catch(err => {
-                console.log(err.response);
-                toast.error('Connection failed!');
+                //console.log(err.response);
+                toast.error('Connection échoué!');
             });
     };
 

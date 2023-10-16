@@ -22,9 +22,9 @@ const Annonces = () => {
       try {
         const response = await axios.get('http://localhost:3000/api/advertissements');
         setAnnonces(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       } catch (error) {
-        console.error(error);
+        //console.error(error);
       }
     };
 
@@ -36,7 +36,7 @@ const Annonces = () => {
       try {
         const response = await axios.get('http://localhost:3000/api/companies');
         setCompanies(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       } catch (error) {
         console.error(error);
       }
