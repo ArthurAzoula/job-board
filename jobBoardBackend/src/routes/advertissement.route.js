@@ -2,6 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
+const connexion = require('../middlewares/auth.middleware');
+
 const AdvertissementController = require('../controllers/advertissement.controller');
 
 /* GET */

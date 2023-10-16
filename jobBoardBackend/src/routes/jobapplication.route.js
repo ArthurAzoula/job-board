@@ -10,6 +10,8 @@ router.get('/', jobapplication.getAllJobApplications);
 
 router.get('/:id', jobapplication.getJobApplicationById);
 
+router.get('/advert/:advertId', jobapplication.getUserJobApplicationFromAnAdvert);
+
 /* POST */
 
 router.post('/', jobapplication.createJobApplication);  

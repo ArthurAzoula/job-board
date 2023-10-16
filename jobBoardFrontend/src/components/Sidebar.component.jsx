@@ -3,6 +3,7 @@ import SettingsIcon from "../icons/Settings.icon";
 import AdminIcon from "../icons/Admin.icon";
 import CandidatureIcon from "../icons/Candidature.icon";
 import Settings from "./Settings.component";
+import Appliers from "./Appliers.component";
 
 const   Sidebar = () => {
   const [showAccount, setShowAccount] = useState(false);
@@ -45,9 +46,7 @@ const   Sidebar = () => {
 
           {showCandidature && (
             <div className="flex flex-col">
-              <p>En cours</p>
-              <p>Refusé</p>
-              <p>Admis</p>
+              <Appliers />
             </div>
           )}
 

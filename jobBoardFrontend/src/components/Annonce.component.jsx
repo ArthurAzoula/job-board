@@ -107,25 +107,27 @@ const Annonce = () => {
             const anonymousPromise = getAnonymousUserByEmail(email);
 
             anonymousPromise.then((res) => {
-                setAnonymous(res.anonymous);
+                if (res && res.anonymous) {
+                    setAnonymous(res.anonymous);
 
-                const data = {
-                    advertissement_id: id,
-                    anonymous_id: res.anonymous.anonymous_id,
-                    email_send: true,
-                    status: 'pending',
-                };
-                
-                axios.post('http://localhost:3000/api/jobapplications', data)
-                .then(res => {
-                    console.log(res.data);
-                })
-                .catch(err => {
-                    console.log(err.response);
-                });
+                    const data = {
+                        advertissement_id: id,
+                        anonymous_id: res.anonymous.anonymous_id,
+                        email_send: true,
+                        status: 'pending',
+                    };
 
+                    axios.post('http://localhost:3000/api/jobapplications', data)
+                        .then(res => {
+                            console.log(res.data);
+                        })
+                        .catch(err => {
+                            console.log(err.response);
+                        });
+                } else {
+                    console.log('Error: anonymous user not found');
+                }
             });
-            
         }
 
         // Close the modal
@@ -135,16 +137,16 @@ const Annonce = () => {
     return (
         <>
             <Breadcrumb items={items} />
-            <div className="bg-white rounded-lg mx-12 pt-12 h-2/3 shadow-xl overflow-hidden">
+            <div className="bg-white rounded-lg mx-12 h-2/3 shadow-xl border  hover:scale-95 duration-300 overflow-hidden">
                 {annonce ? (
                     <>
-                        <div className="relative">
+                        <div className="relative border-b-2 border-gray-400">
                             <img src={hiringImage} alt={annonce.titre} className="w-full h-48 object-cover" />
                             <div className="absolute top-0 right-0 bg-green-500 text-white px-2 py-1 rounded-bl-lg">{annonce.type_contrat}</div>
                         </div>
                         <div className="p-4 flex justify-between">
                             <div className="w-1/2 pr-4">
-                                <h2 className="text-lg font-bold mb-2">{annonce.titre}</h2>
+                                <h2 className="text-3xl bg-gunmetal text-white p-2 rounded-lg mb-2">{annonce.titre}</h2>
                                 <p className="text-gray-700 text-base">{annonce.description}</p>
                                 <div className="flex items-center mt-4">
                                     <MdDateRange className="text-gray-700 mr-2" />
@@ -188,7 +190,12 @@ const Annonce = () => {
                             </div>
                         </div>
                         <div className="p-4">
-                            <button onClick={handleApply} className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300">Postuler</button>
+                            {logged && localStorage.getItem('type') === 'user' && (
+                                <button onClick={handleApply} className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300">Postuler</button>
+                            )}
+                            {logged && localStorage.getItem('type') === 'company' && (
+                                <button disabled className="bg-green-200 text-white px-4 py-2 rounded-lg transition-colors duration-300">Postuler</button>
+                            )}
                         </div>
                     </>
                 ) : (

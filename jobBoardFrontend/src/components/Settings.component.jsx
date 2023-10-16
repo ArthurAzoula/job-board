@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { accountService } from "../services/account.service";
 import formatDate from "../utils/function";
 import axios from "axios";
+import { FaEnvelope, FaUser, FaPhone, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle } from "react-icons/fa";
 
 const Settings = () => {
   const [logged, setLogged] = useState(accountService.isLogged());
@@ -27,54 +28,60 @@ const Settings = () => {
   return (
     <div className="h-screen flex items-start justify-center">
       {logged ? (
-        <div
-          className="p-4 border border-gray-300 rounded shadow-md w-full max-w-xs overflow-auto ml-4"
-        >
-          {localStorage.getItem("type") === "user" ? (
-            <ul className="list-none p-0">
-              <li className="text-left text-lg">
-                <strong>Email:</strong> {user.email}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Prénom:</strong> {user.prenom}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Nom:</strong> {user.nom}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Téléphone:</strong> {user.telephone}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Date de création:</strong> {formatDate(user.createdAt)}
-              </li>
-            </ul>
-          ) : (
-            <ul className="list-none p-0">
-              <li className="text-left text-lg">
-                <strong>Entreprise:</strong> {user.nom}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Email:</strong> {user.email}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Téléphone:</strong> {user.telephone}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Adresse:</strong> {user.adresse}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Description:</strong> {user.description}
-              </li>
-              <li className="text-left text-lg">
-                <strong>Date de création:</strong> {formatDate(user.createdAt)}
-              </li>
-            </ul>
-          )}
+        <div className="p-4 border border-gray-300 rounded shadow-md w-full max-w-xs overflow-auto ml-4">
+          <ul className="list-none p-0 whitespace-normal text-justify">
+            {localStorage.getItem('type') === 'user' && (
+              <>
+                <li className="flex items-center text-lg mb-4">
+                  <FaEnvelope className="mr-2" />
+                  <span>{user.email}</span>
+                </li>
+                <li className="flex items-center text-lg mb-4">
+                  <FaUser className="mr-2" />
+                  <span>{user.prenom} - {user.nom}</span>
+                </li>
+                <li className="flex items-center text-lg mb-4">
+                  <FaPhone className="mr-2" />
+                  <span>{user.telephone}</span>
+                </li>
+                <li className="flex items-center text-lg mb-4">
+                  <FaCalendarAlt className="mr-2" />
+                  <span>{formatDate(user.createdAt)}</span>
+                </li>
+              </>
+            )}
+            {localStorage.getItem('type') === 'company' && (
+              <>
+                <li className="flex items-center text-lg mb-4">
+                  <FaEnvelope className="mr-2" />
+                  <span>{user.email}</span>
+                </li>
+                <li className="flex items-center text-lg mb-4">
+                  <FaUser className="mr-2" />
+                  <span>{user.nom}</span>
+                </li>
+                <li className="flex items-center text-lg mb-4">
+                  <FaPhone className="mr-2" />
+                  <span>{user.telephone}</span>
+                </li>
+                <li className="flex items-center text-lg mb-4">
+                  <FaMapMarkerAlt className="mr-2" />
+                  <span>{user.adresse}</span>
+                </li>
+                <li className="flex items-center text-lg mb-4">
+                  <FaInfoCircle className="mr-2" />
+                  <span>{user.description}</span>
+                </li>
+                <li className="flex items-center text-lg mb-4">
+                  <FaCalendarAlt className="mr-2" />
+                  <span>{formatDate(user.createdAt)}</span>
+                </li>
+              </>
+            )}
+          </ul>
         </div>
       ) : (
-        <p className="text-red-500">
-          Veuillez vous connecter pour voir les informations.
-        </p>
+        <p>Veuillez vous connecter pour accéder à cette page.</p>
       )}
     </div>
   );
