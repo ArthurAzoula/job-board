@@ -40,8 +40,10 @@ const Navbar = () => {
   const logout = () => {
     accountService.logout();
     setLogged(false);
-    navigate("/");
-  };
+    navigate("/signin");
+    window.location.reload();
+
+  } 
 
   const userType = localStorage.getItem("type") || null;
 
