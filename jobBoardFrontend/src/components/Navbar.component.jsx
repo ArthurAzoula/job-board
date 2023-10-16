@@ -49,7 +49,7 @@ const Navbar = () => {
       <div className="mx-auto container flex items-center justify-between">
         <Link to="/" className="text-white text-4xl font-bold text-center">
           <span className="text-gradient font-extrabold text-5xl">&#123;EpiJob&#125;</span>
-          <span className="text-bleugris font-bold text-3xl ml-2">{userType === 'company' ? 'for company' : userType === 'user' ? 'for user' : ''}</span>
+          <span className="text-bleugris font-bold text-3xl ml-2">{userType === 'company' ? 'for company' : userType === 'user' && user.isAdmin ? 'for admin' : userType === 'user' && !user.isAdmin ? 'for user' : ''}</span>
         </Link>
         <ul className="hidden md:flex space-x-14 items-center bg-gunemetal p-4 rounded-xl text-xl">
           <li>

@@ -9,7 +9,7 @@ const anonymousController = require('../controllers/anonymous.controller');
 
 router.get('/', anonymousController.findAll);
 
-// router.get('/:id', anonymousController.findOne); 
+router.get('/:id', anonymousController.findOne); 
 
 router.get('/email/:email', anonymousController.findAnonymousByEmail);
 

@@ -35,7 +35,7 @@ const Admin = () => {
     }
   }, [logged, token]);
 
-  if (!user.isAdmin) {
+  if (!user.isAdmin || localStorage.getItem('type') !== 'user' || !logged) {
     navigate("/");
   }
 

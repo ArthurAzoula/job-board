@@ -1,5 +1,6 @@
 const database = require('../models/index');
 const bcrypt = require('bcrypt');
+const ms = require('ms');
 
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwt.config');
@@ -42,6 +43,9 @@ const login = async (req, res) => {
                 expiresIn: jwtConfig.refreshOptions.expiresIn
             });
 
+            // Put the token in a cookie
+            res.cookie('token', accessToken, { maxAge: ms(jwtConfig.options.expiresIn), httpOnly: true, secure: true, sameSite: 'strict' });
+
             // Return the access and refresh tokens along with the type
             return res.status(200).json({ type, accessToken, refreshToken });
         }
@@ -63,6 +67,9 @@ const login = async (req, res) => {
             const refreshToken = jwt.sign({ id: user.people_id }, jwtConfig.refreshSecret, {
                 expiresIn: jwtConfig.refreshOptions.expiresIn
             });
+
+            // Put the token in a cookie
+            res.cookie('token', accessToken, { maxAge: ms(jwtConfig.options.expiresIn), httpOnly: true, secure: true, sameSite: 'strict' });
 
             // Return the access and refresh tokens along with the type
             return res.status(200).json({ type, accessToken, refreshToken });

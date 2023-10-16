@@ -2,6 +2,18 @@ const database = require('../models/index');
 
 const getAllJobApplications = async (req, res) => {
     try {
+        const company_id = req.params.company_id;
+
+        if (company_id) {
+            const jobApplications = await database.sequelize.models.jobapplication.findAll({
+                where: { company_id: company_id }
+            });
+            if (jobApplications) {
+                return res.status(200).json(jobApplications);
+            }
+            return res.status(404).send('JobApplications does not exists');
+        }
+
         const jobApplication = await database.sequelize.models.jobapplication.findAll();
         if (jobApplication) {
             return res.status(200).json(jobApplication);
@@ -27,6 +39,21 @@ const getJobApplicationById = async (req, res) => {
     }
     
 
+}
+
+const getUserJobApplicationFromAnAdvert = async (req, res) => {
+    try {
+        const advertId = req.params.advertId;
+        const jobApplication = await database.sequelize.models.jobapplication.findAll({
+            where: { advertissement_id: advertId }
+        })
+        if (jobApplication) {
+            return res.status(200).json(jobApplication);
+        }
+        return res.status(404).send('JobApplication with the specified ID does not exists');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 }
 
 const createJobApplication = async (req, res) => {
@@ -63,5 +90,6 @@ module.exports = {
     getJobApplicationById,
     createJobApplication,
     updateJobApplication,
-    deleteJobApplication
+    deleteJobApplication,
+    getUserJobApplicationFromAnAdvert
 }
