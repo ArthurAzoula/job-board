@@ -102,32 +102,37 @@ const Annonce = () => {
         } else {
             // Create the anonymous user
             axios.post('http://localhost:3000/api/anonymous', { nom: nom, prenom: prenom, email: email, telephone: telephone })
+                .then(() => {
+                    // Wait for 1 second to allow the database to update
+                    setTimeout(() => {
+                        // Get the anonymous user
+                        const anonymousPromise = getAnonymousUserByEmail(email);
 
-            // Get the anonymous user
-            const anonymousPromise = getAnonymousUserByEmail(email);
+                        anonymousPromise.then((res) => {
+                            if (res && res.anonymous) {
+                                setAnonymous(res.anonymous);
 
-            anonymousPromise.then((res) => {
-                if (res && res.anonymous) {
-                    setAnonymous(res.anonymous);
+                                const data = {
+                                    advertissement_id: id,
+                                    anonymous_id: res.anonymous.anonymous_id,
+                                    email_send: true,
+                                    status: 'pending',
+                                };
 
-                    const data = {
-                        advertissement_id: id,
-                        anonymous_id: res.anonymous.anonymous_id,
-                        email_send: true,
-                        status: 'pending',
-                    };
-
-                    axios.post('http://localhost:3000/api/jobapplications', data)
-                        .then(res => {
-                            console.log(res.data);
-                        })
-                        .catch(err => {
-                            console.log(err.response);
+                                axios.post('http://localhost:3000/api/jobapplications', data)
+                                    .then(res => {
+                                        console.log(res.data);
+                                    })
+                                    .catch(err => {
+                                        console.log(err.response);
+                                    });
+                            } else {
+                                console.log('Error: anonymous user not found');
+                            }
                         });
-                } else {
-                    console.log('Error: anonymous user not found');
-                }
-            });
+                    }, 1000);
+                })
+                .catch((err) => console.log(err));
         }
 
         // Close the modal
@@ -190,10 +195,10 @@ const Annonce = () => {
                             </div>
                         </div>
                         <div className="p-4">
-                            {logged && localStorage.getItem('type') === 'user' && (
+                            {(localStorage.getItem('type') === 'user' || !logged) && (
                                 <button onClick={handleApply} className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300">Postuler</button>
                             )}
-                            {logged && localStorage.getItem('type') === 'company' && (
+                            {localStorage.getItem('type') === 'company' && (
                                 <button disabled className="bg-green-200 text-white px-4 py-2 rounded-lg transition-colors duration-300">Postuler</button>
                             )}
                         </div>
@@ -250,4 +255,4 @@ const Annonce = () => {
     );
 };
 
-export default Annonce;
+export default Annonce

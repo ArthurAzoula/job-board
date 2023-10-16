@@ -39,7 +39,6 @@ const Navbar = () => {
   const logout = () => {
     accountService.logout();
     setLogged(false);
-    navigate('/');
   } 
 
   const userType =  localStorage.getItem('type') || null;
