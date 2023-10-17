@@ -77,119 +77,141 @@ const ButtonAddAdvert = () => {
     };
 
     return (
-        <>
-            <button
-                className="bg-white border hover:scale-110 duration-300 border-black text-gunmetal px-4 py-2 rounded-md flex items-center"
-                onClick={openModal}
-            >
-                <PlusIcon className="w-4 h-4 mr-2" />
-                <span>Ajouter une annonce</span>
-            </button>
-            {showModal && (
-                <Modal closeModal={closeModal}>
-                    <form onSubmit={onSubmit}>
-                        <h1 className='text-gray-700 font-bold mb-4 text-center uppercase'>Ajouter une annonce</h1>
-                        <div className="mb-4">
-                            <label htmlFor="titre" className="block text-gray-700 font-bold mb-2">
-                                Titre
-                            </label>
-                            <input
-                                type="text"
-                                id="titre"
-                                name="titre"
-                                onChange={onChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
-                                Description
-                            </label>
-                            <textarea
-                                id="description"
-                                name="description"
-                                onChange={onChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="type_contrat" className="block text-gray-700 font-bold mb-2">
-                                Type de contrat
-                            </label>
-                            <select
-                                id="type_contrat"
-                                name="type_contrat"
-                                onChange={onChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required
-                            >
-                                <option value="stage">Stage</option>
-                                <option value="cdd">CDD</option>
-                                <option value="cdi">CDI</option>
-                                <option value="alternance">Alternance</option>
-                            </select>
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="remuneration" className="block text-gray-700 font-bold mb-2">
-                                Rémunération
-                            </label>
-                            <input
-                                type="text"
-                                id="remuneration"
-                                name="remuneration"
-                                onChange={onChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="working_time" className="block text-gray-700 font-bold mb-2">
-                                Temps de travail
-                            </label>
-                            <input
-                                type="text"
-                                id="working_time"
-                                name="working_time"
-                                onChange={onChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="lieu" className="block text-gray-700 font-bold mb-2">
-                                Lieu
-                            </label>
-                            <input
-                                type="text"
-                                id="lieu"
-                                name="lieu"
-                                onChange={onChange}
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required
-                            />
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <button
-                                type="submit"
-                                className="bg-bleugris text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            >
-                                Créer
-                            </button>
-                            <button
-                                type="button"
-                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                onClick={closeModal}
-                            >
-                                Annuler
-                            </button>
-                        </div>
-                    </form>
-                </Modal>
-            )}
-            <ToastContainer />
-        </>
+      <>
+        <button
+          className="bg-white border hover:scale-110 duration-300 border-black text-gunmetal px-4 py-2 rounded-md flex items-center"
+          onClick={openModal}
+        >
+          <PlusIcon className="w-4 h-4 mr-2" />
+          <span className='hidden lg:inline'>
+            Ajouter une annonce
+          </span>
+        </button>
+        {showModal && (
+          <Modal closeModal={closeModal}>
+            <form onSubmit={onSubmit}>
+              <h1 className="text-gray-700 font-bold mb-4 text-center uppercase">
+                Ajouter une annonce
+              </h1>
+              <div className="mb-4">
+                <label
+                  htmlFor="titre"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Titre
+                </label>
+                <input
+                  type="text"
+                  id="titre"
+                  name="titre"
+                  onChange={onChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="description"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  onChange={onChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="type_contrat"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Type de contrat
+                </label>
+                <select
+                  id="type_contrat"
+                  name="type_contrat"
+                  onChange={onChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                >
+                  <option value="stage">Stage</option>
+                  <option value="cdd">CDD</option>
+                  <option value="cdi">CDI</option>
+                  <option value="alternance">Alternance</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="remuneration"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Rémunération
+                </label>
+                <input
+                  type="text"
+                  id="remuneration"
+                  name="remuneration"
+                  onChange={onChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="working_time"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Temps de travail
+                </label>
+                <input
+                  type="text"
+                  id="working_time"
+                  name="working_time"
+                  onChange={onChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="lieu"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Lieu
+                </label>
+                <input
+                  type="text"
+                  id="lieu"
+                  name="lieu"
+                  onChange={onChange}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  required
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <button
+                  type="submit"
+                  className="bg-bleugris text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Créer
+                </button>
+                <button
+                  type="button"
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  onClick={closeModal}
+                >
+                  Annuler
+                </button>
+              </div>
+            </form>
+          </Modal>
+        )}
+        <ToastContainer />
+      </>
     );
 };
 

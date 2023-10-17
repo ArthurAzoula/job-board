@@ -28,17 +28,19 @@ const Settings = () => {
   return (
     <div className="h-screen flex items-start justify-center">
       {logged ? (
-        <div className="p-4 border border-gray-300 rounded shadow-md w-full max-w-xs overflow-auto ml-4">
-          <ul className="list-none p-0 whitespace-normal text-justify">
-            {localStorage.getItem('type') === 'user' && (
+        <div className="p-4 border border-gray-300 rounded shadow-md w-full overflow-x-scroll ml-4">
+          <ul className="flex flex-col list-none p-0 whitespace-normal text-justify">
+            {localStorage.getItem("type") === "user" && (
               <>
-                <li className="flex items-center text-lg mb-4">
-                  <FaEnvelope className="mr-2" />
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
+                  <FaEnvelope className="mr-2 shrink-0" />
                   <span>{user.email}</span>
                 </li>
                 <li className="flex items-center text-lg mb-4">
                   <FaUser className="mr-2" />
-                  <span>{user.prenom} - {user.nom}</span>
+                  <span>
+                    {user.prenom} - {user.nom}
+                  </span>
                 </li>
                 <li className="flex items-center text-lg mb-4">
                   <FaPhone className="mr-2" />
@@ -50,7 +52,7 @@ const Settings = () => {
                 </li>
               </>
             )}
-            {localStorage.getItem('type') === 'company' && (
+            {localStorage.getItem("type") === "company" && (
               <>
                 <li className="flex items-center text-lg mb-4">
                   <FaEnvelope className="mr-2" />

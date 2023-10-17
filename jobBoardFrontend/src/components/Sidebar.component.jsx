@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SettingsIcon from "../icons/Settings.icon";
 import CandidatureIcon from "../icons/Candidature.icon";
+
 import Settings from "./Settings.component";
 import Appliers from "./Appliers.component";
 
@@ -19,8 +20,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="max-w-fit">
-      <div className="bg-gray-100 h-screen p-4 w-full text-gunmetal max-w-fit">
+    <div className="w-full">
+      <div className="bg-gray-100 h-screen p-4 w-full text-gunmetal">
         <div className="flex flex-col">
           <div className="flex justify-center items-center mb-4">
             <h1 className="text-2xl">Mon espace</h1>
