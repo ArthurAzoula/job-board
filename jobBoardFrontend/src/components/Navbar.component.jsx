@@ -11,6 +11,7 @@ import { accountService } from "../services/account.service";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "../icons/Logout.icon";
 import ButtonAddAdvert from "./ButtonAddAdvert.component";
+import { FaBuilding } from "react-icons/fa";
 import { IoIosLogIn } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify';
 import { FaUserCircle } from "react-icons/fa";
@@ -91,18 +92,20 @@ const Navbar = () => {
               </span>
             </Link>
           </li>
-          <li>
-            <Link
-              to="/services"
-              className="text-white flex items-center hover:underline decoration-white font-bold"
-            >
-              <AboutIcon className="mr-2" />
-              <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
-                About
-              </span>
-            </Link>
-          </li>
-          {user.isAdmin && (
+          {localStorage.getItem("type") !== "company" && (
+            <li>
+              <Link
+                to="/companies"
+                className="text-white flex items-center hover:underline decoration-white font-bold"
+              >
+                <FaBuilding className="mr-2" />
+                <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
+                  Companies
+                </span>
+              </Link>
+            </li>
+          )}
+          {user.isAdmin && logged && (
             <li>
               <Link
                 to="/admin"

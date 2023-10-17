@@ -42,7 +42,7 @@ const UserForm = () => {
                     window.location.reload();
                 }, 3000);
             })
-            .catch((err) => { 
+            .catch((err) => {
                 console.log(err.response);
                 toast.error('Inscription client échouée!');
             })
@@ -53,7 +53,7 @@ const UserForm = () => {
             <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
                     <label htmlFor="nom" className="block text-gray-700 font-bold mb-2">
-                        Nom
+                        Nom <span className="text-red-500">*</span>
                     </label>
                     <input
                         type="text"
@@ -64,11 +64,13 @@ const UserForm = () => {
                         placeholder='Doe'
                         onChange={onChange}
                         required
+                        maxLength={50}
                     />
+                    <p className="text-gray-500 text-sm mt-1">Veuillez entrer votre nom complet.</p>
                 </div>
                 <div>
-                    <label htmlFor="prebom" className="block text-gray-700 font-bold mb-2">
-                        Prénom
+                    <label htmlFor="prenom" className="block text-gray-700 font-bold mb-2">
+                        Prénom <span className="text-red-500">*</span>
                     </label>
                     <input
                         type="text"
@@ -79,12 +81,14 @@ const UserForm = () => {
                         placeholder='John'
                         onChange={onChange}
                         required
+                        maxLength={50}
                     />
+                    <p className="text-gray-500 text-sm mt-1">Veuillez entrer votre prénom complet.</p>
                 </div>
             </div>
             <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                    Email
+                    Email <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="email"
@@ -96,10 +100,11 @@ const UserForm = () => {
                     onChange={onChange}
                     required
                 />
+                <p className="text-gray-500 text-sm mt-1">Veuillez entrer une adresse email valide.</p>
             </div>
             <div className="mb-4">
                 <label htmlFor="telephone" className="block text-gray-700 font-bold mb-2">
-                    Téléphone
+                    Téléphone <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="tel"
@@ -107,14 +112,16 @@ const UserForm = () => {
                     name="telephone"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={credentials.telephone}
-                    placeholder='0606060606'
+                    placeholder='0778794962'
                     onChange={onChange}
                     required
+                    pattern="[0-9]{10}"
                 />
+                <p className="text-gray-500 text-sm mt-1">Veuillez entrer un numéro de téléphone valide (10 chiffres).</p>
             </div>
             <div className="mb-4">
                 <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
-                    Mot de passe
+                    Mot de passe <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="password"
@@ -125,7 +132,10 @@ const UserForm = () => {
                     placeholder='********'
                     onChange={onChange}
                     required
+                    maxLength={50}
+                    minLength={8}
                 />
+                <p className="text-gray-500 text-sm mt-1">Veuillez Entrez un mot de passe avec au moins 8 caractères.</p>
             </div>
             <div className="flex justify-center">
                 <button
