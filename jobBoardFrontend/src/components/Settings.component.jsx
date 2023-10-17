@@ -36,17 +36,17 @@ const Settings = () => {
                   <FaEnvelope className="mr-2 shrink-0" />
                   <span>{user.email}</span>
                 </li>
-                <li className="flex items-center text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
                   <FaUser className="mr-2" />
                   <span>
                     {user.prenom} - {user.nom}
                   </span>
                 </li>
-                <li className="flex items-center text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
                   <FaPhone className="mr-2" />
                   <span>{user.telephone}</span>
                 </li>
-                <li className="flex items-center text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
                   <FaCalendarAlt className="mr-2" />
                   <span>{formatDate(user.createdAt)}</span>
                 </li>
@@ -54,27 +54,27 @@ const Settings = () => {
             )}
             {localStorage.getItem("type") === "company" && (
               <>
-                <li className="flex items-center text-lg mb-4">
-                  <FaEnvelope className="mr-2" />
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
+                  <FaEnvelope className="mr-2 shrink-0" />
                   <span>{user.email}</span>
                 </li>
-                <li className="flex items-center text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
                   <FaUser className="mr-2" />
                   <span>{user.nom}</span>
                 </li>
-                <li className="flex items-center text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
                   <FaPhone className="mr-2" />
                   <span>{user.telephone}</span>
                 </li>
-                <li className="flex items-center text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
                   <FaMapMarkerAlt className="mr-2" />
                   <span>{user.adresse}</span>
                 </li>
-                <li className="flex items-center text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
                   <FaInfoCircle className="mr-2" />
                   <span>{user.description}</span>
                 </li>
-                <li className="flex items-center text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
                   <FaCalendarAlt className="mr-2" />
                   <span>{formatDate(user.createdAt)}</span>
                 </li>
