@@ -51,7 +51,7 @@ const CompanyForm = () => {
         <form className="mt-6" onSubmit={onSubmit}>
             <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
-                    Nom de l'entreprise
+                    Nom de l'entreprise <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -61,11 +61,14 @@ const CompanyForm = () => {
                     value={credentials.nom}
                     onChange={onChange}
                     required
+                    maxLength={50}
+                    placeholder="Entrez le nom de votre entreprise"
                 />
+                <p className="text-gray-500 text-sm mt-1">Maximum 50 caractères.</p>
             </div>
             <div className="mb-4">
                 <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
-                    Description
+                    Description <span className="text-red-500">*</span>
                 </label>
                 <textarea
                     id="description"
@@ -74,11 +77,12 @@ const CompanyForm = () => {
                     value={credentials.description}
                     onChange={onChange}
                     required
+                    placeholder="Entrez une description de votre entreprise"
                 />
             </div>
             <div className="mb-4">
                 <label htmlFor="telephone" className="block text-gray-700 font-bold mb-2">
-                    Téléphone
+                    Téléphone <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="tel"
@@ -87,12 +91,15 @@ const CompanyForm = () => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={credentials.telephone}
                     onChange={onChange}
+                    pattern="[0-9]{10}"
                     required
+                    placeholder="Entrez le numéro de téléphone de votre entreprise"
                 />
+                <p className="text-gray-500 text-sm mt-1">Veuillez entrer un numéro de téléphone valide (10 chiffres).</p>
             </div>
             <div className="mb-4">
-                <label htmlFor="adress" className="block text-gray-700 font-bold mb-2">
-                    Adresse
+                <label htmlFor="adresse" className="block text-gray-700 font-bold mb-2">
+                    Adresse <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -102,11 +109,12 @@ const CompanyForm = () => {
                     value={credentials.adresse}
                     onChange={onChange}
                     required
+                    placeholder="Entrez l'adresse de votre entreprise"
                 />
             </div>
             <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                    Email
+                    Email <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="email"
@@ -116,11 +124,14 @@ const CompanyForm = () => {
                     value={credentials.email}
                     onChange={onChange}
                     required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    placeholder="Entrez l'adresse email de votre entreprise"
                 />
+                <p className="text-gray-500 text-sm mt-1">Veuillez entrer une adresse email valide.</p>
             </div>
             <div className="mb-4">
                 <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
-                    Mot de passe
+                    Mot de passe <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="password"
@@ -130,7 +141,10 @@ const CompanyForm = () => {
                     value={credentials.password}
                     onChange={onChange}
                     required
+                    minLength={8}
+                    placeholder="Entrez un mot de passe sécurisé (au moins 8 caractères)"
                 />
+                <p className="text-gray-500 text-sm mt-1">Veuillez entrer un mot de passe sécurisé (au moins 8 caractères).</p>
             </div>
             <div className="flex justify-center">
                 <button
