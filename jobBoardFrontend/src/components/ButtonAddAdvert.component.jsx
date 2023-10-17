@@ -43,11 +43,6 @@ const ButtonAddAdvert = () => {
         e.preventDefault();
         axios
             .post('http://localhost:3000/api/advertissements', credentials, {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Content-type_contrat': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
             })
             .then((res) => {
                 toast.success('Annonce ajoutée avec succès!');
@@ -94,7 +89,7 @@ const ButtonAddAdvert = () => {
                         <h1 className='text-gray-700 font-bold mb-4 text-center uppercase'>Ajouter une annonce</h1>
                         <div className="mb-4">
                             <label htmlFor="titre" className="block text-gray-700 font-bold mb-2">
-                                Titre
+                                Titre <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
@@ -103,11 +98,14 @@ const ButtonAddAdvert = () => {
                                 onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
+                                maxLength={50}
+                                placeholder="Entrez le titre de l'annonce"
                             />
+                            <p className="text-gray-500 text-sm mt-1">Maximum 50 caractères.</p>
                         </div>
                         <div className="mb-4">
                             <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
-                                Description
+                                Description <span className="text-red-500">*</span>
                             </label>
                             <textarea
                                 id="description"
@@ -115,11 +113,12 @@ const ButtonAddAdvert = () => {
                                 onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
+                                placeholder="Entrez une description de l'annonce"
                             />
                         </div>
                         <div className="mb-4">
                             <label htmlFor="type_contrat" className="block text-gray-700 font-bold mb-2">
-                                Type de contrat
+                                Type de contrat <span className="text-red-500">*</span>
                             </label>
                             <select
                                 id="type_contrat"
@@ -128,6 +127,7 @@ const ButtonAddAdvert = () => {
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             >
+                                <option disabled value="">Type de contrat</option>
                                 <option value="stage">Stage</option>
                                 <option value="cdd">CDD</option>
                                 <option value="cdi">CDI</option>
@@ -136,7 +136,7 @@ const ButtonAddAdvert = () => {
                         </div>
                         <div className="mb-4">
                             <label htmlFor="remuneration" className="block text-gray-700 font-bold mb-2">
-                                Rémunération
+                                Rémunération <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
@@ -145,11 +145,12 @@ const ButtonAddAdvert = () => {
                                 onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
+                                placeholder="Entrez la rémunération de l'annonce"
                             />
                         </div>
                         <div className="mb-4">
                             <label htmlFor="working_time" className="block text-gray-700 font-bold mb-2">
-                                Temps de travail
+                                Temps de travail <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
@@ -158,11 +159,12 @@ const ButtonAddAdvert = () => {
                                 onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
+                                placeholder="Entrez le temps de travail de l'annonce"
                             />
                         </div>
                         <div className="mb-4">
                             <label htmlFor="lieu" className="block text-gray-700 font-bold mb-2">
-                                Lieu
+                                Lieu <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
@@ -171,6 +173,7 @@ const ButtonAddAdvert = () => {
                                 onChange={onChange}
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
+                                placeholder="Entrez le lieu de l'annonce"
                             />
                         </div>
                         <div className="flex items-center justify-between">

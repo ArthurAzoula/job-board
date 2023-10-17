@@ -25,10 +25,10 @@ const AuthentificationForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(credentials);
+        //console.log(credentials);
         axios.post('http://localhost:3000/api/auth/login', credentials)
             .then(res => {
-                console.log(res.data.accessToken);
+                //console.log(res.data.accessToken);
                 accountService.saveToken(res.data.accessToken, res.data.type);
                 toast.success('Connection réussie!');
                 window.setTimeout(() => {
