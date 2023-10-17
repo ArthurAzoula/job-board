@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CompanyForm = () => {
     const [credentials, setCredentials] = useState({
@@ -18,6 +21,8 @@ const CompanyForm = () => {
         });
     };
 
+    let navigate = useNavigate();
+
     const onSubmit = (e) => {
         e.preventDefault();
         console.log(credentials);
@@ -28,8 +33,18 @@ const CompanyForm = () => {
                     'Content-Type': 'application/json',
                 },
             })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err.response));
+            .then((res) => {
+                console.log(res);
+                toast.success('Inscription entreprise réussie!');
+                window.setTimeout(() => {
+                    navigate('/signin');
+                    window.location.reload();
+                }, 3000);
+            })
+            .catch((err) => {
+                console.log(err.response);
+                toast.error('Inscription entreprise échouée!');
+            });
     };
 
     return (
@@ -125,6 +140,7 @@ const CompanyForm = () => {
                     S'inscrire
                 </button>
             </div>
+            <ToastContainer />
         </form>
     );
 };

@@ -3,6 +3,10 @@ import { useState } from 'react';
 import react from 'react'
 import axios from 'axios';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 const UserForm = () => {
     const [credentials, setCredentials] = useState({
         nom: '',
@@ -15,9 +19,11 @@ const UserForm = () => {
     const onChange = (e) => {
         setCredentials({
             ...credentials,
-            [e.target.name] : e.target.value,
+            [e.target.name]: e.target.value,
         })
     };
+
+    let navigate = useNavigate();
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -28,8 +34,18 @@ const UserForm = () => {
                 'Content-Type': 'application/json',
             },
         })
-            .then((res) => console.log(res))
-            .catch((err) => console.error(err.response))
+            .then((res) => {
+                console.log(res);
+                toast.success('Inscription client réussie!');
+                window.setTimeout(() => {
+                    navigate('/signin');
+                    window.location.reload();
+                }, 3000);
+            })
+            .catch((err) => { 
+                console.log(err.response);
+                toast.error('Inscription client échouée!');
+            })
     };
 
     return (
@@ -119,6 +135,7 @@ const UserForm = () => {
                     S'inscrire
                 </button>
             </div>
+            <ToastContainer />
         </form>
     );
 };

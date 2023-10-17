@@ -9,94 +9,101 @@ const Appliers = () => {
     const [logged, setLogged] = useState(accountService.isLogged());
     const [company, setCompany] = useState(null);
     const token = accountService.getToken() || null;
-    const [applierUser, setAppplierUser] = useState(null);
-    const [applierAnonymous, setAppplierAnonymous] = useState(null);
-    const [advert, setAdvert] = useState(null);
+    const [applierUser, setAppplierUser] = useState({});
+    const [applierAnonymous, setAppplierAnonymous] = useState({});
+    const [advert, setAdvert] = useState({});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchCompanyId = async () => {
+        const fetchJobApplications = async () => {
             try {
-                if (logged) {
-                    const response = await axios.get(`http://localhost:3000/api/auth/me/${token}`);
-                    if (localStorage.getItem('type') === 'company') {
-                        setCompanyId(response.data.company_id);
-                    } else if (localStorage.getItem('type') === 'user') {
-                        setUser(response.data);
-                    }
-                }
-            } catch (error) {
-                console.error(error);
+                const response = await axios.get(`http://localhost:3000/api/jobapplications?company_id=${companyId}`);
+                console.log(response)
+                setJobapplications(response.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
             }
         };
 
-        fetchCompanyId();
+        if (companyId !== null) {
+            fetchJobApplications();
+        }
+    }, [companyId, token]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/auth/me/${token}`);
+                setUser(response.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        if (logged) {
+            fetchUser();
+        }
     }, [logged, token]);
 
     useEffect(() => {
-        if (companyId) {
-            axios.get(`http://localhost:3000/api/jobapplications?company_id=${companyId}`)
-                .then((response) => {
-                    setJobapplications(response.data);
-                })
-                .catch((err) => console.log(err));
-        }
-    }, [companyId]);
+        const fetchCompany = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/companies/${user.company_id}`);
+                setCompany(response.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
 
-    useEffect(() => {
-        if (companyId) {
-            axios.get(`http://localhost:3000/api/companies/${companyId}`)
-                .then((response) => {
-                    setCompany(response.data);
-                })
-                .catch((err) => console.log(err));
+        if (user !== null) {
+            fetchCompany();
         }
-    }, [companyId]);
+    }, [user, token]);
 
     useEffect(() => {
         if (jobapplications.length > 0) {
+            const userPromises = [];
+            const anonymousPromises = [];
+            const advertPromises = [];
+
             jobapplications.forEach((jobapplication) => {
                 if (jobapplication.people_id !== null && jobapplication.anonymous_id === null) {
-                    axios.get(`http://localhost:3000/api/users/${jobapplication.people_id}`)
-                        .then((response) => {
-                            setAppplierUser((prevUser) => ({
-                                ...prevUser,
-                                [jobapplication.id]: response.data,
-                            }));
-                        })
-                        .catch((err) => console.log(err));
+                    userPromises.push(axios.get(`http://localhost:3000/api/users/${jobapplication.people_id}`));
                 }
                 if (jobapplication.people_id === null && jobapplication.anonymous_id !== null) {
-                    axios.get(`http://localhost:3000/api/anonymous/${jobapplication.anonymous_id}`)
-                        .then((response) => {
-                            setAppplierAnonymous((prevAnonymous) => ({
-                                ...prevAnonymous,
-                                [jobapplication.id]: response.data,
-                            }));
-                        })
-                        .catch((err) => console.log(err));
+                    anonymousPromises.push(axios.get(`http://localhost:3000/api/anonymous/${jobapplication.anonymous_id}`));
+                }
+                if (jobapplication.advertissement_id !== null) {
+                    advertPromises.push(axios.get(`http://localhost:3000/api/advertissements/${jobapplication.advertissement_id}`));
                 }
             });
+
+            Promise.all([...userPromises, ...anonymousPromises, ...advertPromises])
+                .then((responses) => {
+                    const users = {};
+                    const anonymous = {};
+                    const adverts = {};
+
+                    responses.forEach((response) => {
+                        if (response.config.url.includes('/users/')) {
+                            users[response.data.people_id] = response.data;
+                        }
+                        if (response.config.url.includes('/anonymous/')) {
+                            anonymous[response.data.anonymous_id] = response.data;
+                        }
+                        if (response.config.url.includes('/advertissements/')) {
+                            adverts[response.data.advertissement_id] = response.data;
+                        }
+                    });
+
+                    setAppplierUser(users);
+                    setAppplierAnonymous(anonymous);
+                    setAdvert(adverts);
+                })
+                .catch((err) => console.log(err));
         }
     }, [jobapplications]);
-
-    useEffect(() => {
-        if (jobapplications.length > 0) {
-            jobapplications.forEach((jobapplication) => {
-                if (jobapplication.advertissement_id) {
-                    axios.get(`http://localhost:3000/api/advertissements/${jobapplication.advertissement_id}`)
-                        .then((response) => {
-                            setAdvert((prevAdvert) => ({
-                                ...prevAdvert,
-                                [jobapplication.id]: response.data,
-                            }));
-                        })
-                        .catch((err) => console.log(err));
-                }
-            });
-        }
-    }, [jobapplications]);
-
-
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -105,10 +112,9 @@ const Appliers = () => {
             {company && jobapplications.length > 0 && (
                 <div className="grid grid-cols-1 gap-4 overflow-y-scroll">
                     {jobapplications.map((jobapplication) => {
-                        console.log(jobapplication)
-                        const user = applierUser && applierUser[jobapplication.people_id] && { ...applierUser[jobapplication.people_id] };
-                        const anonymous = applierAnonymous && applierAnonymous[jobapplication.anonymous_id];
-                        const advertisement = advert && advert[jobapplication.id];
+                        const user = applierUser[jobapplication.people_id] && { ...applierUser[jobapplication.people_id] };
+                        const anonymous = applierAnonymous[jobapplication.anonymous_id];
+                        const advertisement = advert[jobapplication.advertissement_id];
                         return (
                             <div key={jobapplication.jobapplication_id} className="bg-white rounded-lg shadow-md overflow-y-auto">
                                 <div className="p-4">
@@ -129,6 +135,6 @@ const Appliers = () => {
             )}
         </div>
     );
-}
+};
 
 export default Appliers;

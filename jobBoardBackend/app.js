@@ -6,6 +6,7 @@ const companiesRoutes = require('./src/routes/company.route');
 const peopleRoutes = require('./src/routes/people.route');
 const authRoutes = require('./src/routes/auth.route');
 const anonymousRoutes = require('./src/routes/anonymous.route');
+const tablesRoutes = require('./src/routes/tables.route');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
@@ -26,6 +27,7 @@ app.use(`/api/companies`, companiesRoutes);
 app.use(`/api/users`, peopleRoutes);
 app.use(`/api/auth`, authRoutes);
 app.use(`/api/anonymous`, anonymousRoutes);
+app.use(`/api/tables`, tablesRoutes);
 app.use('/test', (req, res) => {
     res.send('Hello World')
 });

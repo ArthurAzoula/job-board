@@ -11,6 +11,8 @@ import { IoMdCash } from 'react-icons/io';
 import { RiTimeFill } from 'react-icons/ri';
 import formatDate from '../utils/function';
 import { getAnonymousUserByEmail, getUserConnected } from '../api/calls.api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Annonce = () => {
     const { id } = useParams();
@@ -33,31 +35,35 @@ const Annonce = () => {
     ];
 
     useEffect(() => {
-        const fetchAnnonce = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/advertissements/${id}`);
-                setAnnonce(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+        if (id) {
+            const fetchAnnonce = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:3000/api/advertissements/${id}`);
+                    setAnnonce(response.data);
+                    //console.log(response.data);
+                } catch (error) {
+                    console.error(error);
+                }
+            };
 
-        fetchAnnonce();
+            fetchAnnonce();
+        }
     }, [id]);
 
     useEffect(() => {
-        const fetchCompany = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/companies/${annonce?.company_id}`);
-                setCompany(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+        if (annonce && annonce.company_id) {
+            const fetchCompany = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:3000/api/companies/${annonce.company_id}`);
+                    setCompany(response.data);
+                    //console.log(response.data);
+                } catch (error) {
+                    console.error(error);
+                }
+            };
 
-        fetchCompany();
+            fetchCompany();
+        }
     }, [annonce]);
 
     const handleApply = () => {
@@ -77,60 +83,59 @@ const Annonce = () => {
         event.preventDefault();
 
         if (logged) {
-
-            // Get the user
             const userConnectedPromise = getUserConnected(localStorage.getItem('token'));
 
             userConnectedPromise.then((user) => {
-                setUser(user);
-
-                // Send message to the company
-                const data = {
-                    advertissement_id: id,
-                    people_id: user.people_id,
-                    status: 'pending',
-                    email_send: true
-                };
-                axios.post('http://localhost:3000/api/jobapplications', data)
-                    .then(res => {
-                        console.log(res.data);
-                    })
-                    .catch(err => {
-                        console.log(err.response);
-                    });
+                if (user && user.people_id) {
+                    setUser(user);
+                    // Send message to the company
+                    const data = {
+                        advertissement_id: id,
+                        people_id: user.people_id,
+                        status: 'pending',
+                        email_send: true
+                    };
+                    axios.post('http://localhost:3000/api/jobapplications', data)
+                        .then(res => {
+                            toast.success(`Merci pour votre candidature ${user.prenom} ${user.nom} !}`);
+                            closeModal()
+                        })
+                        .catch(err => {
+                            toast.error('Erreur lors de l\'envoi de votre candidature !');
+                        });
+                }
             });
         } else {
             // Create the anonymous user
             axios.post('http://localhost:3000/api/anonymous', { nom: nom, prenom: prenom, email: email, telephone: telephone })
-                .then(() => {
-                    // Wait for 1 second to allow the database to update
-                    setTimeout(() => {
-                        // Get the anonymous user
-                        const anonymousPromise = getAnonymousUserByEmail(email);
+                .then((res) => {
+                    const anonymous = res.data.anonymous;
 
-                        anonymousPromise.then((res) => {
-                            if (res && res.anonymous) {
-                                setAnonymous(res.anonymous);
+                    const anonymousPromise = getAnonymousUserByEmail(email);
 
-                                const data = {
-                                    advertissement_id: id,
-                                    anonymous_id: res.anonymous.anonymous_id,
-                                    email_send: true,
-                                    status: 'pending',
-                                };
+                    anonymousPromise.then((res) => {
+                        if (res && res.anonymous) {
+                            setAnonymous(res.anonymous);
 
-                                axios.post('http://localhost:3000/api/jobapplications', data)
-                                    .then(res => {
-                                        console.log(res.data);
-                                    })
-                                    .catch(err => {
-                                        console.log(err.response);
-                                    });
-                            } else {
-                                console.log('Error: anonymous user not found');
-                            }
-                        });
-                    }, 1000);
+                            const data = {
+                                advertissement_id: id,
+                                anonymous_id: res.anonymous.anonymous_id,
+                                email_send: true,
+                                status: 'pending',
+                            };
+
+                            axios.post('http://localhost:3000/api/jobapplications', data)
+                                .then(res => {
+                                    toast.success(`Merci pour votre candidature anonyme ${anonymous.prenom} ${anonymous.nom} !`);
+                                    closeModal()
+                                })
+                                .catch(err => {
+                                    toast.error('Erreur lors de l\'envoi de votre candidature anonyme !');
+                                });
+                        } else {
+                            console.log('Error: anonymous user not found');
+                        }
+                    });
                 })
                 .catch((err) => console.log(err));
         }
@@ -250,7 +255,9 @@ const Annonce = () => {
                         </form>
                     )}
                 </Modal>
+
             )}
+            <ToastContainer />
         </>
     );
 };

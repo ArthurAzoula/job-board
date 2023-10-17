@@ -12,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 import LogoutIcon from "../icons/Logout.icon";
 import ButtonAddAdvert from "./ButtonAddAdvert.component";
 import { IoIosLogIn } from "react-icons/io";
+import { ToastContainer, toast } from 'react-toastify';
+import { FaUserCircle } from "react-icons/fa";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
   const [logged, setLogged] = useState(accountService.isLogged());
@@ -27,7 +30,7 @@ const Navbar = () => {
       })
         .then((response) => {
           if (response.status === 200) {
-            console.log(response.data);
+            //console.log(response.data);
             setUser(response.data);
           }
         })
@@ -39,9 +42,13 @@ const Navbar = () => {
 
   const logout = () => {
     accountService.logout();
-    setLogged(false);
-    navigate("/");
+    toast.success('Déconnexion réussie!');
+    setTimeout(() => {
+      navigate("/signin");
+      window.location.reload();
+    }, 2000);
   };
+
 
   const userType = localStorage.getItem("type") || null;
 
@@ -151,6 +158,7 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
+      <ToastContainer />
     </nav>
   );
 };
