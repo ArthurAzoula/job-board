@@ -45,15 +45,53 @@ const updateRecord = async (req, res) => {
         // Get the table name, record ID, and updated record data from the request
         const { tableName, id } = req.params;
         const updatedRecordData = req.body;
+
+        let tableId = "";
+        let table = "";
+
+        switch (tableName.trim()) {
+            case "people":
+                tableId = "people_id";
+                table = "people";
+                break;
+            case "companies":
+                tableId = "company_id";
+                table = "companies";
+                break;
+            case "advertissements":
+                tableId = "advertissement_id";
+                table = "advertissements";
+                break;
+            case "jobapplications":
+                tableId = "jobapplication_id";
+                table = "jobapplications";
+                break;
+            case "anonymous":
+                tableId = "anonymous_id";
+                table = "anonymous";
+                break;
+            default:
+                tableId = "id";
+                table = "table";
+                break;
+        }
+
+        if (database[table] === undefined) {
+            console.log(database);
+            return res.status(404).send("Table does not exist");
+        }
+
         // Update the record in the database with sequelize
-        const [numRowsUpdated, [updatedRecord]] = await database[tableName].update(updatedRecordData, {
-            where: { id },
+        console.log(updatedRecordData);
+        const [numRowsUpdated, [updatedRecord]] = await database[table].update(updatedRecordData, {
+            where: { [tableId]: id },
             returning: true,
         });
+
         // Check if the record was updated
         if (numRowsUpdated === 0) {
             // Return an error if the record was not updated
-            return res.status(404).send('Record not found');
+            return res.status(404).send("Record not found");
         }
         // Return the updated record
         return res.status(200).json(updatedRecord);
@@ -66,9 +104,39 @@ const createRecord = async (req, res) => {
     try {
         // Get the table name and new record data from the request
         const { tableName } = req.params;
+
+        let table = "";
+
+        switch (tableName.trim()) {
+            case "people":
+                table = "people";
+                break;
+            case "companies":
+                table = "company";
+                break;
+            case "advertissements":
+                table = "advertissement";
+                break;
+            case "jobapplications":
+                table = "jobapplication";
+                break;
+            case "anonymous":
+                table = "anonymous";
+                break;
+            default:
+                table = "table";
+                break;
+        }
+
         const newRecordData = req.body;
+
+        if (database[table] === undefined || database[table] === null) {
+            console.log(database);
+            return res.status(404).send('Table does not exists');
+        }
+
         // Create the record in the database with sequelize
-        const newRecord = await database[tableName].create(newRecordData);
+        const newRecord = await database[table].create(newRecordData);
         // Return the new record
         return res.status(201).json(newRecord);
     } catch (error) {
@@ -80,8 +148,45 @@ const deleteRecord = async (req, res) => {
     try {
         // Get the table name and record ID from the request
         const { tableName, id } = req.params;
+
+        let tableId = "";
+        let table = "";
+
+        switch (tableName.trim()) {
+            case "people":
+                tableId = "people_id";
+                table = "people";
+                break;
+            case "companies":
+                tableId = "company_id";
+                table = "company";
+                break;
+            case "advertissements":
+                tableId = "advertissement_id";
+                table = "advertissement";
+                break;
+            case "jobapplications":
+                tableId = "jobapplication_id";
+                table = "jobapplication";
+                break;
+            case "anonymous":
+                tableId = "anonymous_id";
+                table = "anonymous";
+                break;
+            default:
+                tableId = "id";
+                table = "table";
+                break;
+        }
+
+        if (database[table] === undefined) {
+            console.log(database);
+            return res.status(404).send('Table does not exists');
+        }
+
         // Delete the record from the database with sequelize
-        const numRowsDeleted = await database[tableName].destroy({ where: { id } });
+        const numRowsDeleted = await database[table].destroy({ where: { [tableId]: id } });
+
         // Check if the record was deleted
         if (numRowsDeleted === 0) {
             // Return an error if the record was not deleted

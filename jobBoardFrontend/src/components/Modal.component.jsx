@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
-const Modal = ({ closeModal, children }) => {
+const Modal = ({ closeModal, children, isGrid}) => {
     const modalRef = useRef(null);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const Modal = ({ closeModal, children }) => {
 
     return ReactDOM.createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white rounded-lg shadow-lg p-6" ref={modalRef}>
+            <div className={`bg-white rounded-lg shadow-lg p-6 ${isGrid ? 'grid grid-cols-2 gap-2' : ''}`} ref={modalRef}>
                 {children}
             </div>
         </div>,

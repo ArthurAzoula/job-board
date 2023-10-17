@@ -53,9 +53,9 @@ const Filtres = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row pt-4 pb-4 w-2/3 justify-center items-center bg-grisclair rounded-lg">
+    <div className="flex flex-col md:flex-row pt-4 pb-4  w-2/3 justify-center items-center bg-grisclair rounded-lg">
       <form className="flex space-x-4" onSubmit={handleSubmit}>
-        <div className="elative flex items-center pr-8">
+        <div className="elative flex items-center ml-4 pr-8">
           <KeyWordsIcon className="absolute left-2 bg-gray-400 text-gray-400" />
           <span className="ml-2"></span>
           <input
@@ -69,11 +69,11 @@ const Filtres = () => {
           />
         </div>
 
-        <div className="relative flex items-center pr-8">
+        <div className="relative flex items-center pr-4">
           <ContractIcon className="absolute left-2 text-gray-400" />
           <span className="ml-2"></span>
           <select
-            className="pl-2 pr-2 py-2 w-48 rounded-md bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="pl-2 py-2 w-48 rounded-md bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             name="type_contrat"
             id="type_contrat"
             value={credentials.type_contrat}
@@ -120,7 +120,7 @@ const Filtres = () => {
           )}
         </div>
         <div className="relative flex items-center">
-          <button className="bg-bleugris p-2 mr-2 rounded-full hover:scale-110 duration-200 text-white font-bold">
+          <button className="bg-bleugris p-2 mr-4 rounded-full hover:scale-110 duration-200 text-white font-bold">
             <LoopIcon className="inline-block" />
           </button>
         </div>

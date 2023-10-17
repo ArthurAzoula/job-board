@@ -24,6 +24,38 @@ const getAllJobApplications = async (req, res) => {
     }
 }
 
+const getJobApplicationsByCompanyId = async (req, res) => {
+    try {
+        const { companyId } = req.params;
+        const jobApplications = await database.sequelize.models.jobapplication.findAll({
+            where: { company_id: companyId },
+            include: [{ model: database.sequelize.models.advertissement }]
+        });
+        if (jobApplications) {
+            return res.status(200).json(jobApplications);
+        }
+        return res.status(404).send('JobApplications does not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+const getJobApplicationsByUserId = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const jobApplications = await database.sequelize.models.jobapplication.findAll({
+            where: { people_id: userId },
+            include: [{ model: database.sequelize.models.advertissement }]
+        });
+        if (jobApplications) {
+            return res.status(200).json(jobApplications);
+        }
+        return res.status(404).send('JobApplications does not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 const getJobApplicationById = async (req, res) => {
     try {
         const jobApplicationId = req.params.id;
@@ -91,5 +123,8 @@ module.exports = {
     createJobApplication,
     updateJobApplication,
     deleteJobApplication,
-    getUserJobApplicationFromAnAdvert
+    getUserJobApplicationFromAnAdvert,
+    getJobApplicationsByCompanyId,
+    getJobApplicationsByUserId
+    
 }
