@@ -16,7 +16,6 @@ const Home = () => {
         { label: "Home", path: "/"}
     ]
 
-
     return (
         <div className="bg-white">
             <Breadcrumb items={items} />
@@ -24,24 +23,22 @@ const Home = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                     <div className="flex flex-col justify-center">
                         <h1 className="text-gradient font-extrabold text-5xl animate-pulse mb-4">
-                            Find your dream job with EpiJob
+                            Trouvez votre emploi de rêve avec EpiJob
                         </h1>
                         <p className="text-lg mb-8 animate-pulse">
-                            EpiJob is the best platform to find your dream job. With our
-                            advanced search algorithms and personalized recommendations,
-                            you'll be able to find the perfect job in no time.
+                            EpiJob est la meilleure plateforme pour trouver votre emploi de rêve. Avec nos algorithmes de recherche avancés et nos recommandations personnalisées, vous pourrez trouver le travail parfait en un rien de temps.
                         </p>
                         <Link
                             to="/annonces"
                             className="bg-bleugris rounded-full px-4 py-2 font-bold text-center  text-white hover:underline decoration-white"
                         >
-                            Browse Jobs
+                            Parcourir les offres d'emploi
                         </Link>
                     </div>
                     <div className="relative">
                         <img
                             src={Job3}
-                            alt="Job search"
+                            alt="Recherche d'emploi"
                             className="rounded-xl animate-fade-in"
                         />
                         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 rounded-xl"></div>
@@ -51,57 +48,121 @@ const Home = () => {
             <div className="bg-lightblue">
                 <div className="mx-auto container py-16">
                     <h2 className="text-3xl font-bold mb-8 text-black animate__animated animate__fadeInUp">
-                        Why EpiJob?
+                        Pourquoi EpiJob ?
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                        {/* Add some animations or transitions for the items below */}
+                        {/* Ajouter des animations ou des transitions pour les éléments ci-dessous */}
                         <div className="flex flex-col justify-center">
-                            <h3 className="text-2xl font-bold mb-4 animate-bounce">Advanced Search</h3>
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">Recherche avancée</h3>
                             <p className="text-lg mb-8 animate-pulse">
-                                Our advanced search algorithms allow you to find the perfect job
-                                based on your skills, experience, and preferences.
+                                Nos algorithmes de recherche avancés vous permettent de trouver l'emploi parfait en fonction de vos compétences, de votre expérience et de vos préférences.
                             </p>
                         </div>
                         <div className="flex flex-col justify-center">
                             <h3 className="text-2xl font-bold mb-4 animate-bounce">
-                                Personalized Recommendations
+                                Recommandations personnalisées
                             </h3>
                             <p className="text-lg mb-8 animate-pulse">
-                                Our personalized recommendations help you discover new job
-                                opportunities that match your interests and career goals.
+                                Nos recommandations personnalisées vous aident à découvrir de nouvelles opportunités d'emploi qui correspondent à vos intérêts et à vos objectifs de carrière.
                             </p>
                         </div>
                         <div className="flex flex-col justify-center">
                             <h3 className="text-2xl font-bold mb-4 animate-bounce">
-                                Easy Application Process
+                                Processus de candidature facile
                             </h3>
                             <p className="text-lg mb-8 animate-pulse">
-                                Our easy application process allows you to apply for jobs with
-                                just a few clicks, so you can spend more time focusing on your
-                                career.
+                                Notre processus de candidature facile vous permet de postuler à des emplois en quelques clics, afin que vous puissiez passer plus de temps à vous concentrer sur votre carrière.
                             </p>
                         </div>
                         <div className="flex flex-col justify-center">
-                            <h3 className="text-2xl font-bold mb-4 animate-bounce">Trusted Employers</h3>
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">Employeurs de confiance</h3>
                             <p className="text-lg mb-8 animate-pulse">
-                                We partner with trusted employers to bring you the best job
-                                opportunities in your field.
+                                Nous nous associons à des employeurs de confiance pour vous offrir les meilleures opportunités d'emploi dans votre domaine.
                             </p>
                         </div>
                     </div>
                     <p className="text-lg mb-8 animate-pulse">
-                        EpiJob is not only a great platform for job seekers, but also for
-                        companies looking to hire top talent. With our advanced search
-                        algorithms and personalized recommendations, we help companies find
-                        the best candidates for their open positions. Our easy application
-                        process also makes it simple for companies to receive and review
-                        applications, so they can quickly fill their open positions.
+                        EpiJob n'est pas seulement une excellente plateforme pour les chercheurs d'emploi, mais aussi pour les entreprises à la recherche de talents exceptionnels. Avec nos algorithmes de recherche avancés et nos recommandations personnalisées, nous aidons les entreprises à trouver les meilleurs candidats pour leurs postes vacants. Notre processus de candidature facile permet également aux entreprises de recevoir et de passer en revue les candidatures rapidement, afin qu'elles puissent pourvoir rapidement leurs postes vacants.
                     </p>
+                </div>
+            </div>
+            <div className="bg-white">
+                <div className="mx-auto container py-16">
+                    <h2 className="text-3xl font-bold mb-8 text-black animate__animated animate__fadeInUp">
+                        Pour les chercheurs d'emploi
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                        <div className="flex flex-col justify-center">
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">Trouvez votre emploi de rêve</h3>
+                            <p className="text-lg mb-8 animate-pulse">
+                                Avec EpiJob, vous pouvez trouver le travail parfait en fonction de vos compétences, de votre expérience et de vos préférences. Utilisez notre recherche avancée et nos recommandations personnalisées pour découvrir de nouvelles opportunités d'emploi.
+                            </p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">
+                                Postulez en quelques clics
+                            </h3>
+                            <p className="text-lg mb-8 animate-pulse">
+                                Notre processus de candidature facile vous permet de postuler à des emplois en quelques clics, afin que vous puissiez passer plus de temps à vous concentrer sur votre carrière.
+                            </p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">
+                                Recevez des recommandations personnalisées
+                            </h3>
+                            <p className="text-lg mb-8 animate-pulse">
+                                Nos recommandations personnalisées vous aident à découvrir de nouvelles opportunités d'emploi qui correspondent à vos intérêts et à vos objectifs de carrière.
+                            </p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">Trouvez des employeurs de confiance</h3>
+                            <p className="text-lg mb-8 animate-pulse">
+                                Nous nous associons à des employeurs de confiance pour vous offrir les meilleures opportunités d'emploi dans votre domaine.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="bg-lightblue">
+                <div className="mx-auto container py-16">
+                    <h2 className="text-3xl font-bold mb-8 text-black animate__animated animate__fadeInUp">
+                        Pour les entreprises
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                        <div className="flex flex-col justify-center">
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">Trouvez les meilleurs candidats</h3>
+                            <p className="text-lg mb-8 animate-pulse">
+                                Avec nos algorithmes de recherche avancés et nos recommandations personnalisées, nous aidons les entreprises à trouver les meilleurs candidats pour leurs postes vacants.
+                            </p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">
+                                Publiez des offres d'emploi en quelques clics
+                            </h3>
+                            <p className="text-lg mb-8 animate-pulse">
+                                Notre processus de publication d'offres d'emploi facile vous permet de publier des offres d'emploi en quelques clics, afin que vous puissiez pourvoir rapidement vos postes vacants.
+                            </p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">
+                                Recevez des candidatures rapidement
+                            </h3>
+                            <p className="text-lg mb-8 animate-pulse">
+                                Notre processus de candidature facile permet aux entreprises de recevoir et de passer en revue les candidatures rapidement, afin qu'elles puissent pourvoir rapidement leurs postes vacants.
+                            </p>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                            <h3 className="text-2xl font-bold mb-4 animate-bounce">Trouvez des candidats de confiance</h3>
+                            <p className="text-lg mb-8 animate-pulse">
+                                Nous nous associons à des chercheurs d'emploi de confiance pour vous offrir les meilleurs candidats pour vos postes vacants.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="bg-gray-100">
                 <div className="mx-8 container py-16">
-                    <h2 className="text-3xl font-bold mb-8 text-bleugris animate__animated animate__fadeInUp">Featured Jobs</h2>
+                    <h2 className="text-3xl font-bold mb-8 text-bleugris animate__animated animate__fadeInUp">Offres d'emploi en vedette</h2>
                     <div className="carousel-wrapper max-w-3xl mx-auto">
                         <Carousel
                             showArrows={true}
@@ -113,50 +174,34 @@ const Home = () => {
                             <div className="animate__animated animate__fadeIn">
                                 <img
                                     src={Job1}
-                                    alt="Job 1"
+                                    alt="Emploi 1"
                                     className="rounded-xl"
                                 />
-                                <p className="legend text-bleugris">Job 1</p>
-                            </div>
-                            <div className="animate__animated animate__fadeIn">
-                                <img
-                                    src={Job2}
-                                    alt="Job 2"
-                                    className="rounded-xl"
-                                />
-                                <p className="legend text-bleugris">Job 2</p>
-                            </div>
-                            <div className="animate__animated animate__fadeIn">
-                                <img
-                                    src={Job4}
-                                    alt="Job 3"
-                                    className="rounded-xl"
-                                />
-                                <p className="legend text-bleugris">Job 3</p>
+                                <p className="legend text-bleugris">En recherche d'emploi</p>
                             </div>
                             <div className="animate__animated animate__fadeIn">
                                 <img
                                     src={Job5}
-                                    alt="Job 4"
+                                    alt="Emploi 4"
                                     className="rounded-xl"
                                 />
-                                <p className="legend text-bleugris">Job 3</p>
+                                <p className="legend text-bleugris">Développeur</p>
                             </div>
                             <div className="animate__animated animate__fadeIn">
                                 <img
                                     src={Job6}
-                                    alt="Job 5"
+                                    alt="Emploi 5"
                                     className="rounded-xl"
                                 />
-                                <p className="legend text-bleugris">Job 3</p>
+                                <p className="legend text-bleugris">Community Manager</p>
                             </div>
                             <div className="animate__animated animate__fadeIn">
                                 <img
                                     src={Job7}
-                                    alt="Job 6"
+                                    alt="Emploi 6"
                                     className="rounded-xl"
                                 />
-                                <p className="legend text-bleugris">Job 3</p>
+                                <p className="legend text-bleugris">Ressources Humaines</p>
                             </div>
                         </Carousel>
                     </div>
@@ -164,7 +209,7 @@ const Home = () => {
                         to="/annonces"
                         className="bg-bleugris rounded-full px-4 py-2 text-white hover:underline decoration-white"
                     >
-                        Browse All Jobs
+                        Parcourir toutes les offres d'emploi
                     </Link>
                 </div>
             </div>

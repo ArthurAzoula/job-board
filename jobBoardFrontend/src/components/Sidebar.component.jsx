@@ -39,7 +39,7 @@ const Sidebar = () => {
               <span className="flex justify-center">
                 <CandidatureIcon />
               </span>
-              <span className="ml-2">Applications</span>
+              <span className="ml-2">Candidatures</span>
             </button>
             <button
               className={`w-40 py-2 px-4 rounded-lg hover:bg-gray-300 ${
@@ -52,7 +52,7 @@ const Sidebar = () => {
               <span className="flex justify-center">
                 <SettingsIcon />
               </span>
-              <span className="ml-2 flex justify-center">Settings</span>
+              <span className="ml-2 flex justify-center">Paramètres</span>
             </button>
           </div>
 
@@ -62,7 +62,7 @@ const Sidebar = () => {
             </div>
           )}
 
-          {showAccount && (
+          {showAccount && (   
             <div className="flex flex-col">
               <Settings />
             </div>
