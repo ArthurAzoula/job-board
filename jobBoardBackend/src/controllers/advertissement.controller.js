@@ -1,4 +1,5 @@
 const database = require('../models/index');
+const { Op } = require("sequelize");
 
 const getAllAdvertissements = async (req, res) => {
     try {
@@ -27,23 +28,38 @@ const getAdvertissementById = async (req, res) => {
 
 const getAdvertissementFilters = async (req, res) => {
     try {
-        const { keywords, type_contrat } = req.query;
+        
+        const { keywords, contract, city } = req.query;
 
-        console.log(keywords, type_contrat);
+        console.log(keywords, contract, city);
 
         const whereClause = {};
-        if (type_contrat) {
-            whereClause.type_contrat = "CDI";
-        }
+
         if (keywords) {
+            // titre contains keywords
             whereClause.titre = {
-                [Op.like]: `%Back%`
+                [database.Sequelize.Op.like]: `%${keywords}%`
             };
         }
-        const advertissement = await database.sequelize.models.advertissement.findAll({
+
+        if (contract) {
+            whereClause.type_contrat = contract;
+        }
+
+        if (city) {
+            // Where lieu contains city
+            whereClause.lieu = {
+                [database.Sequelize.Op.like]: `%${city}%`
+            };
+        }
+
+        // Check for all filters
+        const advertissements = await database.sequelize.models.advertissement.findAll({
+            where: whereClause
         });
-        if (advertissement) {
-            return res.status(200).json(advertissement);
+        
+        if (advertissements) {
+            return res.status(200).json(advertissements);
         }
     } catch (error) {
         return res.status(500).json({ error: error.message });
