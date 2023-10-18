@@ -56,7 +56,7 @@ const Annonces = () => {
       <div className="flex justify-center mt-12">
         <Filtres />
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-12 ml-2 px-4">
+      <div className="grid md:grid-cols-3 gap-4 mt-12 ml-2 px-4">
         {annonces.map((annonce) => (
           <div key={annonce.advertissement_id} className="bg-white border rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition duration-300">
             <div className="relative">
