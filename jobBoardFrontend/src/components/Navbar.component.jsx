@@ -57,9 +57,50 @@ const Navbar = () => {
       <nav className="bg-gunmetal">
         <div className="mx-auto container items-center justify-between block md:flex">
           <Link to="/" className="text-white text-4xl font-bold text-center">
-            <span className="text-gradient font-extrabold lg:text-5xl text-3xl">
-              &#123;EpiJob&#125;
-            </span>
+            <div className="flex justify-between">
+              <span className="text-gradient font-extrabold lg:text-5xl text-3xl">
+                &#123;EpiJob&#125;
+              </span>
+              <div className="xs:hidden">
+                {!logged ? (
+                  <div className="bg-bleugris rounded-lg px-2 py-0 flex items-center">
+                    <Link
+                      to="/signin"
+                      className="text-white hover:underline decoration-white hover:scale-110 duration-100"
+                    >
+                      <div className="block lg:flex justify-center">
+                        <AdminIcon className="mr-2" />
+                        <span className="ml-2 hidden 2xl:inline">
+                          Connexion
+                        </span>
+                      </div>
+                    </Link>
+                    <span className="ml-3 text-white">/</span>
+                    <Link
+                      to="/signup"
+                      className="text-white hover:underline decoration-white ml-4 hover:scale-110 duration-100"
+                    >
+                      <div className="block lg:flex justify-center">
+                        <SignInIcon className="mr-2" />
+                        <span className="ml-2 hidden 2xl:inline">
+                          Inscription
+                        </span>
+                      </div>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="">
+                    <button
+                      onClick={logout}
+                      className="block lg:flex items-center bg-bleugris rounded-lg font-bold hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
+                    >
+                      <LogoutIcon />
+                      <span className="ml-2 hidden 2xl:inline">Logout</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
             <span className="text-bleugris font-bold text-3xl ml-2 hidden lg:inline">
               {userType === "company"
                 ? "for company"
@@ -93,13 +134,13 @@ const Navbar = () => {
                 </span>
               </Link>
             </li>
-            <li>
+            <li className="lg:hidden">
               <Link
                 to="/settings"
-                className="lg:hidden text-white flex items-center hover:underline decoration-white font-bold"
+                className=" text-white flex items-center hover:underline decoration-white font-bold"
               >
-                <SettingsIcon className="mr-2" /> 
-                <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
+                <SettingsIcon className="mr-2" />
+                <span className="ml-2 hover:scale-110 duration-100 hidden">
                   Settings
                 </span>
               </Link>
@@ -137,12 +178,12 @@ const Navbar = () => {
             )}
             <li>
               {!logged ? (
-                <div className="bg-bleugris rounded-lg px-4 py-2 flex items-center">
+                <div className="hidden xs:flex bg-bleugris rounded-lg px-4 py-2 items-center">
                   <Link
                     to="/signin"
                     className="text-white hover:underline decoration-white hover:scale-110 duration-100"
                   >
-                    <div className="flex justify-center">
+                    <div className="block lg:flex justify-center">
                       <AdminIcon className="mr-2" />
                       <span className="ml-2 hidden 2xl:inline">Connexion</span>
                     </div>
@@ -152,7 +193,7 @@ const Navbar = () => {
                     to="/signup"
                     className="text-white hover:underline decoration-white ml-4 hover:scale-110 duration-100"
                   >
-                    <div className="flex justify-center">
+                    <div className="block lg:flex justify-center">
                       <SignInIcon className="mr-2" />
                       <span className="ml-2 hidden 2xl:inline">
                         Inscription
@@ -161,10 +202,10 @@ const Navbar = () => {
                   </Link>
                 </div>
               ) : (
-                <div className="">
+                <div className="hidden xs:flex">
                   <button
                     onClick={logout}
-                    className="flex items-center bg-bleugris rounded-lg font-bold hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
+                    className="block lg:flex items-center bg-bleugris rounded-lg font-bold hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
                   >
                     <LogoutIcon />
                     <span className="ml-2 hidden 2xl:inline">Logout</span>

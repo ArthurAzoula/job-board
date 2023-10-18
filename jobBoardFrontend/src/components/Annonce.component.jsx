@@ -154,8 +154,8 @@ const Annonce = () => {
                             <img src={hiringImage} alt={annonce.titre} className="w-full h-48 object-cover" />
                             <div className="absolute top-0 right-0 bg-green-500 text-white px-2 py-1 rounded-bl-lg">{annonce.type_contrat}</div>
                         </div>
-                        <div className="p-4 flex justify-between">
-                            <div className="w-1/2 pr-4">
+                        <div className="p-4 block md:flex justify-between">
+                            <div className="w-full md:w-1/2 pr-4">
                                 <h2 className="text-3xl bg-gunmetal text-white p-2 rounded-lg mb-2">{annonce.titre}</h2>
                                 <p className="text-gray-700 text-base">{annonce.description}</p>
                                 <div className="flex items-center mt-4">
@@ -175,7 +175,7 @@ const Annonce = () => {
                                     <p className="text-gray-700 text-base">{annonce.lieu}</p>
                                 </div>
                             </div>
-                            <div className="w-1/2 pl-4 border-l border-gray-300">
+                            <div className="w-full md:w-1/2 pl-0 md:pl-4 border-t md:border-l border-gray-300">
                                 <h2 className="text-lg font-bold mb-2">À propos de l'entreprise</h2>
                                 <div className="flex items-center mt-4">
                                     <FaUser className="text-gray-700 mr-2" />
