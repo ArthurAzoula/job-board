@@ -31,7 +31,6 @@ const Navbar = () => {
       })
         .then((response) => {
           if (response.status === 200) {
-            //console.log(response.data);
             setUser(response.data);
           }
         })
@@ -55,7 +54,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gunmetal">
-      <div className="mx-auto container flex items-center justify-between">
+      <div className="mx-auto container items-center justify-between block md:flex">
         <Link to="/" className="text-white text-4xl font-bold text-center">
           <span className="text-gradient font-extrabold lg:text-5xl text-3xl">
             &#123;EpiJob&#125;
@@ -70,14 +69,14 @@ const Navbar = () => {
               : ""}
           </span>
         </Link>
-        <ul className="hidden md:flex space-x-14 items-center bg-gunemetal p-4 rounded-xl text-xl">
+        <ul className="flex space-x-8 md:space-x-14 items-center bg-gunemetal p-2 md:p-4 rounded-xl text-xl">
           <li>
             <Link
               to="/"
               className="text-white flex items-center hover:underline hover:underline-offset-2 decoration-white font-bold"
             >
               <HomeIcon className="mr-2 sm:mr-2 md:mr-2" />
-              <span className="ml-2 hover:scale-110 duration-100 hidden lg:inline">
+              <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
                 Home
               </span>
             </Link>
@@ -88,7 +87,7 @@ const Navbar = () => {
               className="text-white flex items-center hover:underline decoration-white font-bold"
             >
               <AdvertissementIcon className="mr-2" />
-              <span className="ml-2 hover:scale-110 duration-100 hidden lg:inline">
+              <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
                 Adverts
               </span>
             </Link>
@@ -100,7 +99,7 @@ const Navbar = () => {
                 className="text-white flex items-center hover:underline decoration-white font-bold"
               >
                 <FaBuilding className="mr-2" />
-                <span className="ml-2 hover:scale-110 duration-100 hidden lg:inline">
+                <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
                   Companies
                 </span>
               </Link>
@@ -113,7 +112,7 @@ const Navbar = () => {
                 className="text-white flex items-center hover:underline decoration-white font-bold"
               >
                 <AdminIcon className="mr-2" />
-                <span className="ml-2 hover:scale-110 duration-100 hidden lg:inline">
+                <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
                   Admin
                 </span>
               </Link>
@@ -133,7 +132,7 @@ const Navbar = () => {
                 >
                   <div className="flex justify-center">
                     <AdminIcon className="mr-2" />
-                    <span className="ml-2 hidden lg:inline">Connexion</span>
+                    <span className="ml-2 hidden 2xl:inline">Connexion</span>
                   </div>
                 </Link>
                 <span className="ml-3 text-white">/</span>
@@ -143,7 +142,7 @@ const Navbar = () => {
                 >
                   <div className="flex justify-center">
                     <SignInIcon className="mr-2" />
-                    <span className="ml-2 hidden lg:inline">Inscription</span>
+                    <span className="ml-2 hidden 2xl:inline">Inscription</span>
                   </div>
                 </Link>
               </div>
@@ -154,7 +153,7 @@ const Navbar = () => {
                   className="flex items-center bg-bleugris rounded-lg font-bold hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
                 >
                   <LogoutIcon />
-                  <span className="ml-2 hidden lg:inline">Logout</span>
+                  <span className="ml-2 hidden 2xl:inline">Logout</span>
                 </button>
               </div>
             )}
