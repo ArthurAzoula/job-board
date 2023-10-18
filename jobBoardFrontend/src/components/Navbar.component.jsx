@@ -54,7 +54,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gunmetal">
-      <div className="mx-auto container flex items-center justify-between">
+      <div className="mx-auto container items-center justify-between block md:flex">
         <Link to="/" className="text-white text-4xl font-bold text-center">
           <span className="text-gradient font-extrabold lg:text-5xl text-3xl">
             &#123;EpiJob&#125;
@@ -69,7 +69,7 @@ const Navbar = () => {
               : ""}
           </span>
         </Link>
-        <ul className="hidden md:flex md:inline space-x-14 items-center bg-gunemetal p-4 rounded-xl text-xl">
+        <ul className="flex space-x-8 md:space-x-14 items-center bg-gunemetal p-2 md:p-4 rounded-xl text-xl">
           <li>
             <Link
               to="/"
@@ -132,7 +132,7 @@ const Navbar = () => {
                 >
                   <div className="flex justify-center">
                     <AdminIcon className="mr-2" />
-                    <span className="ml-2 hidden xl:inline">Connexion</span>
+                    <span className="ml-2 hidden 2xl:inline">Connexion</span>
                   </div>
                 </Link>
                 <span className="ml-3 text-white">/</span>
@@ -142,7 +142,7 @@ const Navbar = () => {
                 >
                   <div className="flex justify-center">
                     <SignInIcon className="mr-2" />
-                    <span className="ml-2 hidden xl:inline">Inscription</span>
+                    <span className="ml-2 hidden 2xl:inline">Inscription</span>
                   </div>
                 </Link>
               </div>
@@ -153,7 +153,7 @@ const Navbar = () => {
                   className="flex items-center bg-bleugris rounded-lg font-bold hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
                 >
                   <LogoutIcon />
-                  <span className="ml-2 hidden xl:inline">Logout</span>
+                  <span className="ml-2 hidden 2xl:inline">Logout</span>
                 </button>
               </div>
             )}
