@@ -56,15 +56,15 @@ const updateRecord = async (req, res) => {
                 break;
             case "companies":
                 tableId = "company_id";
-                table = "companies";
+                table = "company";
                 break;
             case "advertissements":
                 tableId = "advertissement_id";
-                table = "advertissements";
+                table = "advertissement";
                 break;
             case "jobapplications":
                 tableId = "jobapplication_id";
-                table = "jobapplications";
+                table = "jobapplication";
                 break;
             case "anonymous":
                 tableId = "anonymous_id";
@@ -74,27 +74,28 @@ const updateRecord = async (req, res) => {
                 tableId = "id";
                 table = "table";
                 break;
-        }
+        }   
 
         if (database[table] === undefined) {
             console.log(database);
             return res.status(404).send("Table does not exist");
         }
 
-        // Update the record in the database with sequelize
-        console.log(updatedRecordData);
-        const [numRowsUpdated, [updatedRecord]] = await database[table].update(updatedRecordData, {
-            where: { [tableId]: id },
-            returning: true,
-        });
+        // Search by Pk
+        const recordPk = await database[table].findByPk(id);
 
-        // Check if the record was updated
-        if (numRowsUpdated === 0) {
-            // Return an error if the record was not updated
+        // Check if the record exists
+        if (!recordPk) {
+            // Return an error if the record does not exist
             return res.status(404).send("Record not found");
         }
+
+        // Update the record in the database with sequelize
+        const updatedRecord = await database[table].update(updatedRecordData, { where: { [tableId]: id } });
+
         // Return the updated record
         return res.status(200).json(updatedRecord);
+        
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
@@ -183,6 +184,8 @@ const deleteRecord = async (req, res) => {
             console.log(database);
             return res.status(404).send('Table does not exists');
         }
+
+        
 
         // Delete the record from the database with sequelize
         const numRowsDeleted = await database[table].destroy({ where: { [tableId]: id } });

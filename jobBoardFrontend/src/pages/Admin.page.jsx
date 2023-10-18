@@ -6,9 +6,13 @@ import Breadcrumb from "../components/FilArianne.component";
 import Modal from "../components/Modal.component";
 import { toast } from "react-toastify";
 import TableList from "../components/TableList.component";
+import { accountService } from "../services/account.service";
 
 const Admin = () => {
   const navigate = useNavigate();
+  const token = accountService.getToken() || null;
+  const [user, setUser] = useState([]);
+  const [logged, setLogged] = useState(accountService.isLogged());
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState(null);
   const [records, setRecords] = useState([]);
@@ -18,11 +22,30 @@ const Admin = () => {
   const [formData, setFormData] = useState({});
   const [isModalForCreate, setIsModalForCreate] = useState(false);
 
-
   const items = [
     { label: "Home", path: "/" },
     { label: "Admin", path: "/admin" },
   ];
+
+  useEffect(() => {
+    if (logged) {
+      axios({
+        method: "GET",
+        url: `http://localhost:3000/api/auth/me/${token}`,
+        responseType: "json",
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            setUser(response.data);
+            setLogged(true);
+            if (!response.data.isAdmin) {
+              navigate("/");
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -65,7 +88,7 @@ const Admin = () => {
   const handleEdit = (id, data) => {
     axios.put(`http://localhost:3000/api/tables/${selectedTable}/${id}`, data)
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         toast.success("Enregistrement modifié avec succès !");
         window.setTimeout(() => {
           window.location.reload();
@@ -133,19 +156,19 @@ const Admin = () => {
     <>
       <Breadcrumb items={items} />
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-row items-center justify-between mb-4">
+        <div className="flex flex-row items-center gap-4 justify-between mb-4">
           <div className="relative">
             <TableList tables={tables} selectedTable={selectedTable} setSelectedTable={setSelectedTable} />
           </div>
           {selectedTable && (
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 sm:mt-0 sm:ml-4"
               onClick={handleCreateClick}
             >
               <FaPlusCircle className="inline-block mr-2" />
               Create
             </button>
-          )}
+          )}  
         </div>
         {records.length > 0 && (
           <div className="overflow-x-scroll">
