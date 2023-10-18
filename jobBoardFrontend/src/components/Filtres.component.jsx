@@ -40,22 +40,21 @@ const Filtres = () => {
     e.preventDefault();
 
     console.log(credentials);
-  
+
     try {
-      const response = axios.get(`http://localhost:3000/api/advertissements/filters?keywords=${credentials.titre}&type_contrat=${credentials.type_contrat}`)
+      const response = axios.get(
+        `http://localhost:3000/api/advertissements/filters?keywords=${credentials.titre}&type_contrat=${credentials.type_contrat}`
+      );
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
-    
-
-    
   };
 
   return (
     <div className="flex flex-col md:flex-row pt-4 pb-4  w-2/3 justify-center items-center bg-grisclair rounded-lg">
       <form className="flex space-x-4" onSubmit={handleSubmit}>
-        <div className="elative flex items-center ml-4 pr-8">
+        <div className="relative flex items-center ml-4 pr-8">
           <KeyWordsIcon className="absolute left-2 bg-gray-400 text-gray-400" />
           <span className="ml-2"></span>
           <input
@@ -79,7 +78,9 @@ const Filtres = () => {
             value={credentials.type_contrat}
             onChange={onChange}
           >
-            <option disabled value="">Type de contrat</option>
+            <option disabled value="">
+              Type de contrat
+            </option>
             <option value="CDI">CDI</option>
             <option value="CDD">CDD</option>
             <option value="Stage">Stage</option>
