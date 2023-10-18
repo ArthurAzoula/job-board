@@ -33,7 +33,7 @@ const Home = () => {
                         </p>
                         <Link
                             to="/annonces"
-                            className="bg-bleugris rounded-full px-4 py-2 text-white hover:underline decoration-white"
+                            className="bg-bleugris rounded-full px-4 py-2 font-bold text-center  text-white hover:underline decoration-white"
                         >
                             Browse Jobs
                         </Link>
@@ -50,7 +50,7 @@ const Home = () => {
             </div>
             <div className="bg-lightblue">
                 <div className="mx-auto container py-16">
-                    <h2 className="text-3xl font-bold mb-8 text-white animate__animated animate__fadeInUp">
+                    <h2 className="text-3xl font-bold mb-8 text-black animate__animated animate__fadeInUp">
                         Why EpiJob?
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
