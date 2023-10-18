@@ -138,7 +138,7 @@ const Settings = () => {
             )}
             {localStorage.getItem("type") === "company" && (
               <>
-                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4">
+                <li className="flex sm:text-sm md:text-sm lg:text-lg xl:text-lg 2xl:text-lg mb-4 overflow-auto">
                   <FaEnvelope className="mr-2 shrink-0" />
                   <span>{user.email}</span>
                 </li>

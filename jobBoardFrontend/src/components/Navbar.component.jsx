@@ -13,9 +13,10 @@ import LogoutIcon from "../icons/Logout.icon";
 import ButtonAddAdvert from "./ButtonAddAdvert.component";
 import { FaBuilding } from "react-icons/fa";
 import { IoIosLogIn } from "react-icons/io";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import { FaUserCircle } from "react-icons/fa";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import SettingsIcon from "../icons/Settings.icon";
 
 const Navbar = () => {
   const [logged, setLogged] = useState(accountService.isLogged());
@@ -42,126 +43,140 @@ const Navbar = () => {
 
   const logout = () => {
     accountService.logout();
-    toast.success('Déconnexion réussie!');
+    toast.success("Déconnexion réussie!");
     setTimeout(() => {
       navigate("/signin");
       window.location.reload();
     }, 2000);
   };
 
-
   const userType = localStorage.getItem("type") || null;
 
   return (
-    <nav className="bg-gunmetal">
-      <div className="mx-auto container items-center justify-between block md:flex">
-        <Link to="/" className="text-white text-4xl font-bold text-center">
-          <span className="text-gradient font-extrabold lg:text-5xl text-3xl">
-            &#123;EpiJob&#125;
-          </span>
-          <span className="text-bleugris font-bold text-3xl ml-2 hidden lg:inline">
-            {userType === "company"
-              ? "for company"
-              : userType === "user" && user.isAdmin
-              ? "for admin"
-              : userType === "user" && !user.isAdmin
-              ? "for user"
-              : ""}
-          </span>
-        </Link>
-        <ul className="flex space-x-8 md:space-x-14 items-center bg-gunemetal p-2 md:p-4 rounded-xl text-xl">
-          <li>
-            <Link
-              to="/"
-              className="text-white flex items-center hover:underline hover:underline-offset-2 decoration-white font-bold"
-            >
-              <HomeIcon className="mr-2 sm:mr-2 md:mr-2" />
-              <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
-                Home
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/annonces"
-              className="text-white flex items-center hover:underline decoration-white font-bold"
-            >
-              <AdvertissementIcon className="mr-2" />
-              <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
-                Adverts
-              </span>
-            </Link>
-          </li>
-          {localStorage.getItem("type") !== "company" && (
+    <>
+      <nav className="bg-gunmetal">
+        <div className="mx-auto container items-center justify-between block md:flex">
+          <Link to="/" className="text-white text-4xl font-bold text-center">
+            <span className="text-gradient font-extrabold lg:text-5xl text-3xl">
+              &#123;EpiJob&#125;
+            </span>
+            <span className="text-bleugris font-bold text-3xl ml-2 hidden lg:inline">
+              {userType === "company"
+                ? "for company"
+                : userType === "user" && user.isAdmin
+                ? "for admin"
+                : userType === "user" && !user.isAdmin
+                ? "for user"
+                : ""}
+            </span>
+          </Link>
+          <ul className="flex space-x-8 md:space-x-14 items-center bg-gunemetal p-2 md:p-4 rounded-xl text-xl">
             <li>
               <Link
-                to="/companies"
-                className="text-white flex items-center hover:underline decoration-white font-bold"
+                to="/"
+                className="text-white flex items-center hover:underline hover:underline-offset-2 decoration-white font-bold"
               >
-                <FaBuilding className="mr-2" />
+                <HomeIcon className="mr-2 sm:mr-2 md:mr-2" />
                 <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
-                  Companies
+                  Home
                 </span>
               </Link>
             </li>
-          )}
-          {user.isAdmin && logged && (
             <li>
               <Link
-                to="/admin"
+                to="/annonces"
                 className="text-white flex items-center hover:underline decoration-white font-bold"
               >
-                <AdminIcon className="mr-2" />
+                <AdvertissementIcon className="mr-2" />
                 <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
-                  Admin
+                  Adverts
                 </span>
               </Link>
             </li>
-          )}
-          {userType === "company" && (
             <li>
-              <ButtonAddAdvert />
+              <Link
+                to="/settings"
+                className="lg:hidden text-white flex items-center hover:underline decoration-white font-bold"
+              >
+                <SettingsIcon className="mr-2" /> 
+                <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
+                  Settings
+                </span>
+              </Link>
             </li>
-          )}
-          <li>
-            {!logged ? (
-              <div className="bg-bleugris rounded-lg px-4 py-2 flex items-center">
+            {localStorage.getItem("type") !== "company" && (
+              <li>
                 <Link
-                  to="/signin"
-                  className="text-white hover:underline decoration-white hover:scale-110 duration-100"
+                  to="/companies"
+                  className="text-white flex items-center hover:underline decoration-white font-bold"
                 >
-                  <div className="flex justify-center">
-                    <AdminIcon className="mr-2" />
-                    <span className="ml-2 hidden 2xl:inline">Connexion</span>
-                  </div>
+                  <FaBuilding className="mr-2" />
+                  <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
+                    Companies
+                  </span>
                 </Link>
-                <span className="ml-3 text-white">/</span>
-                <Link
-                  to="/signup"
-                  className="text-white hover:underline decoration-white ml-4 hover:scale-110 duration-100"
-                >
-                  <div className="flex justify-center">
-                    <SignInIcon className="mr-2" />
-                    <span className="ml-2 hidden 2xl:inline">Inscription</span>
-                  </div>
-                </Link>
-              </div>
-            ) : (
-              <div className="">
-                <button
-                  onClick={logout}
-                  className="flex items-center bg-bleugris rounded-lg font-bold hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
-                >
-                  <LogoutIcon />
-                  <span className="ml-2 hidden 2xl:inline">Logout</span>
-                </button>
-              </div>
+              </li>
             )}
-          </li>
-        </ul>
-      </div>
-      <ToastContainer />
-    </nav>
+            {user.isAdmin && logged && (
+              <li>
+                <Link
+                  to="/admin"
+                  className="text-white flex items-center hover:underline decoration-white font-bold"
+                >
+                  <AdminIcon className="mr-2" />
+                  <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
+                    Admin
+                  </span>
+                </Link>
+              </li>
+            )}
+            {userType === "company" && (
+              <li>
+                <ButtonAddAdvert />
+              </li>
+            )}
+            <li>
+              {!logged ? (
+                <div className="bg-bleugris rounded-lg px-4 py-2 flex items-center">
+                  <Link
+                    to="/signin"
+                    className="text-white hover:underline decoration-white hover:scale-110 duration-100"
+                  >
+                    <div className="flex justify-center">
+                      <AdminIcon className="mr-2" />
+                      <span className="ml-2 hidden 2xl:inline">Connexion</span>
+                    </div>
+                  </Link>
+                  <span className="ml-3 text-white">/</span>
+                  <Link
+                    to="/signup"
+                    className="text-white hover:underline decoration-white ml-4 hover:scale-110 duration-100"
+                  >
+                    <div className="flex justify-center">
+                      <SignInIcon className="mr-2" />
+                      <span className="ml-2 hidden 2xl:inline">
+                        Inscription
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+              ) : (
+                <div className="">
+                  <button
+                    onClick={logout}
+                    className="flex items-center bg-bleugris rounded-lg font-bold hover:scale-110 duration-200 px-4 py-2 text-white hover:underline decoration-white"
+                  >
+                    <LogoutIcon />
+                    <span className="ml-2 hidden 2xl:inline">Logout</span>
+                  </button>
+                </div>
+              )}
+            </li>
+          </ul>
+        </div>
+        <ToastContainer />
+      </nav>
+    </>
   );
 };
 
