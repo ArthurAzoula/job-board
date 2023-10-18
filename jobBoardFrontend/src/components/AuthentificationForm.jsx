@@ -37,7 +37,7 @@ const AuthentificationForm = () => {
                 }, 2000);
             })
             .catch(err => {
-                //console.log(err.response);
+                console.log(err.response);
                 toast.error('Connection échoué!');
             });
     };

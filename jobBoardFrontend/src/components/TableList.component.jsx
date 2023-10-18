@@ -10,7 +10,7 @@ const TableList = ({ tables, selectedTable, setSelectedTable }) => {
             {tables.map((table) => (
                 <div
                     key={table}
-                    className={`p-4 cursor-pointer ${selectedTable === table ? 'bg-gray-200 font-bold' : 'bg-gray-100'} hover:bg-gray-200`}
+                    className={`p-4 cursor-pointer w-full sm:w-auto ${selectedTable === table ? 'bg-gray-200 font-bold' : 'bg-gray-100'} hover:bg-gray-200`}
                     onClick={() => handleTableClick(table)}
                 >
                     {table}
