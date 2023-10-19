@@ -11,11 +11,12 @@ import LocalisationIcon from '../icons/Localisation.icon';
 const JobApplications = () => {
     const [jobApplications, setJobApplications] = useState([]);
     const [role, setRole] = useState(localStorage.getItem('type')) || null;
-    const [login, setLogin] =  useState(accountService.isLogged());
+    const [login, setLogin] = useState(accountService.isLogged());
     const [userConnected, setUserConnected] = useState([]);
     const [advertissements, setAdvertissements] = useState([]);
     const [peoples, setPeoples] = useState([]);
     const [companies, setCompanies] = useState([]);
+    const [filteredAdverts, setFilteredAdverts] = useState([]);
 
     const token = localStorage.getItem('token') || null;
 
@@ -39,13 +40,7 @@ const JobApplications = () => {
                     }
 
                     if (advertsResponse.data.length > 0) {
-                        const advert = advertsResponse.data.filter((advert) => {
-                            return jobApplications.some((jobApplication) => jobApplication.advertissement_id === advert.advertissement_id);
-                        });
-
-                        if (advert.length > 0) {
-                            setAdvertissements(advert);
-                        }
+                        setAdvertissements(advertsResponse.data);
                     }
                 } else if (response && response.company_id) {
                     setUserConnected(response);
@@ -59,13 +54,7 @@ const JobApplications = () => {
                     }
 
                     if (advertsResponse.data.length > 0) {
-                        const advert = advertsResponse.data.filter((advert) => {
-                            return jobApplications.some((jobApplication) => jobApplication.advertissement_id === advert.advertissement_id);
-                        });
-
-                        if (advert.length > 0) {
-                            setAdvertissements(advert);
-                        }
+                        setAdvertissements(advertsResponse.data);
                     }
                 }
             } catch (err) {
@@ -76,14 +65,19 @@ const JobApplications = () => {
         fetchUser();
     }, []);
 
-    const filteredAdverts = advertissements.filter((advert) => {
-        return jobApplications.some((jobApplication) => jobApplication.advertissement_id === advert.advertissement_id);
-    });
+    useEffect(() => {
+        const filteredAdverts = advertissements.filter((advert) => {
+            return jobApplications.some((jobApplication) => jobApplication.advertissement_id === advert.advertissement_id);
+        });
+
+        setFilteredAdverts(filteredAdverts);
+    }, [advertissements, jobApplications]);
 
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-4">Vos candidatures</h1>
             {jobApplications.length === 0 && <p>Aucune candidatures</p>}
+            {jobApplications.length > 0 && <p className='mb-2'>Vous avez postulé à <span className='font-bold text-red-500'>{jobApplications.length}</span> offre(s)</p>}
             {filteredAdverts.map((advert) => (
                 <div key={advert.advertissement_id} className="border border-gray-300 bg-white shadow-xl rounded-lg p-4 mb-4">
                     <h2 className="text-xl font-bold mb-2">{advert.titre}</h2>
@@ -101,7 +95,7 @@ const JobApplications = () => {
                             <FaEye />
                             <span>Voir l'annonce</span>
                         </div>
-                        
+
                     </Link>
                 </div>
             ))}

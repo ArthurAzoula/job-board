@@ -6,17 +6,15 @@ import Settings from "./Settings.component";
 import Appliers from "./Appliers.component";
 
 const Sidebar = () => {
-  const [showAccount, setShowAccount] = useState(false);
-  const [showCandidature, setShowCandidature] = useState(false);
+
+  const [show, setShow] = useState(false);
 
   const handleAccountClick = () => {
-    setShowAccount(!showAccount);
-    setShowCandidature(false);
+    setShow(!show);
   };
 
   const handleCandidatureClick = () => {
-    setShowCandidature(!showCandidature);
-    setShowAccount(false);
+    setShow(!show);
   };
 
   return (
@@ -30,9 +28,9 @@ const Sidebar = () => {
           <div className="flex flex-col gap-2 mb-4 justify-center items-center">
             <button
               className={`w-40 py-2 px-4 rounded-lg hover:bg-gray-300 ${
-                showCandidature
-                  ? "bg-gray-300 text-gray-800"
-                  : "bg-gray-800 text-white"
+                show
+                ? "bg-gray-800 text-white"
+                : "bg-gray-300 text-gray-800"
               } transition duration-200`}
               onClick={handleCandidatureClick}
             >
@@ -43,9 +41,9 @@ const Sidebar = () => {
             </button>
             <button
               className={`w-40 py-2 px-4 rounded-lg hover:bg-gray-300 ${
-                showAccount
-                  ? "bg-gray-300 text-gray-800"
-                  : "bg-gray-800 text-white"
+                !show
+                ? "bg-gray-800 text-white"
+                : "bg-gray-300 text-gray-800"
               } transition duration-200`}
               onClick={handleAccountClick}
             >
@@ -56,13 +54,13 @@ const Sidebar = () => {
             </button>
           </div>
 
-          {showCandidature && (
+          {show && (
             <div className="flex flex-col">
-              <Appliers />
+              <Appliers changeScreen={show} />
             </div>
           )}
 
-          {showAccount && (   
+          {!show && (   
             <div className="flex flex-col">
               <Settings />
             </div>
