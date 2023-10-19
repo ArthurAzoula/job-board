@@ -26,6 +26,25 @@ const getAdvertissementById = async (req, res) => {
     }
 }
 
+const getAdvertissementByCompany = async (req, res) => {
+    try {
+        
+        const { companyId } = req.params
+        const advertissements = await database.sequelize.models.advertissement.findAll({
+            where: { company_id: companyId }
+        }) 
+
+        if (advertissements) {
+            return res.status(200).json(advertissements);
+        }
+
+        return res.status(404).send('The company does not have any advertissements');
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 const getAdvertissementFilters = async (req, res) => {
     try {
         
@@ -101,5 +120,6 @@ module.exports = {
     updateAdvertissement,
     deleteAdvertissement,
     getAdvertissementById,
-    getAdvertissementFilters
+    getAdvertissementFilters,
+    getAdvertissementByCompany
 }

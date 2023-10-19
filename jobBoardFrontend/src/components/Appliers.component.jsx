@@ -42,6 +42,25 @@ const JobApplications = ({ user }) => {
                         setJobApplications(getCompanyCandidature.data);
                     }
                 }
+
+                if (jobApplications.length > 0) {
+                    
+                    const getAdverts = await axios.get(`http://localhost:3000/api/advertissements`);
+
+                    if (getAdverts.data.length > 0) {
+                        // Get the advertissemnts where id is in the jobApplications
+                        const advert = getAdverts.data.filter((advert) => {
+                            return jobApplications.some((jobApplication) => jobApplication.advertissement_id === advert.advertissement_id);
+                        });
+
+                        if (advert.length > 0) {
+                            setAdvertissements(advert);
+                        }
+                    }
+
+                    
+
+                }
             } catch (err) {
                 console.log(err);
             }

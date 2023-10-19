@@ -5,6 +5,7 @@ const AdvertissementController = require('../controllers/advertissement.controll
 
 /* GET */
 router.get('/filters', AdvertissementController.getAdvertissementFilters);
+router.get('/company/:companyId', AdvertissementController.getAdvertissementByCompany);
 router.get('/:id', AdvertissementController.getAdvertissementById);
 router.get('/', AdvertissementController.getAllAdvertissements);
 

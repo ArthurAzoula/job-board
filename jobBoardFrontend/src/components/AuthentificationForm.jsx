@@ -37,8 +37,8 @@ const AuthentificationForm = () => {
                 }, 2000);
             })
             .catch(err => {
-                console.log(err.response);
-                toast.error('Connection échoué!');
+                //console.log(err.response);
+                toast.error(err.response.data);
             });
     };
 
@@ -49,7 +49,7 @@ const AuthentificationForm = () => {
                     htmlFor="email"
                     className="block text-gray-700 font-bold mb-2"
                 >
-                    Email
+                    Email <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="email"
@@ -58,6 +58,7 @@ const AuthentificationForm = () => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={credentials.email}
                     onChange={onChange}
+                    placeholder='connexion@mail.fr'
                     required
                 />
             </div>
@@ -66,7 +67,7 @@ const AuthentificationForm = () => {
                     htmlFor="password"
                     className="block text-gray-700 font-bold mb-2"
                 >
-                    Password
+                    Password <span className="text-red-500">*</span>
                 </label>
                 <input
                     type="password"
@@ -75,6 +76,7 @@ const AuthentificationForm = () => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={credentials.password}
                     onChange={onChange}
+                    placeholder='********'
                     required
                 />
             </div>
