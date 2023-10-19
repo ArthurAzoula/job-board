@@ -175,7 +175,7 @@ const Annonce = () => {
                                     <p className="text-gray-700 text-base">{annonce.lieu}</p>
                                 </div>
                             </div>
-                            <div className="w-full md:w-1/2 pl-0 md:pl-4 border-t md:border-l border-gray-300">
+                            <div className="w-full md:w-1/2 pl-0 md:pl-4 border-t md:border-t-0 md:border-l border-gray-300">
                                 <h2 className="text-lg font-bold mb-2">À propos de l'entreprise</h2>
                                 <div className="flex items-center mt-4">
                                     <FaUser className="text-gray-700 mr-2" />
