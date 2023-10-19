@@ -9,6 +9,7 @@ import InscriptionPage from "./pages/Inscription.page";
 import Sidebar from "./components/Sidebar.component";
 import Home from "./pages/Home.page";
 import Settings from "./pages/SettingsMobile.page";
+import Companies from "./pages/Companies.page";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path="/signin" element={<ConnexionPage />} />
               <Route path="/signup" element={<InscriptionPage />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/companies" element={<Companies />} />
             </Routes>
           </div>
           <Footer />
