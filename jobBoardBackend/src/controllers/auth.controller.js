@@ -22,7 +22,7 @@ const login = async (req, res) => {
 
         // If the user is not found in either table, return a 404 error
         if (!user && !company) {
-            return res.status(404).send('User not found');
+            return res.status(404).send('Utilisateur non trouvé !');
         }
 
         // If the user is found in the company table but not in the people table, set the type to 'company'
@@ -32,7 +32,7 @@ const login = async (req, res) => {
             // Check if the password is valid
             const validPassword = await bcrypt.compare(req.body.password, company.password);
             if (!validPassword) {
-                return res.status(401).send('Password not valid');
+                return res.status(401).send('Mot de passe incorrecte !');
             }
 
             // Generate access and refresh tokens for the company

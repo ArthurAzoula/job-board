@@ -119,7 +119,7 @@ const Navbar = () => {
               >
                 <HomeIcon className="mr-2 sm:mr-2 md:mr-2" />
                 <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
-                  Home
+                  Accueil
                 </span>
               </Link>
             </li>
@@ -130,7 +130,7 @@ const Navbar = () => {
               >
                 <AdvertissementIcon className="mr-2" />
                 <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
-                  Adverts
+                  Annonces
                 </span>
               </Link>
             </li>
@@ -141,7 +141,7 @@ const Navbar = () => {
               >
                 <SettingsIcon className="mr-2" />
                 <span className="ml-2 hover:scale-110 duration-100 hidden">
-                  Settings
+                  Paramètres
                 </span>
               </Link>
             </li>
@@ -153,7 +153,7 @@ const Navbar = () => {
                 >
                   <FaBuilding className="mr-2" />
                   <span className="ml-2 hover:scale-110 duration-100 hidden xl:inline">
-                    Companies
+                    Entreprises
                   </span>
                 </Link>
               </li>
