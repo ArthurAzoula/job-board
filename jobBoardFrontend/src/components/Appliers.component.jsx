@@ -44,17 +44,31 @@ const JobApplications = () => {
                     }
                 } else if (response && response.company_id) {
                     setUserConnected(response);
-                    const getCompanyCandidature = axios.get(`http://localhost:3000/api/jobapplications/advert/${response?.advertissement_id}`);
-                    const getAdverts = axios.get(`http://localhost:3000/api/advertissements`);
 
-                    const [companyCandidatureResponse, advertsResponse] = await Promise.all([getCompanyCandidature, getAdverts]);
+                    const getAllAdvertissements = axios.get(`http://localhost:3000/api/advertissements/company/${response?.company_id}`);
 
-                    if (companyCandidatureResponse.data.length > 0) {
-                        setJobApplications(companyCandidatureResponse.data);
+                    const [advertsByCompany] = await Promise.all([getAllAdvertissements]);
+
+                    const jobApplicationsByAdvert = [];
+
+                    for (const advert of advertsByCompany.data) {
+                        const getJobApplications = axios.get(`http://localhost:3000/api/jobapplications/advert/${advert.advertissement_id}`);
+                        const [jobApplicationsResponse] = await Promise.all([getJobApplications]);
+
+                        if (jobApplicationsResponse.data.length > 0) {
+                            jobApplicationsByAdvert.push({
+                                advert: advert,
+                                jobApplications: jobApplicationsResponse.data
+                            });
+                        }
                     }
 
-                    if (advertsResponse.data.length > 0) {
-                        setAdvertissements(advertsResponse.data);
+                    if (jobApplicationsByAdvert.length > 0) {
+                        setJobApplications(jobApplicationsByAdvert[0]);
+                    }
+
+                    if (advertsByCompany.data.length > 0) {
+                        setAdvertissements(advertsByCompany.data);
                     }
                 }
             } catch (err) {
@@ -66,12 +80,24 @@ const JobApplications = () => {
     }, []);
 
     useEffect(() => {
-        const filteredAdverts = advertissements.filter((advert) => {
-            return jobApplications.some((jobApplication) => jobApplication.advertissement_id === advert.advertissement_id);
-        });
+        if (jobApplications.length === 0) return;
 
-        setFilteredAdverts(filteredAdverts);
+        if (role === 'user') {
+            const filteredAdverts = advertissements.filter((advert) => {
+                return jobApplications.some((jobApplication) => jobApplication.advertissement_id === advert.advertissement_id);
+            });
+            setFilteredAdverts(filteredAdverts);
+        }
+
+        if (role === 'company') {
+            const filteredAdverts = advertissements.filter((advert) => {
+                return jobApplications?.jobApplications?.some((apply) => apply.advertissement_id === advert.advertissement_id);
+            });
+            setFilteredAdverts(filteredAdverts);
+        }
     }, [advertissements, jobApplications]);
+
+    console.log(filteredAdverts);
 
     return (
         <div className="container mx-auto px-4 py-8">
