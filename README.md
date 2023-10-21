@@ -93,7 +93,7 @@ Here some exemples of features that are available in JobBoard:
 
 ## Database Schema
 
-We have designed a mobile, dynamic, and strong database schema using Sequelize and MySQL. You can view our MCD [here]("gestion/mcd_final.png") :arrow_left:
+We have designed a mobile, dynamic, and strong database schema using Sequelize and MySQL. You can view our MCD [here](gestion/mcd_final.png) :arrow_left:
 
 ## API Endpoints
 
