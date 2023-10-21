@@ -42,7 +42,7 @@ const InscriptionPage = () => {
                             } py-2 px-4 font-medium rounded-r-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
                             onClick={toggleUserForm}
                         >
-                            Client
+                            Particulier
                         </button>
                     </div>
 
