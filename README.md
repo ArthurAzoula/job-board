@@ -1,5 +1,5 @@
 
-###Welcome :wave: 
+### Welcome :wave: 
 
 *EpiJob v1.0* is now available! This project is a job search platform that allows users to browse available job offers and apply to those that interest them. It was built using React and Express.js.
 
@@ -16,7 +16,7 @@
 To get started, clone this repository to your local machine and install the dependencies:
 
 ```bash
-git clone https://github.com/EpitechMscProPromo2026/T-WEB-501-LIL_17```
+git clone https://github.com/EpitechMscProPromo2026/T-WEB-501-LIL_17
 ```
 
 **:warning: Have sur, you have NodeJs and npm install on your machine.**
