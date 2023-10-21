@@ -1,29 +1,16 @@
 const database = require('../models/index');
 
-/**
- * Gets all job applications from the database.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the job applications.
- */
 const getAllJobApplications = async (req, res) => {
     try {
         const jobApplication = await database.sequelize.models.jobapplication.findAll();
         if (jobApplication) {
             return res.status(200).json(jobApplication);
         }
-        return res.status(404).send('JobApplications do not exist');
+        return res.status(404).send('JobApplications does not exists');
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
 }
-
-/**
- * Gets all job applications for a specific user from the database.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the job applications.
- */
 const getJobApplicationsByUserId = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -33,18 +20,12 @@ const getJobApplicationsByUserId = async (req, res) => {
         if (jobApplications) {
             return res.status(200).json(jobApplications);
         }
-        return res.status(404).send('JobApplications do not exist');
+        return res.status(404).send('JobApplications does not exist');
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
 };
 
-/**
- * Gets a job application by ID from the database.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the job application.
- */
 const getJobApplicationById = async (req, res) => {
     try {
         const jobApplicationId = req.params.id;
@@ -54,18 +35,14 @@ const getJobApplicationById = async (req, res) => {
         if (jobApplication) {
             return res.status(200).json(jobApplication);
         }
-        return res.status(404).send('JobApplication with the specified ID does not exist');
+        return res.status(404).send('JobApplication with the specified ID does not exists');
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
+    
+
 }
 
-/**
- * Gets all job applications for a specific advertisement from the database.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the job applications.
- */
 const getUserJobApplicationFromAnAdvert = async (req, res) => {
     try {
         const advertId = req.params.advertId;
@@ -75,18 +52,12 @@ const getUserJobApplicationFromAnAdvert = async (req, res) => {
         if (jobApplication) {
             return res.status(200).json(jobApplication);
         }
-        return res.status(404).send('JobApplication with the specified ID does not exist');
+        return res.status(404).send('JobApplication with the specified ID does not exists');
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
 }
 
-/**
- * Creates a new job application in the database.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the created job application.
- */
 const createJobApplication = async (req, res) => {
     try {
         const jobApplication = await database.sequelize.models.jobapplication.create(req.body);
@@ -98,12 +69,6 @@ const createJobApplication = async (req, res) => {
     }
 } 
 
-/**
- * Updates a job application in the database.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the updated job application.
- */
 const updateJobApplication = async (req, res) => {
     try {
         const { id } = req.params;
@@ -116,19 +81,13 @@ const updateJobApplication = async (req, res) => {
             });
             return res.status(200).json({ jobApplication: updatedJobApplication });
         }
-        return res.status(404).send('JobApplication with the specified ID does not exist');
+        return res.status(404).send('JobApplication with the specified ID does not exists');
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
 
 }
 
-/**
- * Deletes a job application from the database.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with a success message.
- */
 const deleteJobApplication = async (req, res) => {
     try {
         const { id } = req.params;
@@ -151,4 +110,5 @@ module.exports = {
     deleteJobApplication,
     getUserJobApplicationFromAnAdvert,
     getJobApplicationsByUserId
+    
 }

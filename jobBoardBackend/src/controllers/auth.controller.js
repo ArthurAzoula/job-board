@@ -5,12 +5,7 @@ const ms = require('ms');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwt.config');
 
-/**
- * Authenticates a user and generates access and refresh tokens.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the access and refresh tokens.
- */
+
 const login = async (req, res) => {
     try {
         let type = '';
@@ -88,12 +83,6 @@ const login = async (req, res) => {
     }
 };
 
-/**
- * Logs out a user by clearing the token cookie.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with a success message.
- */
 const logout = async (req, res) => {
     try {
         res.cookie('token', '', { maxAge: 0, httpOnly: true, secure: true, sameSite: 'strict' });
@@ -103,34 +92,28 @@ const logout = async (req, res) => {
     }
 }
 
-/**
- * Gets the connected user's information.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the connected user's information.
- */
 const getUserConnected = async (req, res) => {
     try {
         const { type, token } = req.params;
 
-        // Decode the token
+        // On décode le token
         const decodedToken = jwt.verify(token, jwtConfig.secret);
 
         console.log(decodedToken);
 
-        // Get the user's ID
+        // On récupère l'id de l'utilisateur
         const userId = decodedToken.id;
 
         let user = null;
         let company = null;
 
         if (type === 'user') {
-            // Find the corresponding user in the database
+            // On cherche l'utilisateur correspondant dans la base de donnée
             user = await database.sequelize.models.people.findByPk(userId)
         }
 
         if (type === 'company') {
-            // Find the corresponding company in the database
+            // On cherche l'utilisateur correspondant dans la base de donnée
             company = await database.sequelize.models.company.findByPk(userId)
         }
 
@@ -150,12 +133,6 @@ const getUserConnected = async (req, res) => {
 
 }
 
-/**
- * Generates a new access token using a refresh token.
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Object} The response object with the new access token.
- */
 const refresh = async (req, res) => {
     try {
         const refreshToken = req.body.refreshToken;

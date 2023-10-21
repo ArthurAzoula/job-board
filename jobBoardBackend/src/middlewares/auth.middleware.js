@@ -3,17 +3,6 @@ const database = require('../models/index');
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwt.config');
 
-/**
- * Middleware to validate the JWT token.
- * @name validToken
- * @function
- * @memberof module:authMiddleware
- * @inner
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @param {Function} next - The next middleware function.
- * @returns {Object} The response object or the next middleware function.
- */
 const validToken = async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1] || req.cookies.token;
