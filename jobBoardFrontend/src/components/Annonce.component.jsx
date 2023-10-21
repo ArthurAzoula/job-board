@@ -200,10 +200,10 @@ const Annonce = () => {
                             </div>
                         </div>
                         <div className="p-4">
-                            {(localStorage.getItem('type') === 'user' || !logged) && (
+                            {console.log(user)}
+                            {((localStorage.getItem('type') === 'user') || !localStorage.getItem('type')) ? (
                                 <button onClick={handleApply} className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300">Postuler</button>
-                            )}
-                            {localStorage.getItem('type') === 'company' && (
+                            ) : (
                                 <button disabled className="bg-green-200 text-white px-4 py-2 rounded-lg transition-colors duration-300">Postuler</button>
                             )}
                         </div>
