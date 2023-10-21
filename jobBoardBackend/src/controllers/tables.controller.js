@@ -1,5 +1,11 @@
 const database = require('../models/index');
 
+/**
+ * Gets all tables from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the tables.
+ */
 const getTables = async (req, res) => {
     try {
         // Get all tables from the database with sequelize
@@ -17,10 +23,14 @@ const getTables = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
-
-
 };
 
+/**
+ * Gets a record by table name from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the record.
+ */
 const getRecordByTableName = async (req, res) => {
     try {
         // Get the table name from the request
@@ -44,8 +54,14 @@ const getRecordByTableName = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
-}
+};
 
+/**
+ * Updates a record in the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the updated record.
+ */
 const updateRecord = async (req, res) => {
     try {
         // Get the table name, record ID, and updated record data from the request
@@ -83,7 +99,6 @@ const updateRecord = async (req, res) => {
         }   
 
         if (database[table] === undefined) {
-            console.log(database);
             return res.status(404).send("Table does not exist");
         }
 
@@ -107,6 +122,12 @@ const updateRecord = async (req, res) => {
     }
 };
 
+/**
+ * Creates a new record in the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the created record.
+ */
 const createRecord = async (req, res) => {
     try {
         // Get the table name and new record data from the request
@@ -138,7 +159,6 @@ const createRecord = async (req, res) => {
         const newRecordData = req.body;
 
         if (database[table] === undefined || database[table] === null) {
-            console.log(database);
             return res.status(404).send('Table does not exists');
         }
 
@@ -149,8 +169,14 @@ const createRecord = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
-}
+};
 
+/**
+ * Deletes a record from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with a success message.
+ */
 const deleteRecord = async (req, res) => {
     try {
         // Get the table name and record ID from the request
@@ -187,11 +213,8 @@ const deleteRecord = async (req, res) => {
         }
 
         if (database[table] === undefined) {
-            console.log(database);
             return res.status(404).send('Table does not exists');
         }
-
-        
 
         // Delete the record from the database with sequelize
         const numRowsDeleted = await database[table].destroy({ where: { [tableId]: id } });
@@ -208,11 +231,10 @@ const deleteRecord = async (req, res) => {
     }
 };
 
-
 module.exports = {
     getTables,
     getRecordByTableName,
     updateRecord,
     deleteRecord,
     createRecord
-}
+};

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: companie.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: companie.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const database = require('../models/index');
+
+/**
+ * Gets all companies from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the companies.
+ */
+const getAllCompany = async (req, res) => {
+    try {
+        const company = await database.sequelize.models.company.findAll();
+        if (company) {
+            return res.status(200).json(company);
+        }
+        return res.status(404).send('Company does not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+/**
+ * Gets a company by ID from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the company.
+ */
+const getCompanyById = async (req, res) => {
+    try {
+        const companyId = req.params.id;
+        const company = await database.sequelize.models.company.findOne({
+            where: { company_id: companyId }
+        })
+        if (company) {
+            return res.status(200).json(company);
+        }
+        return res.status(404).send('Company with the specified ID does not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+
+/**
+ * Creates a new company in the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the created company.
+ */
+const createCompany = async (req, res) => {
+    try {
+        // Check if email is already used
+        const email = req.body.email;
+        const companyAlreadyExist = await database.sequelize.models.company.findOne({ where: { email: email } });
+        if (companyAlreadyExist) {
+            return res.status(409).send('Email already used');
+        }
+        const company = await database.sequelize.models.company.create(req.body);
+        if (company) {
+            return res.status(201).json(company);
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+/**
+ * Updates a company in the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the updated company.
+ */
+const updateCompany = async (req, res) => {
+    try {
+        const company = await database.sequelize.models.company.update(req.body, {
+            where: { company_id: Number(req.params.id) }
+        });
+        if (company) {
+            const updatedCompany = await database.sequelize.models.company.findByPk(Number(req.params.id));
+            return res.status(200).json(updatedCompany);
+        }
+        return res.status(404).send('Company with the specified ID does not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+/**
+ * Deletes a company from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with a success message.
+ */
+const deleteCompany = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await database.sequelize.models.company.destroy({
+            where: { company_id: Number(id) }
+        });
+        if (deleted) {
+            return res.status(204).send("Company deleted");
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+module.exports = {
+    getAllCompany,
+    getCompanyById,
+    createCompany,
+    updateCompany,
+    deleteCompany
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#create">create</a></li><li><a href="global.html#createAdvertisement">createAdvertisement</a></li><li><a href="global.html#createCompany">createCompany</a></li><li><a href="global.html#createJobApplication">createJobApplication</a></li><li><a href="global.html#createRecord">createRecord</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteAdvertisement">deleteAdvertisement</a></li><li><a href="global.html#deleteCompany">deleteCompany</a></li><li><a href="global.html#deleteJobApplication">deleteJobApplication</a></li><li><a href="global.html#deleteRecord">deleteRecord</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAnonymousByEmail">findAnonymousByEmail</a></li><li><a href="global.html#findOne">findOne</a></li><li><a href="global.html#getAdvertisementById">getAdvertisementById</a></li><li><a href="global.html#getAdvertisementFilters">getAdvertisementFilters</a></li><li><a href="global.html#getAdvertisementsByCompany">getAdvertisementsByCompany</a></li><li><a href="global.html#getAllAdvertisements">getAllAdvertisements</a></li><li><a href="global.html#getAllCompany">getAllCompany</a></li><li><a href="global.html#getAllJobApplications">getAllJobApplications</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getCompanyById">getCompanyById</a></li><li><a href="global.html#getJobApplicationById">getJobApplicationById</a></li><li><a href="global.html#getJobApplicationsByUserId">getJobApplicationsByUserId</a></li><li><a href="global.html#getRecordByTableName">getRecordByTableName</a></li><li><a href="global.html#getTables">getTables</a></li><li><a href="global.html#getUserById">getUserById</a></li><li><a href="global.html#getUserConnected">getUserConnected</a></li><li><a href="global.html#getUserJobApplicationFromAnAdvert">getUserJobApplicationFromAnAdvert</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateAdvertisement">updateAdvertisement</a></li><li><a href="global.html#updateCompany">updateCompany</a></li><li><a href="global.html#updateJobApplication">updateJobApplication</a></li><li><a href="global.html#updateRecord">updateRecord</a></li><li><a href="global.html#updateUser">updateUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 21 2023 17:41:43 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

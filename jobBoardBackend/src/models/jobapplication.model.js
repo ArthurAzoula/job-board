@@ -2,6 +2,12 @@
 const {
   Model
 } = require('sequelize');
+/**
+ * Represent a JobApplication in the database
+ * @param {*} sequelize 
+ * @param {*} DataTypes 
+ * @returns 
+ */
 module.exports = (sequelize, DataTypes) => {
   class jobApplicationModel extends Model {
     /**

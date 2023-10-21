@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: advertissement.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: advertissement.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const database = require('../models/index');
+
+/**
+ * Get all advertisements
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with advertisements or error message
+ */
+const getAllAdvertisements = async (req, res) => {
+    try {
+        const advertisements = await database.sequelize.models.advertisement.findAll();
+        if (advertisements) {
+            return res.status(200).json(advertisements);
+        }
+        return res.status(404).send('Advertisements do not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * Get advertisement by ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with advertisement or error message
+ */
+const getAdvertisementById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const advertisement = await database.sequelize.models.advertisement.findByPk(Number(id));
+        if (advertisement) {
+            return res.status(200).json(advertisement);
+        }
+        return res.status(404).send('Advertisement with the specified ID does not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * Get advertisements by company ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with advertisements or error message
+ */
+const getAdvertisementsByCompany = async (req, res) => {
+    try {
+        const { companyId } = req.params;
+        const advertisements = await database.sequelize.models.advertisement.findAll({
+            where: { company_id: companyId }
+        });
+        if (advertisements) {
+            return res.status(200).json(advertisements);
+        }
+        return res.status(404).send('The company does not have any advertisements');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * Get advertisements with filters
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with advertisements or error message
+ */
+const getAdvertisementFilters = async (req, res) => {
+    try {
+        const { keywords, contract, city } = req.query;
+        const whereClause = {};
+        if (keywords) {
+            whereClause.titre = {
+                [database.Sequelize.Op.like]: `%${keywords}%`
+            };
+        }
+        if (contract) {
+            whereClause.type_contrat = contract;
+        }
+        if (city) {
+            whereClause.lieu = {
+                [database.Sequelize.Op.like]: `%${city}%`
+            };
+        }
+        const advertisements = await database.sequelize.models.advertisement.findAll({
+            where: whereClause
+        });
+        if (advertisements) {
+            return res.status(200).json(advertisements);
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * Create advertisement
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with created advertisement or error message
+ */
+const createAdvertisement = async (req, res) => {
+    try {
+        const advertisement = await database.sequelize.models.advertisement.create(req.body);
+        if (advertisement) {
+            return res.status(201).json(advertisement);
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * Update advertisement by ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with updated advertisement or error message
+ */
+const updateAdvertisement = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [updated] = await database.sequelize.models.advertisement.update(req.body, {
+            where: { advertisement_id: Number(id) }
+        });
+        if (updated) {
+            const updatedAdvertisement = await database.sequelize.models.advertisement.findOne({
+                where: { advertisement_id: Number(id) }
+            });
+            return res.status(200).json({ advertisement: updatedAdvertisement });
+        }
+        return res.status(404).send('Advertisement with the specified ID does not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * Delete advertisement by ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with success message or error message
+ */
+const deleteAdvertisement = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await database.sequelize.models.advertisement.destroy({
+            where: { advertisement_id: Number(id) }
+        });
+        if (deleted) {
+            return res.status(204).send('Advertisement deleted');
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = {
+    getAllAdvertisements,
+    createAdvertisement,
+    updateAdvertisement,
+    deleteAdvertisement,
+    getAdvertisementById,
+    getAdvertisementFilters,
+    getAdvertisementsByCompany
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#create">create</a></li><li><a href="global.html#createAdvertisement">createAdvertisement</a></li><li><a href="global.html#createCompany">createCompany</a></li><li><a href="global.html#createJobApplication">createJobApplication</a></li><li><a href="global.html#createRecord">createRecord</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteAdvertisement">deleteAdvertisement</a></li><li><a href="global.html#deleteCompany">deleteCompany</a></li><li><a href="global.html#deleteJobApplication">deleteJobApplication</a></li><li><a href="global.html#deleteRecord">deleteRecord</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAnonymousByEmail">findAnonymousByEmail</a></li><li><a href="global.html#findOne">findOne</a></li><li><a href="global.html#getAdvertisementById">getAdvertisementById</a></li><li><a href="global.html#getAdvertisementFilters">getAdvertisementFilters</a></li><li><a href="global.html#getAdvertisementsByCompany">getAdvertisementsByCompany</a></li><li><a href="global.html#getAllAdvertisements">getAllAdvertisements</a></li><li><a href="global.html#getAllCompany">getAllCompany</a></li><li><a href="global.html#getAllJobApplications">getAllJobApplications</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getCompanyById">getCompanyById</a></li><li><a href="global.html#getJobApplicationById">getJobApplicationById</a></li><li><a href="global.html#getJobApplicationsByUserId">getJobApplicationsByUserId</a></li><li><a href="global.html#getRecordByTableName">getRecordByTableName</a></li><li><a href="global.html#getTables">getTables</a></li><li><a href="global.html#getUserById">getUserById</a></li><li><a href="global.html#getUserConnected">getUserConnected</a></li><li><a href="global.html#getUserJobApplicationFromAnAdvert">getUserJobApplicationFromAnAdvert</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateAdvertisement">updateAdvertisement</a></li><li><a href="global.html#updateCompany">updateCompany</a></li><li><a href="global.html#updateJobApplication">updateJobApplication</a></li><li><a href="global.html#updateRecord">updateRecord</a></li><li><a href="global.html#updateUser">updateUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 21 2023 17:41:43 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -2,6 +2,13 @@
 const {
   Model
 } = require('sequelize');
+
+/**
+ * Represents an Advertissement in the database
+ * @param {*} sequelize 
+ * @param {*} DataTypes 
+ * @returns 
+ */
 module.exports = (sequelize, DataTypes) => {
   class advertissementModel extends Model {
     /**

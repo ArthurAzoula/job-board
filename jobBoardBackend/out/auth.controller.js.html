@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: auth.controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: auth.controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const database = require('../models/index');
+const bcrypt = require('bcrypt');
+const ms = require('ms');
+
+const jwt = require('jsonwebtoken');
+const jwtConfig = require('../config/jwt.config');
+
+/**
+ * Authenticates a user and generates access and refresh tokens.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the access and refresh tokens.
+ */
+const login = async (req, res) => {
+    try {
+        let type = '';
+
+        // Check if the user exists in the people table
+        const user = await database.sequelize.models.people.findOne({
+            where: { email: req.body.email }
+        });
+
+        // Check if the user exists in the company table
+        const company = await database.sequelize.models.company.findOne({
+            where: { email: req.body.email }
+        });
+
+        // If the user is not found in either table, return a 404 error
+        if (!user &amp;&amp; !company) {
+            return res.status(404).send('Utilisateur non trouvé !');
+        }
+
+        // If the user is found in the company table but not in the people table, set the type to 'company'
+        if (company &amp;&amp; !user) {
+            type = 'company';
+
+            // Check if the password is valid
+            const validPassword = await bcrypt.compare(req.body.password, company.password);
+            if (!validPassword) {
+                return res.status(401).send('Mot de passe incorrecte !');
+            }
+
+            // Generate access and refresh tokens for the company
+            const accessToken = jwt.sign({ id: company.company_id }, jwtConfig.secret, {
+                expiresIn: jwtConfig.options.expiresIn
+            });
+            const refreshToken = jwt.sign({ id: company.company_id }, jwtConfig.refreshSecret, {
+                expiresIn: jwtConfig.refreshOptions.expiresIn
+            });
+
+            // Put the token in a cookie
+            res.cookie('token', accessToken, { maxAge: ms(jwtConfig.options.expiresIn), httpOnly: true, secure: true, sameSite: 'strict' });
+
+            // Return the access and refresh tokens along with the type
+            return res.status(200).json({ type, accessToken, refreshToken });
+        }
+
+        // If the user is found in the people table but not in the company table, set the type to 'user'
+        if (user &amp;&amp; !company) {
+            type = 'user';
+
+            // Check if the password is valid
+            const validPassword = await bcrypt.compare(req.body.password, user.password);
+            if (!validPassword) {
+                return res.status(401).send('Password not valid');
+            }
+
+            // Generate access and refresh tokens for the user
+            const accessToken = jwt.sign({ id: user.people_id }, jwtConfig.secret, {
+                expiresIn: jwtConfig.options.expiresIn
+            });
+            const refreshToken = jwt.sign({ id: user.people_id }, jwtConfig.refreshSecret, {
+                expiresIn: jwtConfig.refreshOptions.expiresIn
+            });
+
+            // Put the token in a cookie
+            res.cookie('token', accessToken, { maxAge: ms(jwtConfig.options.expiresIn), httpOnly: true, secure: true, sameSite: 'strict' });
+
+            // Return the access and refresh tokens along with the type
+            return res.status(200).json({ type, accessToken, refreshToken });
+        }
+
+        // If the user is found in both tables, return a 500 error
+        return res.status(500).send('User found in both tables');
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * Logs out a user by clearing the token cookie.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with a success message.
+ */
+const logout = async (req, res) => {
+    try {
+        res.cookie('token', '', { maxAge: 0, httpOnly: true, secure: true, sameSite: 'strict' });
+        res.status(200).send('User logout');
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+/**
+ * Gets the connected user's information.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the connected user's information.
+ */
+const getUserConnected = async (req, res) => {
+    try {
+        const { type, token } = req.params;
+
+        // Decode the token
+        const decodedToken = jwt.verify(token, jwtConfig.secret);
+
+        console.log(decodedToken);
+
+        // Get the user's ID
+        const userId = decodedToken.id;
+
+        let user = null;
+        let company = null;
+
+        if (type === 'user') {
+            // Find the corresponding user in the database
+            user = await database.sequelize.models.people.findByPk(userId)
+        }
+
+        if (type === 'company') {
+            // Find the corresponding company in the database
+            company = await database.sequelize.models.company.findByPk(userId)
+        }
+
+        if (user) {
+            return res.status(200).json(user);
+        }
+
+        if (company) {
+            return res.status(200).json(company);
+        }
+
+        return res.status(404).send('User with the specified ID does not exists');
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+
+}
+
+/**
+ * Generates a new access token using a refresh token.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the new access token.
+ */
+const refresh = async (req, res) => {
+    try {
+        const refreshToken = req.body.refreshToken;
+        if (!refreshToken) {
+            return res.status(401).send('Refresh token not provided');
+        }
+        const decoded = jwt.verify(refreshToken, jwtConfig.refreshSecret);
+        const user = await database.sequelize.models.people.findOne(decoded.id);
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
+            expiresIn: jwtConfig.options.expiresIn
+        });
+        return res.status(200).json({ accessToken });
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+module.exports = {
+    login,
+    logout,
+    refresh,
+    getUserConnected
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#create">create</a></li><li><a href="global.html#createAdvertisement">createAdvertisement</a></li><li><a href="global.html#createCompany">createCompany</a></li><li><a href="global.html#createJobApplication">createJobApplication</a></li><li><a href="global.html#createRecord">createRecord</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteAdvertisement">deleteAdvertisement</a></li><li><a href="global.html#deleteCompany">deleteCompany</a></li><li><a href="global.html#deleteJobApplication">deleteJobApplication</a></li><li><a href="global.html#deleteRecord">deleteRecord</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAnonymousByEmail">findAnonymousByEmail</a></li><li><a href="global.html#findOne">findOne</a></li><li><a href="global.html#getAdvertisementById">getAdvertisementById</a></li><li><a href="global.html#getAdvertisementFilters">getAdvertisementFilters</a></li><li><a href="global.html#getAdvertisementsByCompany">getAdvertisementsByCompany</a></li><li><a href="global.html#getAllAdvertisements">getAllAdvertisements</a></li><li><a href="global.html#getAllCompany">getAllCompany</a></li><li><a href="global.html#getAllJobApplications">getAllJobApplications</a></li><li><a href="global.html#getAllUsers">getAllUsers</a></li><li><a href="global.html#getCompanyById">getCompanyById</a></li><li><a href="global.html#getJobApplicationById">getJobApplicationById</a></li><li><a href="global.html#getJobApplicationsByUserId">getJobApplicationsByUserId</a></li><li><a href="global.html#getRecordByTableName">getRecordByTableName</a></li><li><a href="global.html#getTables">getTables</a></li><li><a href="global.html#getUserById">getUserById</a></li><li><a href="global.html#getUserConnected">getUserConnected</a></li><li><a href="global.html#getUserJobApplicationFromAnAdvert">getUserJobApplicationFromAnAdvert</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateAdvertisement">updateAdvertisement</a></li><li><a href="global.html#updateCompany">updateCompany</a></li><li><a href="global.html#updateJobApplication">updateJobApplication</a></li><li><a href="global.html#updateRecord">updateRecord</a></li><li><a href="global.html#updateUser">updateUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 21 2023 17:41:43 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,125 +1,164 @@
 const database = require('../models/index');
-const { Op } = require("sequelize");
 
-const getAllAdvertissements = async (req, res) => {
+/**
+ * Get all advertisements
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with advertisements or error message
+ */
+const getAllAdvertisements = async (req, res) => {
     try {
-        const advertissement = await database.sequelize.models.advertissement.findAll();
-        if (advertissement) {
-            return res.status(200).json(advertissement);
+        const advertisements = await database.sequelize.models.advertisement.findAll();
+        if (advertisements) {
+            return res.status(200).json(advertisements);
         }
-        return res.status(404).send('Advertissements does not exists');
+        return res.status(404).send('Advertisements do not exist');
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-const getAdvertissementById = async (req, res) => {
+/**
+ * Get advertisement by ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with advertisement or error message
+ */
+const getAdvertisementById = async (req, res) => {
     try {
         const { id } = req.params;
-        const advertissement = await database.sequelize.models.advertissement.findByPk(Number(id));
-        if (advertissement) {
-            return res.status(200).json(advertissement);
+        const advertisement = await database.sequelize.models.advertisement.findByPk(Number(id));
+        if (advertisement) {
+            return res.status(200).json(advertisement);
         }
-        return res.status(404).send('Advertissement with the specified ID does not exists');
+        return res.status(404).send('Advertisement with the specified ID does not exist');
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-const getAdvertissementByCompany = async (req, res) => {
+/**
+ * Get advertisements by company ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with advertisements or error message
+ */
+const getAdvertisementsByCompany = async (req, res) => {
     try {
-        
-        const { companyId } = req.params
-        const advertissements = await database.sequelize.models.advertissement.findAll({
+        const { companyId } = req.params;
+        const advertisements = await database.sequelize.models.advertisement.findAll({
             where: { company_id: companyId }
-        }) 
-
-        if (advertissements) {
-            return res.status(200).json(advertissements);
+        });
+        if (advertisements) {
+            return res.status(200).json(advertisements);
         }
-
-        return res.status(404).send('The company does not have any advertissements');
-
+        return res.status(404).send('The company does not have any advertisements');
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-const getAdvertissementFilters = async (req, res) => {
+/**
+ * Get advertisements with filters
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with advertisements or error message
+ */
+const getAdvertisementFilters = async (req, res) => {
     try {
-        
         const { keywords, contract, city } = req.query;
-
-        console.log(keywords, contract, city);
-
         const whereClause = {};
-
         if (keywords) {
-            // titre contains keywords
             whereClause.titre = {
                 [database.Sequelize.Op.like]: `%${keywords}%`
             };
         }
-
         if (contract) {
             whereClause.type_contrat = contract;
         }
-
         if (city) {
-            // Where lieu contains city
             whereClause.lieu = {
                 [database.Sequelize.Op.like]: `%${city}%`
             };
         }
-
-        // Check for all filters
-        const advertissements = await database.sequelize.models.advertissement.findAll({
+        const advertisements = await database.sequelize.models.advertisement.findAll({
             where: whereClause
         });
-        
-        if (advertissements) {
-            return res.status(200).json(advertissements);
+        if (advertisements) {
+            return res.status(200).json(advertisements);
         }
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
 };
 
-const createAdvertissement = async (req, res) => {
+/**
+ * Create advertisement
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with created advertisement or error message
+ */
+const createAdvertisement = async (req, res) => {
     try {
-        const advertissement = await database.sequelize.models.advertissement.create(req.body);
-        if (advertissement) {
-            return res.status(201).json(advertissement);
+        const advertisement = await database.sequelize.models.advertisement.create(req.body);
+        if (advertisement) {
+            return res.status(201).json(advertisement);
         }
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
-const updateAdvertissement = async (req, res) => {
-
-}
-
-const deleteAdvertissement = async (req, res) => {
+/**
+ * Update advertisement by ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with updated advertisement or error message
+ */
+const updateAdvertisement = async (req, res) => {
     try {
         const { id } = req.params;
-        const deleted = await database.sequelize.models.advertissement.destroy({
-            where: { advertissement_id: Number(id) }
+        const [updated] = await database.sequelize.models.advertisement.update(req.body, {
+            where: { advertisement_id: Number(id) }
+        });
+        if (updated) {
+            const updatedAdvertisement = await database.sequelize.models.advertisement.findOne({
+                where: { advertisement_id: Number(id) }
+            });
+            return res.status(200).json({ advertisement: updatedAdvertisement });
+        }
+        return res.status(404).send('Advertisement with the specified ID does not exist');
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * Delete advertisement by ID
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} - Response object with success message or error message
+ */
+const deleteAdvertisement = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await database.sequelize.models.advertisement.destroy({
+            where: { advertisement_id: Number(id) }
         });
         if (deleted) {
-            return res.status(204).send("Advertissement deleted");
+            return res.status(204).send('Advertisement deleted');
         }
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
 module.exports = {
-    getAllAdvertissements,
-    createAdvertissement,
-    updateAdvertissement,
-    deleteAdvertissement,
-    getAdvertissementById,
-    getAdvertissementFilters,
-    getAdvertissementByCompany
-}
+    getAllAdvertisements,
+    createAdvertisement,
+    updateAdvertisement,
+    deleteAdvertisement,
+    getAdvertisementById,
+    getAdvertisementFilters,
+    getAdvertisementsByCompany
+};

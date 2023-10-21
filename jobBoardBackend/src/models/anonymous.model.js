@@ -2,6 +2,12 @@
 const {
   Model
 } = require('sequelize');
+/**
+ * Represent an Anonymous in the database
+ * @param {*} sequelize 
+ * @param {*} DataTypes 
+ * @returns 
+ */
 module.exports = (sequelize, DataTypes) => {
   class anonymousModel extends Model {
     /**

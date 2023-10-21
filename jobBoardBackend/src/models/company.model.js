@@ -3,6 +3,12 @@ const bcrypt = require('bcrypt');
 const {
   Model
 } = require('sequelize');
+/**
+ * Represent a Company in the database
+ * @param {*} sequelize 
+ * @param {*} DataTypes 
+ * @returns 
+ */
 module.exports = (sequelize, DataTypes) => {
   class companyModel extends Model {
     /**

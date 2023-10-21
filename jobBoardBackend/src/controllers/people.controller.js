@@ -1,7 +1,11 @@
 const database = require('../models/index');
-const jwt = require('jsonwebtoken');
-const jwtConfig = require('../config/jwt.config');
 
+/**
+ * Gets all users from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the users.
+ */
 const getAllUsers = async (req, res) => {
     try {
         const users = await database.sequelize.models.people.findAll();
@@ -11,6 +15,12 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+/**
+ * Gets a user by ID from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the user.
+ */
 const getUserById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -18,13 +28,18 @@ const getUserById = async (req, res) => {
         if (user) {
             return res.status(200).json(user);
         }
-        return res.status(404).send('User with the specified ID does not exists');
+        return res.status(404).send('User with the specified ID does not exist');
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
 }
 
-
+/**
+ * Creates a new user in the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the created user.
+ */
 const createUser = async (req, res) => {
     try {
         // Check email is not already used
@@ -35,7 +50,7 @@ const createUser = async (req, res) => {
         }
         const user = await database.sequelize.models.people.create(req.body);
         if (user) {
-            console.log(`Un utilisateur de type client a été créé :${user}}`)
+            console.log(`A client user has been created: ${user}}`)
             return res.status(201).json(user);
         }
     } catch (error) {
@@ -43,7 +58,12 @@ const createUser = async (req, res) => {
     }
 }
 
-
+/**
+ * Updates a user in the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the updated user.
+ */
 const updateUser = async (req, res) => {
     try {
         const user = await database.sequelize.models.people.update(req.body, {
@@ -53,13 +73,18 @@ const updateUser = async (req, res) => {
             const updatedUser = await database.sequelize.models.people.findByPk(Number(req.params.id));
             return res.status(200).json(updatedUser);
         }
-        return res.status(404).send('User with the specified ID does not exists');
+        return res.status(404).send('User with the specified ID does not exist');
     } catch (error) {
         return res.status(500).json({ error: error.message })
     }
-
 }
 
+/**
+ * Deletes a user from the database.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with a success message.
+ */
 const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
