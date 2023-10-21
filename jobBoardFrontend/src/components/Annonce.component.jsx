@@ -137,7 +137,9 @@ const Annonce = () => {
                         }
                     });
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    //console.log(err)
+                });
         }
 
         // Close the modal
@@ -200,7 +202,6 @@ const Annonce = () => {
                             </div>
                         </div>
                         <div className="p-4">
-                            {console.log(user)}
                             {((localStorage.getItem('type') === 'user') || !localStorage.getItem('type')) ? (
                                 <button onClick={handleApply} className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300">Postuler</button>
                             ) : (

@@ -52,7 +52,7 @@ const Filtres = () => {
       const response = await axios.get(
         `http://localhost:3000/api/advertissements/filters?keywords=${credentials.titre}&city=${city}&contract=${credentials.type_contrat}`
       );
-      console.log(response.data);
+      //console.log(response.data);
       if (response.data.length > 0) {
         setAdvertisements(response.data);
         setShowModal(true);

@@ -42,7 +42,9 @@ const Settings = () => {
             setUser(response.data);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          //console.log(err)
+        });
     }
   }, [logged, token]);
 

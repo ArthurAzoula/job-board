@@ -25,7 +25,7 @@ const CompanyForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(credentials);
+        //onsole.log(credentials);
         axios
             .post('http://localhost:3000/api/companies', credentials, {
                 headers: {
@@ -34,7 +34,7 @@ const CompanyForm = () => {
                 },
             })
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 toast.success('Inscription entreprise réussie!');
                 window.setTimeout(() => {
                     navigate('/signin');
@@ -42,7 +42,7 @@ const CompanyForm = () => {
                 }, 3000);
             })
             .catch((err) => {
-                console.log(err.response);
+                //console.log(err.response);
                 toast.error('Inscription entreprise échouée!');
             });
     };

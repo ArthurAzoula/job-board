@@ -99,7 +99,7 @@ const getUserConnected = async (req, res) => {
         // On décode le token
         const decodedToken = jwt.verify(token, jwtConfig.secret);
 
-        console.log(decodedToken);
+        //(decodedToken);
 
         // On récupère l'id de l'utilisateur
         const userId = decodedToken.id;

@@ -50,7 +50,7 @@ const getAdvertissementFilters = async (req, res) => {
         
         const { keywords, contract, city } = req.query;
 
-        console.log(keywords, contract, city);
+        //(keywords, contract, city);
 
         const whereClause = {};
 

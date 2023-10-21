@@ -35,7 +35,7 @@ const UserForm = () => {
             },
         })
             .then((res) => {
-                console.log(res);
+                //(res);
                 toast.success('Inscription client réussie!');
                 window.setTimeout(() => {
                     navigate('/signin');
@@ -43,7 +43,7 @@ const UserForm = () => {
                 }, 3000);
             })
             .catch((err) => {
-                console.log(err.response);
+                //console.log(err.response);
                 toast.error('Inscription client échouée!');
             })
     };

@@ -76,7 +76,7 @@ const JobApplications = () => {
                     }
                 }
             } catch (err) {
-                console.log(err);
+                //console.log(err);
             }
         };
 
@@ -104,7 +104,7 @@ const JobApplications = () => {
             setAppliers(appliers);
             setShowModal(true);
         } catch (err) {
-            console.log(err);
+            //console.log(err);
         }
     };
 

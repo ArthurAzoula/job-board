@@ -83,7 +83,7 @@ const updateRecord = async (req, res) => {
         }   
 
         if (database[table] === undefined) {
-            console.log(database);
+            //console.log(database);
             return res.status(404).send("Table does not exist");
         }
 
@@ -138,7 +138,7 @@ const createRecord = async (req, res) => {
         const newRecordData = req.body;
 
         if (database[table] === undefined || database[table] === null) {
-            console.log(database);
+            //(database);
             return res.status(404).send('Table does not exists');
         }
 
@@ -187,7 +187,7 @@ const deleteRecord = async (req, res) => {
         }
 
         if (database[table] === undefined) {
-            console.log(database);
+            //console.log(database);
             return res.status(404).send('Table does not exists');
         }
 

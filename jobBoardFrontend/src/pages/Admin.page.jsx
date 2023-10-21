@@ -43,7 +43,9 @@ const Admin = () => {
             }
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          //console.log(err)
+        });
     }
   }, []);
 
@@ -53,7 +55,9 @@ const Admin = () => {
       .then((response) => {
         setTables(response.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        //console.log(err)
+      });
   }, []);
 
   useEffect(() => {
@@ -63,7 +67,9 @@ const Admin = () => {
         .then((response) => {
           setRecords(response.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          //console.log(err)
+        });
     }
   }, [selectedTable]);
 
@@ -79,7 +85,7 @@ const Admin = () => {
           }, 2000);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           toast.error("Erreur lors de la suppression de l'enregistrement !");
         });
     }
@@ -115,7 +121,7 @@ const Admin = () => {
         setShowModal(false);
       })
       .catch((err) => {
-        console.log(err);
+        //(err);
         toast.error("Erreur lors de la création de l'enregistrement !");
       });
   };

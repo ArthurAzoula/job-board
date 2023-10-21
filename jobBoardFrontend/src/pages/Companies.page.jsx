@@ -28,7 +28,7 @@ const Companies = () => {
       .then((response) => {
         if (response.status === 200) {
           setCompanies(response.data);
-          console.log(response.data);
+          //console.log(response.data);
 
           // Récupérer les annonces par entreprise
           response.data.forEach((company) => {
@@ -48,11 +48,15 @@ const Companies = () => {
                   ]);
                 }
               })
-              .catch((err) => console.log(err));
+              .catch((err) => {
+                //console.log(err)
+              });
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        //console.log(err)
+      });
   }, []);
 
   return (

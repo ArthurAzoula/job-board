@@ -40,7 +40,7 @@ const ButtonAddAdvert = () => {
   const token = accountService.getToken() || null;
 
   const onSubmit = (e) => {
-    console.log(credentials);
+    //console.log(credentials);
     e.preventDefault();
     axios
       .post('http://localhost:3000/api/advertissements', credentials, {
@@ -54,7 +54,7 @@ const ButtonAddAdvert = () => {
         }, 3000);
       })
       .catch((err) => {
-        console.log(err.response)
+        //(err.response)
         toast.error('Erreur lors de l\'ajout de l\'annonce!');
       });
   };
