@@ -27,7 +27,7 @@ const Navbar = () => {
     if (logged && token) {
       axios({
         method: "GET",
-        url: `http://localhost:3000/api/auth/me/${token}`,
+        url: `http://localhost:3000/api/auth/${localStorage?.getItem('type')}/${token}`,
         responseType: "json",
       })
         .then((response) => {

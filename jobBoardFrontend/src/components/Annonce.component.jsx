@@ -93,7 +93,7 @@ const Annonce = () => {
                         advertissement_id: id,
                         people_id: user.people_id,
                         status: 'pending',
-                        email_send: true
+                        message: message,
                     };
                     axios.post('http://localhost:3000/api/jobapplications', data)
                         .then(res => {
@@ -120,7 +120,7 @@ const Annonce = () => {
                             const data = {
                                 advertissement_id: id,
                                 anonymous_id: res.anonymous.anonymous_id,
-                                email_send: true,
+                                message: message,
                                 status: 'pending',
                             };
 

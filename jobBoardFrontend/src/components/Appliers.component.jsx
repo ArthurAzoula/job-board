@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getUserConnected } from '../api/calls.api';
 import { accountService } from '../services/account.service';
 import { Link } from 'react-router-dom';
-import { FaEye, FaLocationArrow, FaChevronRight, FaUser, FaUsers, FaPhone, FaEnvelope, FaUserCircle } from 'react-icons/fa';
+import { FaEye, FaChevronRight, FaUsers, FaPhone, FaEnvelope, FaUserCircle, FaFacebookMessenger } from 'react-icons/fa';
 import ContractIcon from '../icons/Contract.icon';
 import LocalisationIcon from '../icons/Localisation.icon';
 import Modal from './Modal.component';
@@ -93,10 +93,10 @@ const JobApplications = () => {
                     for (const jobApplication of application.jobApplications) {
                         if (jobApplication.people_id) {
                             const response = await axios.get(`http://localhost:3000/api/users/${jobApplication.people_id}`);
-                            appliers.push(response.data);
+                            appliers.push({ ...response.data, message: jobApplication.message }); // add the message to the response data
                         } else if (jobApplication.anonymous_id) {
                             const response = await axios.get(`http://localhost:3000/api/anonymous/${jobApplication.anonymous_id}`);
-                            appliers.push(response.data.anonymous);
+                            appliers.push({ ...response.data.anonymous, jobApplication: application.message }); // add the message to the response data
                         }
                     }
                 }
@@ -184,6 +184,10 @@ const JobApplications = () => {
                                                 <div className="flex items-center mb-2">
                                                     <FaPhone className="text-gray-500 mr-2" />
                                                     <p className="text-gray-500">{applier.telephone}</p>
+                                                </div>
+                                                <div className="flex items-center mb-2">
+                                                    <FaFacebookMessenger className="text-gray-500 mr-2" />
+                                                    <p className="text-gray-500">{applier.message}</p>
                                                 </div>
                                             </div>
                                         ))}

@@ -21,10 +21,9 @@ module.exports = {
         allowNull: true,
         type: Sequelize.INTEGER,
       },
-      email_send: {
+      message: {
         allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        type: Sequelize.STRING,
       },
       status: {
         allowNull: false,

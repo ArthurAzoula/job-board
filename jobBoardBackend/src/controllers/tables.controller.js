@@ -4,10 +4,12 @@ const getTables = async (req, res) => {
     try {
         // Get all tables from the database with sequelize
         const tables = await database.sequelize.query('SHOW TABLES', { type: database.sequelize.QueryTypes.SHOWTABLES });
-        // Check if there is tables
-        if (tables) {
+        // Filters tables
+        const filteredTables = tables.filter((table) => table !== 'SequelizeMeta');
+
+        if (filteredTables) {
             // Return the tables
-            return res.status(200).json(tables);
+            return res.status(200).json(filteredTables);
         }
         // Return an error if there is no tables
         return res.status(404).send('Tables does not exists');
@@ -26,15 +28,19 @@ const getRecordByTableName = async (req, res) => {
         // Get the record from the database with sequelize
         const record = await database.sequelize.query(`SELECT * FROM ${tableName}`, { type: database.sequelize.QueryTypes.SELECT });
         // Check if there is a record
-        if (record) {
+        if (record.length > 0) {
             // Return the record
             return res.status(200).json(record);
         }
-        // Return an error if there is no record
-        return res.status(404).send('Record does not exists');
-
-
-
+        // Get the column names from the table
+        const columns = await database.sequelize.query(`SELECT column_name FROM information_schema.columns WHERE table_name = '${tableName}'`, { type: database.sequelize.QueryTypes.SELECT });
+        // Create an empty result set with the same columns as the table
+        const emptyRecord = columns.reduce((acc, column) => {
+            acc[column.column_name] = null;
+            return acc;
+        }, {});
+        // Return the empty result set
+        return res.status(200).json([emptyRecord]);
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }

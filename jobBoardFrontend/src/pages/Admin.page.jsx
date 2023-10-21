@@ -31,7 +31,7 @@ const Admin = () => {
     if (logged) {
       axios({
         method: "GET",
-        url: `http://localhost:3000/api/auth/me/${token}`,
+        url: `http://localhost:3000/api/auth/${localStorage?.getItem('type')}/${token}`,
         responseType: "json",
       })
         .then((response) => {
@@ -218,7 +218,7 @@ const Admin = () => {
             closeModal={closeModal}
             onSubmit={handleModalSubmit}
           >
-            {Object.keys(records[0]).map((key) => {
+            {Object?.keys(records[0]).map((key) => {
               return (
                 <div key={key} className="mb-4">
                   <label

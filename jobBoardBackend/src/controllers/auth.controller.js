@@ -94,7 +94,7 @@ const logout = async (req, res) => {
 
 const getUserConnected = async (req, res) => {
     try {
-        const { token } = req.params;
+        const { type, token } = req.params;
 
         // On décode le token
         const decodedToken = jwt.verify(token, jwtConfig.secret);
@@ -104,12 +104,18 @@ const getUserConnected = async (req, res) => {
         // On récupère l'id de l'utilisateur
         const userId = decodedToken.id;
 
-        console.log(userId);
+        let user = null;
+        let company = null;
 
-        // On cherche l'utilisateur correspondant dans la base de donnée
-        const user = await database.sequelize.models.people.findByPk(userId)
+        if (type === 'user') {
+            // On cherche l'utilisateur correspondant dans la base de donnée
+            user = await database.sequelize.models.people.findByPk(userId)
+        }
 
-        const company = await database.sequelize.models.company.findByPk(userId);
+        if (type === 'company') {
+            // On cherche l'utilisateur correspondant dans la base de donnée
+            company = await database.sequelize.models.company.findByPk(userId)
+        }
 
         if (user) {
             return res.status(200).json(user);

@@ -31,7 +31,7 @@ export const getAllUsers = async () => {
 
 export const getUserConnected = async (token) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/auth/me/${token}`)
+        const response = await axios.get(`${API_BASE_URL}/auth/${localStorage?.getItem('type')}/${token}`)
         return response.data;
     } catch (error) {
         console.error(error);
