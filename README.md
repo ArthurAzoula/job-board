@@ -95,7 +95,7 @@ Here some exemples of features that are available in JobBoard:
 
 We have designed a mobile, dynamic, and strong database schema using Sequelize and MySQL. You can view our MCD [here](gestion/mcd_final.png) :arrow_left:
 
-How to generate the database:
+:warning: How to generate the database: **Only in local ! On production just make ```npm run build``` into jobBoardBackend**
 
 *In your localhost/phpmyadmin* create a database name **job_board**
 
