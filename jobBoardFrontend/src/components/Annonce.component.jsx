@@ -97,7 +97,7 @@ const Annonce = () => {
                     };
                     axios.post('http://localhost:3000/api/jobapplications', data)
                         .then(res => {
-                            toast.success(`Merci pour votre candidature ${user.prenom} ${user.nom} !}`);
+                            toast.success(`Merci pour votre candidature ${user.prenom} ${user.nom} !`);
                             closeModal()
                         })
                         .catch(err => {

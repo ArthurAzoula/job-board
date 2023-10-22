@@ -96,7 +96,7 @@ const JobApplications = () => {
                             appliers.push({ ...response.data, message: jobApplication.message }); // add the message to the response data
                         } else if (jobApplication.anonymous_id) {
                             const response = await axios.get(`http://localhost:3000/api/anonymous/${jobApplication.anonymous_id}`);
-                            appliers.push({ ...response.data.anonymous, jobApplication: application.message }); // add the message to the response data
+                            appliers.push({ ...response.data.anonymous, message: jobApplication.message }); // add the message to the response data
                         }
                     }
                 }
@@ -173,6 +173,7 @@ const JobApplications = () => {
                                     <Modal closeModal={() => setShowModal(false)}>
                                         {appliers.map((applier) => (
                                             <div key={applier?.people_id ? applier.people_id : applier.anonymous_id} className="border border-gray-300 bg-white shadow-xl rounded-lg p-4 mb-4">
+                                                {console.log(applier)}
                                                 <div className="flex items-center mb-4">
                                                     <FaUserCircle className="text-gray-500 mr-2" />
                                                     <h2 className="text-xl font-bold">{applier.nom} {applier.prenom}</h2>

@@ -39,6 +39,7 @@ const Admin = () => {
             setUser(response.data);
             setLogged(true);
             if (!response.data.isAdmin) {
+              toast.error("Vous n'êtes pas connecté en tant qu'admin !");
               navigate("/");
             }
           }
@@ -46,6 +47,9 @@ const Admin = () => {
         .catch((err) => {
           //console.log(err)
         });
+    } else {
+      navigate("/");
+      toast.error("Vous n'êtes pas connecté en tant qu'admin !");
     }
   }, []);
 
