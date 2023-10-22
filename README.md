@@ -52,7 +52,7 @@ yarn run dev
 2. Open and see in a browser:
 
 ```bash
-localhost:5173/ #FrontEnd
+127.0.0.1:5173/ #FrontEnd
 localhost:3000/ # BackEnd
 ```
 
@@ -94,6 +94,27 @@ Here some exemples of features that are available in JobBoard:
 ## Database Schema
 
 We have designed a mobile, dynamic, and strong database schema using Sequelize and MySQL. You can view our MCD [here](gestion/mcd_final.png) :arrow_left:
+
+How to generate the database:
+
+*In your localhost/phpmyadmin* create a database name **job_board**
+
+Next, go into the src of your backend:
+
+```bash
+cd jobBoardBackend
+
+cd src
+```
+
+generate the database with Sequelize:
+
+```bash
+npx sequelize-cli db:migrate
+
+# If you want to undo database
+npx sequelize-cli db:migrate:undo:all
+```
 
 ## API Endpoints
 
