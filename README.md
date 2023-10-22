@@ -58,6 +58,12 @@ localhost:3000/ # BackEnd
 
 If you want to use EpiJob in production, do this:
 
+**You need the branch 'release/1.0'**
+
+```bash
+git checkout release/1.0
+```
+
 ```bash
 cd jobBoardFrontend
 npm install
