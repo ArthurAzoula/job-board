@@ -74,7 +74,7 @@ const Settings = () => {
         const response = await axios.put(`http://localhost:3000/api/users/${user.people_id}`, credentialsUser);
         if (response.status === 200) {
           toast.success('Votre compte a été mis à jour avec succès !');
-          closeModal();
+          setShowModal(false);
           setTimeout(() => {
             window.location.reload();
           }, 2000);
@@ -98,6 +98,7 @@ const Settings = () => {
         const response = await axios.put(`http://localhost:3000/api/companies/${user.company_id}`, credentialsCompany);
         if (response.status === 200) {
           toast.success('Votre compte a été mis à jour avec succès !');
+          setShowModal(false);
           setTimeout(() => {
             window.location.reload();
           }, 2000);
