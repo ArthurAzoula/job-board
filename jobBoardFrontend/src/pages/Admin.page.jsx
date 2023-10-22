@@ -7,6 +7,7 @@ import Modal from "../components/Modal.component";
 import { toast } from "react-toastify";
 import TableList from "../components/TableList.component";
 import { accountService } from "../services/account.service";
+import Pagination from "../components/Pagination.component";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const Admin = () => {
   const [modalData, setModalData] = useState({});
   const [formData, setFormData] = useState({});
   const [isModalForCreate, setIsModalForCreate] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const items = [
     { label: "Home", path: "/" },
@@ -70,6 +73,7 @@ const Admin = () => {
         .get(`http://localhost:3000/api/tables/${selectedTable}`)
         .then((response) => {
           setRecords(response.data);
+          setCurrentPage(1); // Reset current page to 1
         })
         .catch((err) => {
           //console.log(err)
@@ -162,6 +166,20 @@ const Admin = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(parseInt(e.target.value));
+    setCurrentPage(1); // Reset current page to 1
+  };
+
+  // Get current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = records.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <>
       <Breadcrumb items={items} />
@@ -180,12 +198,12 @@ const Admin = () => {
             </button>
           )}  
         </div>
-        {records.length > 0 && (
+        {currentItems.length > 0 && (
           <div className="overflow-x-scroll">
             <table className="table-auto w-full">
               <thead>
                 <tr>
-                  {Object.keys(records[0]).map((key) => (
+                  {Object.keys(currentItems[0]).map((key) => (
                     <th key={key} className="px-4 py-2 text-left">
                       {key}
                     </th>
@@ -194,7 +212,7 @@ const Admin = () => {
                 </tr>
               </thead>
               <tbody>
-                {records.map((record) => (
+                {currentItems.map((record) => (
                   <tr key={record.id} className="border-t hover:bg-gray-100">
                     {Object.keys(record).map((key) => (
                       <td key={key} className="px-4 py-2">
@@ -221,6 +239,28 @@ const Admin = () => {
             </table>
           </div>
         )}
+        <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center gap-2">
+            <label htmlFor="itemsPerPage">Items per page:</label>
+            <select
+              id="itemsPerPage"
+              name="itemsPerPage"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+            >
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={records.length}
+            onPageChange={handlePageChange}
+          />
+        </div>
         {showModal && (
           <Modal
             isGrid={true}
